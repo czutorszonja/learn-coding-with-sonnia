@@ -228,6 +228,50 @@ Counting:
 
 ---
 
+## Extra Practice Exercise
+
+Want more practice with for loops? Try this!
+
+### Exercise: Grocery Total 🛒
+
+**Scenario:** You're at the grocery store and want to calculate your total bill!
+
+**Your task:**
+1. Create a list called `prices` with 5 item prices (numbers, like 2.50, 5.99, etc.)
+2. Create a variable `total` starting at 0
+3. Use a `for` loop to go through each price
+4. Add each price to the total
+5. After the loop, print the total with a nice message (use an f-string!)
+
+**Hint:** To format money to 2 decimal places, use `{total:.2f}` in your f-string!
+
+**Try it yourself first!** Solution below.
+
+---
+
+## Extra Practice Solution
+
+### Grocery Total Solution
+
+```python
+prices = [2.50, 5.99, 3.49, 1.99, 7.50]
+total = 0
+
+for price in prices:
+    total = total + price
+
+print(f"Total bill: £{total:.2f}")
+```
+
+**Output:**
+```
+Total bill: £21.47
+```
+
+**Note:** The `:.2f` in the f-string formats the number to 2 decimal places (for pounds and pence)!
+
+---
+
 ## Quick Recap
 
 - **`for` loops** repeat code for each item in a list

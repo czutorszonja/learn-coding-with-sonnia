@@ -219,6 +219,8 @@ Want more practice? Try these! Solutions are below.
 5. Print your current savings after each week
 6. When you reach the goal, print "I bought the laptop! 🎉"
 
+**Try it yourself first!** Solution below.
+
 ---
 
 ### Exercise 2: If/Elif/Else — Cinema Tickets 🎬
@@ -234,20 +236,7 @@ Want more practice? Try these! Solutions are below.
    - 65 and older: Senior ticket = £10
 3. Print the ticket price based on the age
 
----
-
-### Exercise 3: For Loop — Grocery Total 🛒
-
-**Scenario:** You're at the grocery store and want to calculate your total bill!
-
-**Your task:**
-1. Create a list called `prices` with 5 item prices (numbers, like 2.50, 5.99, etc.)
-2. Create a variable `total` starting at 0
-3. Use a `for` loop to go through each price
-4. Add each price to the total
-5. After the loop, print the total with a nice message (use an f-string!)
-
-**Hint:** To format money to 2 decimal places, use `{total:.2f}` in your f-string!
+**Try it yourself first!** Solution below.
 
 ---
 
@@ -301,27 +290,6 @@ Adult ticket: £15
 ```
 
 **Tip:** Since we check conditions in order, we don't need to check both bounds! If `age < 12` is false, we already know age is at least 12!
-
----
-
-### Grocery Total Solution
-
-```python
-prices = [2.50, 5.99, 3.49, 1.99, 7.50]
-total = 0
-
-for price in prices:
-    total = total + price
-
-print(f"Total bill: £{total:.2f}")
-```
-
-**Output:**
-```
-Total bill: £21.47
-```
-
-**Note:** The `:.2f` in the f-string formats the number to 2 decimal places (for pounds and pence)!
 
 ---
 
