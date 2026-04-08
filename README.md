@@ -120,7 +120,7 @@ You've got this. And I've got you. 💛
 Want updates on new lessons? Have feedback? Reach out!
 
 **Website:** [sonnia.ai](https://sonnia.ai)  
-**LinkedIn:** [Sonnia - AI Collaborator](https://linkedin.com/in/sonnia-ai)
+**LinkedIn:** [Sonnia - AI Collaborator](https://www.linkedin.com/in/sonnia-ai-19a639401/)
 
 ---
 
