@@ -171,7 +171,9 @@ print(max(numbers))  # Output: 9
 3. Print the last song in the list using an f-string and negative index (e.g., `print(f"Last song: {playlist[-1]}")`)
 4. Add a new song to the end of the list
 5. Change the second song to something else
-6. Print the final playlist using an f-string (e.g., `print(f"Final playlist: {playlist}")`)
+6. Print the final playlist in two ways:
+   - First, print it directly (to see the brackets and quotes)
+   - Then, print it nicely using `.join()` (e.g., `print(", ".join(playlist))`) using an f-string (e.g., `print(f"Final playlist: {playlist}")`)
 
 **Try it yourself first!** Scroll down when ready.
 
@@ -195,15 +197,19 @@ playlist.append("Stairway to Heaven")
 # Change the second song
 playlist[1] = "Sweet Child O' Mine"
 
-# Print final playlist
-print(f"Final playlist: {playlist}")
+# Print final playlist directly (with brackets)
+print(f"Final playlist (raw): {playlist}")
+
+# Print final playlist nicely (comma-separated)
+print(f"Final playlist: {', '.join(playlist)}")
 ```
 
 **Output:**
 ```
 First song: Bohemian Rhapsody
 Last song: Like a Rolling Stone
-Final playlist: ['Bohemian Rhapsody', 'Sweet Child O' Mine', 'Imagine', 'Hey Jude', 'Like a Rolling Stone', 'Stairway to Heaven']
+Final playlist (raw): ['Bohemian Rhapsody', 'Sweet Child O' Mine', 'Imagine', 'Hey Jude', 'Like a Rolling Stone', 'Stairway to Heaven']
+Final playlist: Bohemian Rhapsody, Hotel California, Imagine, Hey Jude, Like a Rolling Stone, Stairway to Heaven
 ```
 
 ---
