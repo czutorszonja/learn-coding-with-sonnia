@@ -121,6 +121,8 @@ for i in range(1, 6):
 # Number: 5
 ```
 
+**Important:** The end number is *exclusive* — `range(1, 6)` gives you 1, 2, 3, 4, 5 (stops BEFORE 6). If you want to include 10, use `range(1, 11)`!
+
 ### Range with Steps
 
 You can also skip numbers:
@@ -185,13 +187,13 @@ for book in books:
     print(f"I love: {book}")
 
 # Print with position using enumerate
-print("\nBookshelf order:")
+print("Bookshelf order:")
 for index, book in enumerate(books):
     print(f"Book {index + 1}: {book}")
 
 # Print numbers 1-10
-print("\nCounting:")
-for i in range(1, 11):
+print("Counting:")
+for i in range(1, 11):  # Remember: end is exclusive, so use 11 to include 10!
     print(i)
 ```
 
