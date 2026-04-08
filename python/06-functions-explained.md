@@ -168,6 +168,48 @@ print(total)  # Output: 8
 
 ---
 
+## What Can You Return?
+
+**You can return ANY type of data!** Not just numbers!
+
+### Return a string:
+```python
+def get_greeting():
+    return "Hello, World!"
+
+message = get_greeting()
+print(message)  # Output: Hello, World!
+```
+
+### Return a boolean:
+```python
+def is_adult(age):
+    return age >= 18
+
+result = is_adult(20)
+print(result)  # Output: True
+```
+
+### Return a list:
+```python
+def get_colors():
+    return ["red", "green", "blue"]
+
+colors = get_colors()
+print(colors)  # Output: ['red', 'green', 'blue']
+```
+
+### Return nothing (using `return` without a value):
+```python
+def say_goodbye():
+    print("Goodbye!")
+    return  # Optional - function ends here anyway
+
+say_goodbye()  # Output: Goodbye!
+```
+
+---
+
 ## Return vs Print
 
 **Big difference:**
@@ -247,7 +289,7 @@ Large coffee: £4.50
 - **Functions** are reusable blocks of code
 - **`def`** defines a function
 - **Parameters** let you pass data into functions
-- **`return`** sends a value back to the caller
+- **`return`** sends a value back — can be ANY type (number, string, boolean, list, etc.)
 - **Call functions** by name with parentheses
 - **Return vs Print:** Return for calculations, print for display
 
