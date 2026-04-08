@@ -162,58 +162,6 @@ print(max(numbers))  # Output: 9
 
 ---
 
-## Practice Exercise
-
-**Scenario:** You're making a playlist for a road trip!
-
-1. Create a list called `playlist` with 5 songs (just use song titles as strings)
-2. Print a sentence that tells us what the first song is (use an f-string to include the song name)
-3. Print a sentence that tells us what the last song is (use an f-string with a negative index)
-4. Add a new song to the end of the list
-5. Change the second song to something else
-6. Print the final playlist in two ways:
-   - First, print it directly (to see the brackets and quotes)
-   - Then, print it nicely as a comma-separated list using `.join()` using an f-string (e.g., `print(f"Final playlist: {playlist}")`)
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-## Solution
-
-```python
-# Create playlist with 5 songs
-playlist = ["Bohemian Rhapsody", "Hotel California", "Imagine", "Hey Jude", "Like a Rolling Stone"]
-
-# Print first song
-print(f"First song: {playlist[0]}")
-
-# Print last song (using negative index)
-print(f"Last song: {playlist[-1]}")
-
-# Add a new song to the end
-playlist.append("Stairway to Heaven")
-
-# Change the second song
-playlist[1] = "Sweet Child O' Mine"
-
-# Print final playlist directly (with brackets)
-print(f"Final playlist (raw): {playlist}")
-
-# Print final playlist nicely (comma-separated)
-print(f"Final playlist: {', '.join(playlist)}")
-```
-
-**Output:**
-```
-First song: Bohemian Rhapsody
-Last song: Like a Rolling Stone
-Final playlist (raw): ['Bohemian Rhapsody', 'Sweet Child O' Mine', 'Imagine', 'Hey Jude', 'Like a Rolling Stone', 'Stairway to Heaven']
-Final playlist: Bohemian Rhapsody, Hotel California, Imagine, Hey Jude, Like a Rolling Stone, Stairway to Heaven
-```
-
----
-
 ## Printing Lists Nicely
 
 When you print a list directly, Python shows it with brackets and quotes:
@@ -256,6 +204,58 @@ for song in playlist:
 # Yesterday
 # Girl
 # Bohemian Rhapsody
+```
+
+---
+
+## Practice Exercise
+
+**Scenario:** You're making a playlist for a road trip!
+
+1. Create a list called `playlist` with 5 songs (just use song titles as strings)
+2. Print a sentence that tells us what the first song is (use an f-string to include the song name)
+3. Print a sentence that tells us what the last song is (use an f-string with a negative index)
+4. Add a new song to the end of the list
+5. Change the second song to something else
+6. Print the final playlist in two ways:
+   - First, print it directly (to see the brackets and quotes)
+   - Then, print it nicely as a comma-separated list using `.join()` inside an f-string
+
+**Try it yourself first!** Scroll down when ready.
+
+---
+
+## Solution
+
+```python
+# Create playlist with 5 songs
+playlist = ["Bohemian Rhapsody", "Hotel California", "Imagine", "Hey Jude", "Like a Rolling Stone"]
+
+# Print first song
+print(f"First song: {playlist[0]}")
+
+# Print last song (using negative index)
+print(f"Last song: {playlist[-1]}")
+
+# Add a new song to the end
+playlist.append("Stairway to Heaven")
+
+# Change the second song
+playlist[1] = "Sweet Child O' Mine"
+
+# Print final playlist directly (with brackets)
+print(f"Final playlist (raw): {playlist}")
+
+# Print final playlist nicely (comma-separated)
+print(f"Final playlist: {', '.join(playlist)}")
+```
+
+**Output:**
+```
+First song: Bohemian Rhapsody
+Last song: Like a Rolling Stone
+Final playlist (raw): ['Bohemian Rhapsody', 'Sweet Child O' Mine', 'Imagine', 'Hey Jude', 'Like a Rolling Stone', 'Stairway to Heaven']
+Final playlist: Bohemian Rhapsody, Hotel California, Imagine, Hey Jude, Like a Rolling Stone, Stairway to Heaven
 ```
 
 ---
