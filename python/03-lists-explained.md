@@ -167,11 +167,11 @@ print(max(numbers))  # Output: 9
 **Scenario:** You're making a playlist for a road trip!
 
 1. Create a list called `playlist` with 5 songs (just use song titles as strings)
-2. Print the first song in the list
-3. Print the last song in the list (try using negative index!)
+2. Print the first song in the list using an f-string (e.g., `print(f"First song: {playlist[0]}")`)
+3. Print the last song in the list using an f-string and negative index (e.g., `print(f"Last song: {playlist[-1]}")`)
 4. Add a new song to the end of the list
 5. Change the second song to something else
-6. Print the final playlist
+6. Print the final playlist using an f-string (e.g., `print(f"Final playlist: {playlist}")`)
 
 **Try it yourself first!** Scroll down when ready.
 
