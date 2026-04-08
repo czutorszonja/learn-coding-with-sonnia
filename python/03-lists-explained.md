@@ -208,6 +208,34 @@ Final playlist: ['Bohemian Rhapsody', 'Sweet Child O' Mine', 'Imagine', 'Hey Jud
 
 ---
 
+## Printing Lists Nicely
+
+When you print a list directly, Python shows it with brackets and quotes:
+
+```python
+playlist = ["Yesterday", "Girl", "Bohemian Rhapsody"]
+print(playlist)
+# Output: ['Yesterday', 'Girl', 'Bohemian Rhapsody']
+```
+
+That's not very pretty! To print each item on its own line, you need a **loop** (which we'll cover in Lesson 4):
+
+```python
+playlist = ["Yesterday", "Girl", "Bohemian Rhapsody"]
+
+for song in playlist:
+    print(song)
+
+# Output:
+# Yesterday
+# Girl
+# Bohemian Rhapsody
+```
+
+Much cleaner! 🎵
+
+---
+
 ## Quick Recap
 
 - **Lists** store multiple items in one variable
