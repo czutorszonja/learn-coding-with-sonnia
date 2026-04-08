@@ -169,7 +169,7 @@ for index, song in enumerate(playlist):
 1. Create a list called `books` with 5 book titles
 2. Use a `for` loop to print each book title with "I love:" in front of it
 3. Use `enumerate()` to print each book with its position (Book 1, Book 2, etc.)
-4. Use `range()` to print numbers 1 through 10 (each on a new line)
+4. Use `range()` to print numbers 1 to 10 (inclusive — meaning 10 should be included!)
 
 **Try it yourself first!** Scroll down when ready.
 
