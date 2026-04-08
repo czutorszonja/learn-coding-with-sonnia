@@ -203,6 +203,128 @@ Blast off! 🚀
 
 ---
 
+## Extra Practice Exercises
+
+Want more practice? Try these! Solutions are below.
+
+### Exercise 1: While Loop — Savings Goal 💰
+
+**Scenario:** You're saving money for a new laptop that costs £1000. You save £100 each week.
+
+**Your task:**
+1. Create a variable `savings` starting at 0
+2. Create a variable `goal` set to 1000
+3. Use a `while` loop that runs while `savings` is less than `goal`
+4. Each week, add £100 to savings
+5. Print your current savings after each week
+6. When you reach the goal, print "I bought the laptop! 🎉"
+
+---
+
+### Exercise 2: If/Elif/Else — Cinema Tickets 🎬
+
+**Scenario:** You're working at a cinema and need to calculate ticket prices based on age!
+
+**Your task:**
+1. Create a variable `age` and set it to any number you want
+2. Use `if/elif/else` to determine the ticket price:
+   - Under 12: Child ticket = £8
+   - 12 to 17: Teenager ticket = £12
+   - 18 to 64: Adult ticket = £15
+   - 65 and older: Senior ticket = £10
+3. Print the ticket price based on the age
+
+---
+
+### Exercise 3: For Loop — Grocery Total 🛒
+
+**Scenario:** You're at the grocery store and want to calculate your total bill!
+
+**Your task:**
+1. Create a list called `prices` with 5 item prices (numbers, like 2.50, 5.99, etc.)
+2. Create a variable `total` starting at 0
+3. Use a `for` loop to go through each price
+4. Add each price to the total
+5. After the loop, print the total with a nice message (use an f-string!)
+
+**Hint:** To format money to 2 decimal places, use `{total:.2f}` in your f-string!
+
+---
+
+## Extra Practice Solutions
+
+### Savings Goal Solution
+
+```python
+savings = 0
+goal = 1000
+week = 0
+
+while savings < goal:
+    week = week + 1
+    savings = savings + 100
+    print(f"Week {week}: £{savings} saved")
+
+print("I bought the laptop! 🎉")
+```
+
+**Output:**
+```
+Week 1: £100 saved
+Week 2: £200 saved
+Week 3: £300 saved
+...
+Week 10: £1000 saved
+I bought the laptop! 🎉
+```
+
+---
+
+### Cinema Tickets Solution
+
+```python
+age = 25
+
+if age < 12:
+    print("Child ticket: £8")
+elif age < 18:
+    print("Teenager ticket: £12")
+elif age < 65:
+    print("Adult ticket: £15")
+else:
+    print("Senior ticket: £10")
+```
+
+**Output (for age 25):**
+```
+Adult ticket: £15
+```
+
+**Tip:** Since we check conditions in order, we don't need to check both bounds! If `age < 12` is false, we already know age is at least 12!
+
+---
+
+### Grocery Total Solution
+
+```python
+prices = [2.50, 5.99, 3.49, 1.99, 7.50]
+total = 0
+
+for price in prices:
+    total = total + price
+
+print(f"Total bill: £{total:.2f}")
+```
+
+**Output:**
+```
+Total bill: £21.47
+```
+
+**Note:** The `:.2f` in the f-string formats the number to 2 decimal places (for pounds and pence)!
+
+---
+
 ## Quick Recap
 
 - **`if` statements** make decisions based on conditions
