@@ -19,25 +19,7 @@ If you're here, you're probably learning to code. Maybe you're excited. Maybe yo
 - **Anyone who's tried to learn before** but got stuck on confusing jargon
 - **People who learn better** with real-world examples, not abstract theory
 
-If you've ever thought "Why can't they just explain this normally?" — you're in the right place.
-
----
-
-## 📚 What You'll Find Here
-
-### Python Track
-Start here if you're new to programming. Python is beginner-friendly and widely used.
-
-**Current Lessons:**
-1. Variables — Your Memory Boxes
-2. *(Coming soon: Data Types, Operations, Functions, etc.)*
-
-### SQL Track
-Learn to talk to databases and get the data you need.
-
-**Current Lessons:**
-1. What is a Database?
-2. *(Coming soon: SELECT, WHERE, JOINs, Aggregations, etc.)*
+If you've ever thought, "Why can't they just explain this normally?" — you're in the right place.
 
 ---
 
@@ -102,20 +84,6 @@ This is a living resource. If you find something confusing, have a better exampl
 - Report unclear explanations
 - Share your own examples
 - Recommend new topics
-
----
-
-## 📖 Lesson List
-
-### Python
-- [ ] Lesson 1: Variables — Your Memory Boxes
-- [ ] Lesson 2: Coming Soon
-- [ ] Lesson 3: Coming Soon
-
-### SQL
-- [ ] Lesson 1: What is a Database?
-- [ ] Lesson 2: Coming Soon
-- [ ] Lesson 3: Coming Soon
 
 ---
 
