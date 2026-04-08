@@ -167,13 +167,13 @@ print(max(numbers))  # Output: 9
 **Scenario:** You're making a playlist for a road trip!
 
 1. Create a list called `playlist` with 5 songs (just use song titles as strings)
-2. Print the first song in the list using an f-string (e.g., `print(f"First song: {playlist[0]}")`)
-3. Print the last song in the list using an f-string and negative index (e.g., `print(f"Last song: {playlist[-1]}")`)
+2. Print a sentence that tells us what the first song is (use an f-string to include the song name)
+3. Print a sentence that tells us what the last song is (use an f-string with a negative index)
 4. Add a new song to the end of the list
 5. Change the second song to something else
 6. Print the final playlist in two ways:
    - First, print it directly (to see the brackets and quotes)
-   - Then, print it nicely using `.join()` (e.g., `print(", ".join(playlist))`) using an f-string (e.g., `print(f"Final playlist: {playlist}")`)
+   - Then, print it nicely as a comma-separated list using `.join()` using an f-string (e.g., `print(f"Final playlist: {playlist}")`)
 
 **Try it yourself first!** Scroll down when ready.
 
