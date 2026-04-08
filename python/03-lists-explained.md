@@ -218,7 +218,27 @@ print(playlist)
 # Output: ['Yesterday', 'Girl', 'Bohemian Rhapsody']
 ```
 
-That's not very pretty! To print each item on its own line, you need a **loop** (which we'll cover in Lesson 4):
+That's not very pretty! Here are two ways to make it look nicer:
+
+### Option 1: Join items with commas
+
+Use `.join()` to combine list items into a single string with a separator:
+
+```python
+playlist = ["Yesterday", "Girl", "Bohemian Rhapsody"]
+formatted = ", ".join(playlist)
+print(formatted)
+# Output: Yesterday, Girl, Bohemian Rhapsody
+```
+
+**How it works:**
+- `", "` is the separator (comma + space)
+- `.join(playlist)` combines all items into one string
+- You can use any separator: `" - ".join(playlist)` → `Yesterday - Girl - Bohemian Rhapsody`
+
+### Option 2: Print each item on its own line (using a loop)
+
+You can also print each item separately using a **loop** (Lesson 4 covers this):
 
 ```python
 playlist = ["Yesterday", "Girl", "Bohemian Rhapsody"]
@@ -231,8 +251,6 @@ for song in playlist:
 # Girl
 # Bohemian Rhapsody
 ```
-
-Much cleaner! 🎵
 
 ---
 
