@@ -61,13 +61,19 @@ Shopping List:
 
 ## Exercise 3: Password Validator 🔐
 
-**Skills used:** Functions, conditionals, return booleans
+**Skills used:** Functions, conditionals, return booleans, for loops, string methods
+
+**Background:** Strings have built-in methods you can use! One helpful method is `isnumeric()` which checks if a string contains only numbers:
+```python
+"123".isnumeric()  # True
+"abc".isnumeric()  # False
+```
 
 **Your task:**
 1. Create a function called `is_valid_password` that takes one parameter: `password`
 2. The password is valid if:
-   - It's at least 8 characters long
-   - It contains at least one digit (hint: use `any(char.isdigit() for char in password)`)
+   - It's at least 8 characters long (hint: use `len(password)`)
+   - It contains at least one digit (hint: loop through each character and check if it's numeric)
 3. Return `True` if valid, `False` if not
 4. Test it with different passwords
 
@@ -186,7 +192,13 @@ def is_valid_password(password):
         return False
     
     # Check if password contains at least one digit
-    has_digit = any(char.isdigit() for char in password)
+    # Loop through each character and check if it's numeric
+    has_digit = False
+    for char in password:
+        if char.isnumeric():
+            has_digit = True
+            break  # We found a digit, no need to check more!
+    
     if not has_digit:
         return False
     
@@ -282,6 +294,19 @@ Letter Grade: B
 ```
 
 **Note:** `sum(grades)` adds all numbers in the list, and `len(grades)` counts how many items are in the list!
+
+---
+
+## Coming Soon: More Python Tricks!
+
+You might see code like this in other tutorials:
+```python
+has_digit = any(char.isdigit() for char in password)
+```
+
+This uses **generator expressions** and the `any()` function — advanced topics we'll cover in a future lesson! For now, the for loop approach you learned works perfectly! 💛
+
+---
 
 ---
 
