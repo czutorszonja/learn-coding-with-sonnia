@@ -244,39 +244,59 @@ Research how to save tasks to a text file (so they persist after closing!)
 # Study Task Tracker
 
 def add_task(tasks):
+    # Get task from user
     task = input("What task do you want to add? ")
+    # Add to the list (append adds to the end)
     tasks.append(task)
     print(f"Task '{task}' added!")
 
 def view_tasks(tasks):
+    # IMPORTANT: Check if empty BEFORE the loop!
+    # If we check inside the loop, it never runs when list is empty
     if len(tasks) == 0:
         print("No tasks yet!")
     else:
         print("Your tasks:")
+        # enumerate() gives us both index and value
+        # start=1 makes numbering start at 1 instead of 0
         for index, task in enumerate(tasks, start=1):
             print(f"{index}. {task}")
 
 def complete_task(tasks):
+    # First check if there are any tasks
     if len(tasks) == 0:
         print("No tasks to complete!")
-        return
+        return  # Exit the function early
     
+    # Show tasks first (so user knows what to pick)
     view_tasks(tasks)
+    
+    # Get user input and convert to int
     task_num = int(input("Which task number is complete? "))
+    
+    # Validate the number is in valid range
+    # task_num - 1 because list indexes start at 0
     if task_num < 1 or task_num > len(tasks):
         print("Invalid task number!")
-        return
+        return  # Exit if invalid
     
     # Mark task as complete (add checkmark)
+    # We use [task_num - 1] because lists start at 0
+    # but we showed the user numbers starting at 1
     tasks[task_num - 1] = tasks[task_num - 1] + " ✓"
     print("Task marked complete!")
 
 def show_summary(tasks):
+    # Count total tasks
     total = len(tasks)
+    
+    # Count completed tasks
     completed = 0
     for task in tasks:
+        # Check if checkmark is in the task string
         if "✓" in task:
             completed = completed + 1
+    
     print("Summary:")
     print(f"Total tasks: {total}")
     print(f"Completed: {completed}")
@@ -286,6 +306,8 @@ def show_summary(tasks):
 def main():
     tasks = []  # Empty list to start
     
+    # while True creates an infinite loop
+    # We break out of it when user chooses "Exit"
     while True:
         print("\n=== Study Task Tracker ===")
         print("1. Add a task")
@@ -296,6 +318,7 @@ def main():
         
         choice = input("Choose an option (1-5): ")
         
+        # Call the right function based on user choice
         if choice == "1":
             add_task(tasks)
         elif choice == "2":
@@ -306,7 +329,7 @@ def main():
             show_summary(tasks)
         elif choice == "5":
             print("Good luck with your studies! 📚")
-            break
+            break  # Exit the while loop
         else:
             print("Invalid option. Try again!")
 
