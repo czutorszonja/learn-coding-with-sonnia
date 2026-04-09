@@ -118,6 +118,15 @@ You should now see your MySQL database in DBeaver's left sidebar. You can expand
    - Temporarily disable your firewall to test
    - If this fixes it, add MySQL to your firewall's allowed list
 
+4. **bind-address setting** (Common!)
+   - MySQL has a config file that controls which addresses it listens on
+   - **Windows:** Look for `my.ini` in `C:\ProgramData\MySQL\MySQL Server 8.0\`
+   - **Mac:** Look for `my.cnf` in `/etc/mysql/` or `/usr/local/mysql/`
+   - Find the line: `bind-address = 127.0.0.1`
+   - Make sure it's NOT commented out (no `#` at the start)
+   - Restart MySQL service after changing
+   - **Note:** `127.0.0.1` is correct for localhost connections!
+
 ### ❌ "Access denied for user 'root'@'localhost'"
 
 **Causes:**
@@ -159,6 +168,22 @@ This means MySQL has hit its connection limit.
 2. Restart MySQL service
 3. If this keeps happening, you may need to increase the `max_connections` setting in MySQL config
 
+### ❌ "Access denied for user 'root'@'localhost'" (with correct password)
+
+If you're sure the password is correct but still getting access denied:
+
+**Fix: Check user permissions**
+1. Open a terminal/command prompt
+2. Try connecting directly:
+   ```bash
+   mysql -u root -p
+   ```
+3. If this works but DBeaver doesn't, the issue might be with how DBeaver is authenticating
+4. In DBeaver connection settings, go to **Driver properties** tab
+5. Find `allowPublicKeyRetrieval` and set it to `TRUE`
+6. Find `useSSL` and set it to `FALSE` (for local development)
+7. Try connecting again
+
 ---
 
 ## Your First Query
@@ -198,4 +223,4 @@ If you're stuck, don't worry! Common issues:
 - **Installation fails?** Try an older MySQL version (8.0 is stable)
 - **DBeaver keeps disconnecting?** Check if MySQL service is running
 
-Drop a message in the group chat if you need help! 💛
+You've got this! 💛
