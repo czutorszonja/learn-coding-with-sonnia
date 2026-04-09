@@ -67,6 +67,7 @@ Shopping List:
 1. Create a function called `is_valid_password` that takes one parameter: `password`
 2. The password is valid if:
    - It's at least 8 characters long (hint: use `len(password)`)
+   - It starts with the letter "S" (hint: use `password[0]` to get the first character)
 3. Return `True` if valid, `False` if not
 4. Test it with different passwords
 
@@ -181,15 +182,19 @@ print(f"77°F = {convert_temperature(77, 'F')}°C")
 ```python
 def is_valid_password(password):
     # Check if password is at least 8 characters
-    if len(password) >= 8:
+    if len(password) < 8:
+        return False
+    
+    # Check if password starts with "S"
+    if password[0] == "S":
         return True
     else:
         return False
 
 # Test the function
-print(is_valid_password("password123"))  # Output: True
-print(is_valid_password("short"))         # Output: False
-print(is_valid_password("abc"))           # Output: False
+print(is_valid_password("Supersecret"))  # Output: True
+print(is_valid_password("password"))      # Output: False (doesn't start with S)
+print(is_valid_password("Short"))         # Output: False (too short)
 ```
 
 ---
@@ -275,17 +280,6 @@ Letter Grade: B
 ```
 
 **Note:** `sum(grades)` adds all numbers in the list, and `len(grades)` counts how many items are in the list!
-
----
-
-## What's Coming Next?
-
-You're doing great! Here are some topics we'll cover in future lessons:
-
-- **String methods** — More ways to work with text (`.upper()`, `.lower()`, `.replace()`, etc.)
-- **`break` and `continue`** — More control over your loops
-- **Dictionaries** — Store data as key-value pairs
-- **Advanced functions** — Default parameters, multiple return values, and more!
 
 ---
 
