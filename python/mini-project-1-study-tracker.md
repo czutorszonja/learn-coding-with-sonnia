@@ -14,7 +14,7 @@ A program that helps you:
 
 **Why this project?**
 - Uses everything you've learned (functions, lists, loops, conditionals)
-- Actually useful for your exam preparation!
+- Actually useful for exam preparation!
 - No new concepts — just practice with what you know
 
 ---
