@@ -75,19 +75,11 @@ Shopping List:
 
 **Skills used:** While loops, conditionals, functions
 
-**Background:** Python has a built-in module called `random` that can generate random numbers. To use it:
-```python
-import random
-random_number = random.randint(1, 10)  # Generates a number between 1 and 10
-```
-
 **Your task:**
-1. Import the random module at the top: `import random`
-2. Create a function called `guess_number` that takes one parameter: `max_number`
-3. Generate a random number between 1 and `max_number` using `random.randint(1, max_number)`
-4. Use a while loop to let the user guess until they get it right
-5. Keep track of how many attempts it takes
-6. When they guess correctly, print a message with the number of attempts
+1. Create a function called `guess_number` that takes one parameter: `secret_number`
+2. Use a while loop to let the user guess until they get it right
+3. Keep track of how many attempts it takes
+4. When they guess correctly, print a message with the number of attempts
 
 **Hint:** Use `input()` to get the user's guess, and `int()` to convert it to a number.
 
@@ -208,15 +200,11 @@ print(is_valid_password("nodigits"))      # Output: False
 ### Exercise 4 Solution: Number Guessing Game
 
 ```python
-import random
-
-def guess_number(max_number):
-    # Generate random number between 1 and max_number
-    secret_number = random.randint(1, max_number)
+def guess_number(secret_number):
     attempts = 0
     guess = None
     
-    print(f"I'm thinking of a number between 1 and {max_number}...")
+    print(f"I'm thinking of a number...")
     
     while guess != secret_number:
         guess = int(input("Your guess: "))
@@ -229,13 +217,13 @@ def guess_number(max_number):
         else:
             print(f"Correct! You got it in {attempts} attempts!")
 
-# Play the game
-guess_number(10)
+# Play the game with secret number 7
+guess_number(7)
 ```
 
 **Example output:**
 ```
-I'm thinking of a number between 1 and 10...
+I'm thinking of a number...
 Your guess: 5
 Too low!
 Your guess: 8
@@ -243,8 +231,6 @@ Too high!
 Your guess: 7
 Correct! You got it in 3 attempts!
 ```
-
-**Note:** Every time you run this, the secret number will be different! That's the magic of `random`! 🎲
 
 ---
 
