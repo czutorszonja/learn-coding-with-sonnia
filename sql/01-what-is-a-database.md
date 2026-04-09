@@ -32,7 +32,10 @@ CREATE DATABASE my_first_db;
 - `CREATE DATABASE` = "make a new database"
 - `my_first_db` = the name you're giving it (you choose!)
 
-**Tip:** Database names should be lowercase with underscores (no spaces).
+**Tip:** Database naming varies by convention:
+- Some use `lowercase_with_underscores` (my_first_db)
+- Some use `PascalCase` (FoodOrdering, Customers)
+- Both work! Follow your team's or class's convention.
 
 ## Using a Database
 
