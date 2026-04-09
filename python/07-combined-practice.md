@@ -66,10 +66,12 @@ Shopping List:
 **Your task:**
 1. Create a function called `is_valid_password` that takes one parameter: `password`
 2. The password is valid if:
-   - It's at least 8 characters long (hint: use `len(password)`)
-   - It starts with the letter "S" (hint: use `password[0]` to get the first character)
+   - It's at least 8 characters long
+   - It starts with the letter "S"
 3. Return `True` if valid, `False` if not
 4. Test it with different passwords
+
+**Hint:** Think about how you access the first item in a list!
 
 **Try it yourself first!** Solution below.
 
@@ -85,7 +87,7 @@ Shopping List:
 3. Keep track of how many attempts it takes
 4. When they guess correctly, print a message with the number of attempts
 
-**Hint:** Use `input()` to get the user's guess, and `int()` to convert it to a number.
+**Hint:** Remember how to get user input and convert it to a number!
 
 **Try it yourself first!** Solution below.
 
