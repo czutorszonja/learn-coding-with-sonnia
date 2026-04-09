@@ -61,19 +61,12 @@ Shopping List:
 
 ## Exercise 3: Password Validator 🔐
 
-**Skills used:** Functions, conditionals, return booleans, for loops, string methods
-
-**Background:** Strings have built-in methods you can use! One helpful method is `isnumeric()` which checks if a string contains only numbers:
-```python
-"123".isnumeric()  # True
-"abc".isnumeric()  # False
-```
+**Skills used:** Functions, conditionals, return booleans
 
 **Your task:**
 1. Create a function called `is_valid_password` that takes one parameter: `password`
 2. The password is valid if:
    - It's at least 8 characters long (hint: use `len(password)`)
-   - It contains at least one digit (hint: loop through each character and check if it's numeric)
 3. Return `True` if valid, `False` if not
 4. Test it with different passwords
 
@@ -188,27 +181,15 @@ print(f"77°F = {convert_temperature(77, 'F')}°C")
 ```python
 def is_valid_password(password):
     # Check if password is at least 8 characters
-    if len(password) < 8:
+    if len(password) >= 8:
+        return True
+    else:
         return False
-    
-    # Check if password contains at least one digit
-    # Loop through each character and check if it's numeric
-    has_digit = False
-    for char in password:
-        if char.isnumeric():
-            has_digit = True
-            break  # We found a digit, no need to check more!
-    
-    if not has_digit:
-        return False
-    
-    # If both checks pass, password is valid
-    return True
 
 # Test the function
 print(is_valid_password("password123"))  # Output: True
 print(is_valid_password("short"))         # Output: False
-print(is_valid_password("nodigits"))      # Output: False
+print(is_valid_password("abc"))           # Output: False
 ```
 
 ---
@@ -297,14 +278,14 @@ Letter Grade: B
 
 ---
 
-## Coming Soon: More Python Tricks!
+## What's Coming Next?
 
-You might see code like this in other tutorials:
-```python
-has_digit = any(char.isdigit() for char in password)
-```
+You're doing great! Here are some topics we'll cover in future lessons:
 
-This uses **generator expressions** and the `any()` function — advanced topics we'll cover in a future lesson! For now, the for loop approach you learned works perfectly! 💛
+- **String methods** — More ways to work with text (`.upper()`, `.lower()`, `.replace()`, etc.)
+- **`break` and `continue`** — More control over your loops
+- **Dictionaries** — Store data as key-value pairs
+- **Advanced functions** — Default parameters, multiple return values, and more!
 
 ---
 

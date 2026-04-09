@@ -146,6 +146,56 @@ for i in range(0, 10, 2):
 
 ---
 
+## Controlling Loops: `break` and `continue`
+
+Sometimes you want more control over your loops!
+
+### `break` — Exit the loop early
+
+Use `break` to stop the loop immediately:
+
+```python
+# Search for a number
+numbers = [1, 3, 5, 7, 9, 11]
+
+for num in numbers:
+    if num == 7:
+        print("Found 7!")
+        break  # Stop the loop!
+    print(f"Checking: {num}")
+
+# Output:
+# Checking: 1
+# Checking: 3
+# Checking: 5
+# Found 7!
+```
+
+**Why use `break`?** Once we found 7, there's no need to check the rest!
+
+### `continue` — Skip to the next iteration
+
+Use `continue` to skip the rest of the current iteration and move to the next:
+
+```python
+# Print only odd numbers
+numbers = [1, 2, 3, 4, 5]
+
+for num in numbers:
+    if num % 2 == 0:  # If even
+        continue  # Skip this number
+    print(num)
+
+# Output:
+# 1
+# 3
+# 5
+```
+
+**Why use `continue`?** We skip even numbers and only print odd ones!
+
+---
+
 ## Getting Both Index and Value
 
 Sometimes you need both the position AND the item. Use `enumerate()`:

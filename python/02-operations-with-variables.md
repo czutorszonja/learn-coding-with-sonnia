@@ -55,6 +55,37 @@ print(squared)  # Output: 4
 
 You already know you can combine strings with `+`. This is called **concatenation**:
 
+---
+
+## String Methods
+
+Strings have built-in functions called **methods** that you can use! Here are some common ones:
+
+### Check if a string is numeric:
+```python
+"123".isnumeric()  # True
+"abc".isnumeric()  # False
+```
+
+### Check if a string is uppercase:
+```python
+"HELLO".isupper()  # True
+"hello".isupper()  # False
+```
+
+### Check if a string is lowercase:
+```python
+"hello".islower()  # True
+"HELLO".islower()  # False
+```
+
+### Get the length of a string:
+```python
+len("hello")  # Output: 5
+```
+
+**Note:** We use `len()` as a function, not a method. It works on strings, lists, and more!
+
 ```python
 first_name = "Szonja"
 last_name = "Doe"
