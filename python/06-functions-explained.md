@@ -297,7 +297,7 @@ Large coffee: £4.50
 
 ## What's Next?
 
-Lesson 7 will cover **dictionaries** — a way to store data as key-value pairs (like a real dictionary with words and definitions)!
+Lesson 7 is a **combined practice lesson** — we'll put together everything you've learned so far (variables, lists, loops, conditionals, and functions) into bigger, real-world projects!
 
 ---
 
