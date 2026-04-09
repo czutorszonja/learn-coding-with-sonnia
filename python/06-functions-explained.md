@@ -1,5 +1,9 @@
 # Python Lesson 6: Functions — Reusable Code Blocks
 
+**← Back to [Lesson 5: While Loops](05-while-loops-and-conditionals.md)**
+
+---
+
 ## What is a Function?
 
 **Plain English:** A function is a named block of code that does one specific thing. You can use (call) it whenever you need it, without rewriting the code.
@@ -297,7 +301,7 @@ Large coffee: £4.50
 
 ## What's Next?
 
-Lesson 7 is a **combined practice lesson** — we'll put together everything you've learned so far (variables, lists, loops, conditionals, and functions) into bigger, real-world projects!
+Ready for more? Continue to **[Lesson 7: Combined Practice](07-combined-practice.md)**! 🚀
 
 ---
 

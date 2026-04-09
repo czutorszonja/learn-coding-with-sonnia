@@ -1,5 +1,9 @@
 # Python Lesson 4: Loops — Doing Things Over and Over
 
+**← Back to [Lesson 3: Lists](03-lists-explained.md)**
+
+---
+
 ## What is a Loop?
 
 **Plain English:** A loop lets you repeat the same code multiple times without writing it over and over.
@@ -285,7 +289,7 @@ Total bill: £21.47
 
 ## What's Next?
 
-Lesson 5 will cover **`while` loops and conditionals** — looping while a condition is true, and making decisions in your code!
+Ready for more? Continue to **[Lesson 5: While Loops and Conditionals](05-while-loops-and-conditionals.md)**! 🚀
 
 ---
 

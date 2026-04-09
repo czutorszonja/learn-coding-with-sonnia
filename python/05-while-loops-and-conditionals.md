@@ -1,5 +1,9 @@
 # Python Lesson 5: While Loops + Conditionals — Making Decisions
 
+**← Back to [Lesson 4: Loops](04-loops-explained.md)**
+
+---
+
 ## Part 1: Conditionals (If/Else)
 
 ### What are Conditionals?
@@ -306,7 +310,7 @@ Adult ticket: £15
 
 ## What's Next?
 
-Lesson 6 will cover **functions** — how to reuse code by wrapping it in a named block you can call multiple times!
+Ready for more? Continue to **[Lesson 6: Functions Explained](06-functions-explained.md)**! 🚀
 
 ---
 

@@ -1,5 +1,9 @@
 # Python Lesson 2: Operations — Doing Things with Variables
 
+**← Back to [Lesson 1: Variables](01-variables-explained.md)**
+
+---
+
 ## What are Operations?
 
 **Plain English:** Operations are actions you can perform on variables — like math, combining text, or comparing values.
@@ -189,7 +193,7 @@ print(f"Total: £{total_revenue}")
 
 ## What's Next?
 
-Lesson 3 will cover **working with lists** — how to store multiple items in one variable (like a shopping list!).
+Ready for more? Continue to **[Lesson 3: Lists Explained](03-lists-explained.md)**! 🚀
 
 ---
 

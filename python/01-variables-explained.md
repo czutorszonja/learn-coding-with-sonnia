@@ -1,5 +1,9 @@
 # Python Lesson 1: Variables — Your Memory Boxes
 
+**← Back to [Python Setup Guide](README.md)**
+
+---
+
 ## What is a Variable?
 
 **Plain English:** A variable is like a labeled box where you can store something to use later.
@@ -106,9 +110,11 @@ print(location)  # Output: Szoni from Budapest
 - Use descriptive names
 - No spaces in variable names
 
+---
+
 ## What's Next?
 
-In Lesson 2, we'll learn about **different operations you can do with variables** — like math, combining text, and more!
+Ready for more? Continue to **[Lesson 2: Operations with Variables](02-operations-with-variables.md)**! 🚀
 
 ---
 

@@ -1,5 +1,9 @@
 # Python Lesson 3: Lists — Storing Multiple Items
 
+**← Back to [Lesson 2: Operations](02-operations-with-variables.md)**
+
+---
+
 ## What is a List?
 
 **Plain English:** A list is like a shopping list — one variable that holds multiple items in order.
@@ -277,7 +281,7 @@ Final playlist: Bohemian Rhapsody, Hotel California, Imagine, Hey Jude, Like a R
 
 ## What's Next?
 
-Lesson 4 will cover **loops** — how to do something for every item in a list (like printing all songs in your playlist without writing 10 print statements!).
+Ready for more? Continue to **[Lesson 4: Loops Explained](04-loops-explained.md)**! 🚀
 
 ---
 
