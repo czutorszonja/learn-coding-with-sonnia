@@ -229,8 +229,90 @@ Research how to save tasks to a text file (so they persist after closing!)
 
 - **Start simple** — Get the basic version working first
 - **Test as you go** — Test each function before moving to the next
-- **Don't peek** — Try to solve it yourself before looking at the solution!
+- **Try first!** — Attempt each function yourself before checking the solution
 - **It's okay to struggle** — That's how you learn!
+
+---
+
+## Solutions (Try First!)
+
+**⚠️ IMPORTANT:** Only look at these AFTER you've tried each function yourself!
+
+### Complete Solution
+
+```python
+# Study Task Tracker
+
+def add_task(tasks):
+    task = input("What task do you want to add? ")
+    tasks.append(task)
+    print(f"Task '{task}' added!")
+
+def view_tasks(tasks):
+    if len(tasks) == 0:
+        print("No tasks yet!")
+    else:
+        print("Your tasks:")
+        for index, task in enumerate(tasks, start=1):
+            print(f"{index}. {task}")
+
+def complete_task(tasks):
+    if len(tasks) == 0:
+        print("No tasks to complete!")
+        return
+    
+    view_tasks(tasks)
+    task_num = int(input("Which task number is complete? "))
+    if task_num < 1 or task_num > len(tasks):
+        print("Invalid task number!")
+        return
+    
+    # Mark task as complete (add checkmark)
+    tasks[task_num - 1] = tasks[task_num - 1] + " ✓"
+    print("Task marked complete!")
+
+def show_summary(tasks):
+    total = len(tasks)
+    completed = 0
+    for task in tasks:
+        if "✓" in task:
+            completed = completed + 1
+    print("Summary:")
+    print(f"Total tasks: {total}")
+    print(f"Completed: {completed}")
+    print(f"Pending: {total - completed}")
+
+# Main program
+def main():
+    tasks = []  # Empty list to start
+    
+    while True:
+        print("\n=== Study Task Tracker ===")
+        print("1. Add a task")
+        print("2. View all tasks")
+        print("3. Mark a task as complete")
+        print("4. Show summary")
+        print("5. Exit")
+        
+        choice = input("Choose an option (1-5): ")
+        
+        if choice == "1":
+            add_task(tasks)
+        elif choice == "2":
+            view_tasks(tasks)
+        elif choice == "3":
+            complete_task(tasks)
+        elif choice == "4":
+            show_summary(tasks)
+        elif choice == "5":
+            print("Good luck with your studies! 📚")
+            break
+        else:
+            print("Invalid option. Try again!")
+
+# Run the program
+main()
+```
 
 ---
 
