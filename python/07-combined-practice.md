@@ -300,7 +300,7 @@ You've now practiced combining:
 
 ## What's Next?
 
-Ready for more? Continue to **[Lesson 8: Dictionaries](08-dictionaries-explained.md)** (coming soon)! 🚀
+Ready for more? Continue to **[Lesson 8: Dictionaries](08-dictionaries-explained.md)**! 🚀
 
 Or go back to **[Lesson 6: Functions Explained](06-functions-explained.md)** to review!
 
