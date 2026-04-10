@@ -302,8 +302,6 @@ You've now practiced combining:
 
 Ready for more? Continue to **[Lesson 8: Dictionaries](08-dictionaries-explained.md)**! 🚀
 
-Or go back to **[Lesson 6: Functions Explained](06-functions-explained.md)** to review!
-
 ---
 
 **Your turn:** Try all 5 exercises! Don't worry if they take time — that's how you learn! 💛
