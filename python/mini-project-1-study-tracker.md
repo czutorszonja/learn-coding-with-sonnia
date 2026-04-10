@@ -357,7 +357,7 @@ Then you can:
 - Use it to track your actual study tasks
 - Add more features
 - Share it with friends
-- Move on to Lesson 8 (Dictionaries)!
+- Continue to **[Lesson 8: Dictionaries](08-dictionaries-explained.md)**!
 
 ---
 
