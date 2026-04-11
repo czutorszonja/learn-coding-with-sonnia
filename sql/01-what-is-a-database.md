@@ -1,5 +1,9 @@
 # SQL Lesson 1: What is a Database?
 
+**← Back to [SQL Setup Guide](README.md)**
+
+---
+
 ## What is a Database?
 
 **Plain English:** A database is like a digital filing cabinet where you store organized information.
@@ -240,6 +244,8 @@ SELECT * FROM movies WHERE director = 'Christopher Nolan';
 ## What's Next?
 
 In Lesson 2, we'll learn about **different ways to filter and sort your data** — like finding movies from a certain year, or sorting by title!
+
+**Continue to [Lesson 2: Filtering and Sorting](02-filtering-and-sorting.md)**
 
 ---
 
