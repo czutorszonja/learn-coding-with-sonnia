@@ -59,7 +59,7 @@ SELECT COUNT(*) FROM Orders;
 SELECT COUNT(*) FROM Orders WHERE quantity > 2;
 ```
 
-**Result:** `4` (Mouse, Keyboard, Monitor, and Headphones have quantity > 2)
+**Result:** `3` (Mouse, Keyboard, and Headphones have quantity > 2. Note: Laptop and Monitor both have quantity = 2, which is NOT greater than 2)
 
 **Tip:** `COUNT(*)` counts all rows. `COUNT(column_name)` counts only non-NULL values in that column.
 
@@ -79,7 +79,7 @@ SELECT SUM(quantity) FROM Orders;
 SELECT SUM(price * quantity) FROM Orders;
 ```
 
-**Result:** `3,050` (1998 + 125 + 225 + 600 + 600 = 3,050)
+**Result:** `3,548` (1998 + 125 + 225 + 600 + 600 = 3,548)
 
 ---
 
