@@ -316,6 +316,7 @@ In **Lesson 3: Aggregate Functions**, you'll learn how to:
 - Find minimum/maximum values with `MIN()` and `MAX()`
 - Sum values with `SUM()`
 - Group results with `GROUP BY`
+- Filter groups with `HAVING`
 
 **Continue to [Lesson 3: Aggregate Functions](03-aggregate-functions.md)**
 
