@@ -115,9 +115,9 @@ You can mix them together! Use parentheses to make it clear:
 SELECT * FROM Movies 
 WHERE year >= 2010 AND director = 'Christopher Nolan';
 
--- Get action OR sci-fi movies, but not from 2020
+-- Get movies directed by Nolan OR Wachowski, but not from 2010
 SELECT * FROM Movies 
-WHERE (genre = 'Action' OR genre = 'Sci-Fi') AND year <> 2020;
+WHERE (director = 'Christopher Nolan' OR director = 'Lana Wachowski') AND year <> 2010;
 ```
 
 ---
