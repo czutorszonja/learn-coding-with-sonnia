@@ -84,7 +84,9 @@ SELECT * FROM Movies
 WHERE director = 'Christopher Nolan' AND year > 2010;
 ```
 
-**Result:** Only "Interstellar" (2014) and "Tenet" (2020) would match.
+**Result:** Only "Interstellar" (2014) would match.
+
+(Note: "Inception" is from 2010, so it doesn't match because we said `> 2010`, not `>= 2010`)
 
 ### OR — At least one condition must be true
 
