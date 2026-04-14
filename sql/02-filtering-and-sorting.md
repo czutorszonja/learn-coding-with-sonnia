@@ -283,8 +283,15 @@ SELECT * FROM Products
 WHERE product_name LIKE 'C%';
 
 -- 7. NOT in Stationery category
+-- Option 1: Using <> (not equal) - recommended for exact matches
+SELECT * FROM Products 
+WHERE category <> 'Stationery';
+
+-- Option 2: Using NOT LIKE - also works, but better for pattern matching
 SELECT * FROM Products 
 WHERE category NOT LIKE 'Stationery';
+
+-- Both give the same result! Use <> for exact matches, NOT LIKE for patterns.
 ```
 
 ---
