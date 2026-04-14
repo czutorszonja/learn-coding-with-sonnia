@@ -204,10 +204,11 @@ ORDER BY year DESC;
 ```
 | title        | director          | year |
 |--------------|-------------------|------|
-| Tenet        | Christopher Nolan | 2020 |
 | Interstellar | Christopher Nolan | 2014 |
 | Inception    | Christopher Nolan | 2010 |
 ```
+
+(Note: These are the only two Nolan movies in our Movies table)
 
 ---
 
