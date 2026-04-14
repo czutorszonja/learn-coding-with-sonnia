@@ -400,6 +400,7 @@ In **Lesson 4: JOINs**, you'll learn how to:
 - Use `INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN`, and `FULL JOIN`
 - Understand join conditions and relationships
 - Work with complex multi-table queries
+- Join multiple tables in one query
 
 **Continue to [Lesson 4: JOINs](04-joins.md)**
 
