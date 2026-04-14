@@ -227,6 +227,20 @@ ORDER BY year DESC;
 | 6  | Pen Set         | Stationery  | 12    | 75    |
 ```
 
+**Insert the data** (if your `id` column is `AUTO_INCREMENT`, use `NULL` for id):
+
+```sql
+VALUES
+(NULL, 'Laptop', 'Electronics', 999, 15),
+(NULL, 'Mouse', 'Electronics', 25, 50),
+(NULL, 'Desk Chair', 'Furniture', 150, 8),
+(NULL, 'Coffee Table', 'Furniture', 200, 12),
+(NULL, 'Notebook', 'Stationery', 5, 100),
+(NULL, 'Pen Set', 'Stationery', 12, 75);
+```
+
+**Note:** If your `id` column is NOT `AUTO_INCREMENT`, replace `NULL` with the actual numbers (1, 2, 3, 4, 5, 6).
+
 **Your tasks:**
 
 1. Get all products that cost more than $100
