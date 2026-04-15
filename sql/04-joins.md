@@ -34,6 +34,130 @@ The Orders table only has `customer_id`, not the customer's name. To see which c
 
 ---
 
+## Important: Normalization vs JOINs
+
+This is a common point of confusion! **Normalization** and **JOINs** are related but **completely different** things:
+
+| Concept | What it is | When it happens |
+|---------|-----------|-----------------|
+| **Normalization** | Database **design** principle | When you **create** the database |
+| **JOIN** | Query **operation** | When you **query** the database |
+
+### What is Normalization?
+
+**Normalization** is about organizing your data INTO separate tables in the first place.
+
+**Example WITHOUT normalization (one big table):**
+
+```
+| customer_name | customer_email       | product    | price | quantity |
+|---------------|----------------------|------------|-------|----------|
+| John Smith    | john@email.com       | Laptop     | 999   | 1        |
+| John Smith    | john@email.com       | Mouse      | 25    | 2        |
+| Jane Doe      | jane@email.com       | Keyboard   | 75    | 1        |
+```
+
+**Problem:** John's info is repeated! If he changes his email, you need to update multiple rows.
+
+**Example WITH normalization (two tables):**
+
+**Customers table:**
+```
+| id | name       | email           |
+|----|------------|-----------------|
+| 1  | John Smith | john@email.com  |
+| 2  | Jane Doe   | jane@email.com  |
+```
+
+**Orders table:**
+```
+| id | customer_id | product  | price | quantity |
+|----|-------------|----------|-------|----------|
+| 1  | 1           | Laptop   | 999   | 1        |
+| 2  | 1           | Mouse    | 25    | 2        |
+| 3  | 2           | Keyboard | 75    | 1        |
+```
+
+**Benefit:** John's info is stored ONCE. No repetition!
+
+**This is normalization** — splitting data into logical, separate tables.
+
+### So Where Do JOINs Come In?
+
+Once you have normalized tables, you use **JOINs** to bring the data back together when you need it.
+
+```sql
+SELECT c.name, c.email, o.product, o.price
+FROM Customers AS c
+INNER JOIN Orders AS o ON c.id = o.customer_id;
+```
+
+**Result:**
+```
+| name       | email           | product  | price |
+|------------|-----------------|----------|-------|
+| John Smith | john@email.com  | Laptop   | 999   |
+| John Smith | john@email.com  | Mouse    | 25    |
+| Jane Doe   | jane@email.com  | Keyboard | 75    |
+```
+
+**The JOIN reconstructs** the combined view from the separate tables.
+
+### The Relationship
+
+Think of it like LEGO:
+
+1. **Normalization** = Breaking a big LEGO structure into smaller, organized pieces (by color, size, etc.)
+2. **JOIN** = Snapping those pieces together when you want to see the full picture
+
+You **normalize first** (design phase), then you **JOIN later** (query phase).
+
+### Is Normalization Automatic?
+
+**No!** Normalization is a **conscious design decision** YOU make when creating your database.
+
+**When you build your database:**
+1. You decide what tables to create ✅ (your design choice)
+2. You decide what columns go where ✅ (your design choice)
+3. You decide on relationships (foreign keys) ✅ (your design choice)
+
+**Nothing is automatic** — you choose to normalize!
+
+### Why Normalize?
+
+**Benefits:**
+- ✅ No duplicate data
+- ✅ Easier to update (change in one place)
+- ✅ Less storage space
+- ✅ Better data integrity
+
+**Trade-off:**
+- ❌ Need JOINs to get complete data (slightly more complex queries)
+
+### Simple Rule of Thumb
+
+**Ask yourself:** "Does this piece of information belong HERE, or does it belong somewhere else?"
+
+**Example:**
+- Should `customer_email` be in the Orders table? ❌ No! It's about the customer, not the order.
+- Should `product_name` be in the Orders table? ❌ No! It's about the product, not the order.
+- Should `customer_id` be in the Orders table? ✅ Yes! It links the order to a customer.
+
+### Does This Make Sense?
+
+The timeline:
+
+```
+1. Design phase → You NORMALIZE (split into tables)
+2. Query phase  → You JOIN (bring back together)
+```
+
+**In our lessons:**
+- Lesson 1: You learned to CREATE tables (this is where normalization happens!)
+- Lesson 4: You learned to JOIN tables (this is how you query normalized data)
+
+---
+
 ## The Example Tables
 
 We'll use two tables for most examples:
