@@ -402,7 +402,7 @@ In **Lesson 4: JOINs**, you'll learn how to:
 - Work with complex multi-table queries
 - Join multiple tables in one query
 
-**Continue to [Lesson 4: JOINs](04-joins.md)**
+**Continue to [Lesson 4: JOINs](04-joins-explained.md)**
 
 ---
 
