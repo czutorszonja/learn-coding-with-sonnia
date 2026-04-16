@@ -33,28 +33,22 @@ Set operations help you answer questions like:
 
 ## Setting Up Example Tables
 
-```sql
-CREATE TABLE Customers_A (
-    customer_id INT,
-    name VARCHAR(100),
-    email VARCHAR(100)
-);
+**Customers_A table:**
+```
+| customer_id | name   | email              |
+|-------------|--------|--------------------|
+| 1           | Szonja | szonja@email.com   |
+| 2           | Arthur | arthur@email.com   |
+| 3           | Maria  | maria@email.com    |
+```
 
-INSERT INTO Customers_A (customer_id, name, email) VALUES
-    (1, 'Szonja', 'szonja@email.com'),
-    (2, 'Arthur', 'arthur@email.com'),
-    (3, 'Maria', 'maria@email.com');
-
-CREATE TABLE Customers_B (
-    customer_id INT,
-    name VARCHAR(100),
-    email VARCHAR(100)
-);
-
-INSERT INTO Customers_B (customer_id, name, email) VALUES
-    (2, 'Arthur', 'arthur@email.com'),
-    (3, 'Maria', 'maria@email.com'),
-    (4, 'David', 'david@email.com');
+**Customers_B table:**
+```
+| customer_id | name   | email              |
+|-------------|--------|--------------------|
+| 2           | Arthur | arthur@email.com   |
+| 3           | Maria  | maria@email.com    |
+| 4           | David  | david@email.com    |
 ```
 
 **Notice:**

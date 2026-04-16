@@ -20,20 +20,14 @@ In this lesson, you'll master:
 
 ## Setting Up Example Table
 
-```sql
-CREATE TABLE Employees (
-    employee_id INT,
-    first_name VARCHAR(50),
-    last_name VARCHAR(50),
-    email VARCHAR(100),
-    phone VARCHAR(20)
-);
-
-INSERT INTO Employees (employee_id, first_name, last_name, email, phone) VALUES
-    (1, 'Szonja', 'Smith', 'szonja.smith@email.com', '555-1234'),
-    (2, 'Arthur', 'Johnson', 'arthur.johnson@email.com', '555-5678'),
-    (3, 'Maria', 'Williams', 'maria.williams@email.com', '555-9012'),
-    (4, 'David', 'Brown', 'david.brown@email.com', '555-3456');
+**Employees table:**
+```
+| employee_id | first_name | last_name | email                    | phone      |
+|-------------|------------|-----------|--------------------------|------------|
+| 1           | Szonja     | Smith     | szonja.smith@email.com   | 555-1234   |
+| 2           | Arthur     | Johnson   | arthur.johnson@email.com | 555-5678   |
+| 3           | Maria      | Williams  | maria.williams@email.com | 555-9012   |
+| 4           | David      | Brown     | david.brown@email.com    | 555-3456   |
 ```
 
 ---
