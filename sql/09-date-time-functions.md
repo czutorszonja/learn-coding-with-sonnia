@@ -483,16 +483,6 @@ WHERE shipped_date IS NULL;
 
 **Scenario:** You have an `Employees` table:
 
-**Create the table first:**
-```sql
-CREATE TABLE Employees (
-    employee_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    hire_date DATE,
-    salary DECIMAL(10,2)
-);
-```
-
 **Copy-paste values (AUTO_INCREMENT):**
 ```sql
 ('Szonja Smith', '2020-01-15', 95000),

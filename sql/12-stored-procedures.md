@@ -624,16 +624,6 @@ Products table:
 | 5          | Headphones    | 149.99 | 25    |
 ```
 
-**Create the table first:**
-```sql
-CREATE TABLE Products (
-    product_id INT AUTO_INCREMENT PRIMARY KEY,
-    product_name VARCHAR(100),
-    price DECIMAL(10,2),
-    stock INT
-);
-```
-
 **Copy-paste values (AUTO_INCREMENT):**
 ```sql
 ('Laptop', 999.99, 15),

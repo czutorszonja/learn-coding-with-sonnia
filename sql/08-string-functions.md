@@ -477,15 +477,6 @@ FROM Employees;
 
 **Scenario:** You have a `Products` table:
 
-**Create the table first:**
-```sql
-CREATE TABLE Products (
-    product_id INT AUTO_INCREMENT PRIMARY KEY,
-    product_name VARCHAR(100),
-    price DECIMAL(10,2)
-);
-```
-
 **Copy-paste values (AUTO_INCREMENT):**
 ```sql
 ('Laptop Pro', 999),

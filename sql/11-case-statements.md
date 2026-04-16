@@ -452,16 +452,6 @@ END DESC;
 
 **Scenario:** You have a `Students` table:
 
-**Create the table first:**
-```sql
-CREATE TABLE Students (
-    student_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    grade VARCHAR(2),
-    score INT
-);
-```
-
 **Copy-paste values (AUTO_INCREMENT):**
 ```sql
 ('Emma Wilson', 'A', 92),

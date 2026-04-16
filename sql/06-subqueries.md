@@ -408,22 +408,6 @@ WHERE price > ALL (SELECT price FROM Products WHERE product_name LIKE '%Laptop%'
 
 **Scenario:** You have a `Students` table and a `Grades` table:
 
-**Create the tables first:**
-```sql
-CREATE TABLE Students (
-    student_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    major VARCHAR(100)
-);
-
-CREATE TABLE Grades (
-    grade_id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT,
-    course_name VARCHAR(100),
-    grade VARCHAR(2)
-);
-```
-
 **Copy-paste values for Students (AUTO_INCREMENT):**
 ```sql
 ('Emma Wilson', 'Computer Science'),

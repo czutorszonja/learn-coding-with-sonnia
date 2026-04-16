@@ -336,22 +336,6 @@ NATURAL JOIN Orders;
 
 **Scenario:** You have a `Teachers` table and a `Classes` table:
 
-**Create the tables first:**
-```sql
-CREATE TABLE Teachers (
-    teacher_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    department VARCHAR(100)
-);
-
-CREATE TABLE Classes (
-    class_id INT AUTO_INCREMENT PRIMARY KEY,
-    teacher_id INT,
-    course_name VARCHAR(100),
-    room VARCHAR(10)
-);
-```
-
 **Copy-paste values for Teachers (AUTO_INCREMENT):**
 ```sql
 ('Dr. Smith', 'Math'),

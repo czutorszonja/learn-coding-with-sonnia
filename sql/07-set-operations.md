@@ -391,19 +391,6 @@ SELECT name FROM Customers_A WHERE customer_id = 2;
 
 **Scenario:** You have two tables of product orders:
 
-**Create the tables first:**
-```sql
-CREATE TABLE Orders_January (
-    order_id INT AUTO_INCREMENT PRIMARY KEY,
-    product_name VARCHAR(100)
-);
-
-CREATE TABLE Orders_February (
-    order_id INT AUTO_INCREMENT PRIMARY KEY,
-    product_name VARCHAR(100)
-);
-```
-
 **Copy-paste values for Orders_January (AUTO_INCREMENT):**
 ```sql
 ('Laptop'),

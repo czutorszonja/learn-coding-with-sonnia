@@ -470,17 +470,6 @@ FROM Products;
 
 **Scenario:** You have a `Sales` table:
 
-**Create the table first:**
-```sql
-CREATE TABLE Sales (
-    sale_id INT AUTO_INCREMENT PRIMARY KEY,
-    product_name VARCHAR(100),
-    quantity INT,
-    unit_price DECIMAL(10,2),
-    discount_percent DECIMAL(5,2)
-);
-```
-
 **Copy-paste values (AUTO_INCREMENT):**
 ```sql
 ('Laptop', 2, 999.99, 10),

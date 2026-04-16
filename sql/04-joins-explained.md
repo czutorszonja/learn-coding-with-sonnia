@@ -344,22 +344,6 @@ INNER JOIN OrderItems oi ON o.order_id = oi.order_id;
 
 **Scenario:** You have a `Students` table and an `Enrollments` table:
 
-**Create the tables first:**
-```sql
-CREATE TABLE Students (
-    student_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    major VARCHAR(100)
-);
-
-CREATE TABLE Enrollments (
-    enrollment_id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT,
-    course_name VARCHAR(100),
-    grade VARCHAR(2)
-);
-```
-
 **Copy-paste values for Students (AUTO_INCREMENT):**
 ```sql
 ('Emma Wilson', 'Computer Science'),
