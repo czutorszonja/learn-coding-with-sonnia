@@ -23,23 +23,16 @@ In this lesson, you'll master:
 
 ### Example: Employee Hierarchy
 
-Let's create an `Employees` table:
-
-```sql
-CREATE TABLE Employees (
-    employee_id INT,
-    name VARCHAR(100),
-    department VARCHAR(100),
-    manager_id INT
-);
-
-INSERT INTO Employees (employee_id, name, department, manager_id) VALUES
-    (1, 'Szonja', 'Engineering', NULL),
-    (2, 'Arthur', 'Engineering', 1),
-    (3, 'Maria', 'Sales', NULL),
-    (4, 'David', 'Sales', 3),
-    (5, 'Emma', 'Engineering', 2),
-    (6, 'Liam', 'HR', NULL);
+**Employees table:**
+```
+| employee_id | name   | department  | manager_id |
+|-------------|--------|-------------|------------|
+| 1           | Szonja | Engineering | NULL       |
+| 2           | Arthur | Engineering | 1          |
+| 3           | Maria  | Sales       | NULL       |
+| 4           | David  | Sales       | 3          |
+| 5           | Emma   | Engineering | 2          |
+| 6           | Liam   | HR          | NULL       |
 ```
 
 **Notice:**
@@ -112,18 +105,22 @@ Now everyone appears! Employees without managers show `NULL` for the manager col
 
 ### Example: Product Sizes and Colors
 
-```sql
-CREATE TABLE Sizes (
-    size_name VARCHAR(10)
-);
+**Sizes table:**
+```
+| size_name |
+|-----------|
+| S         |
+| M         |
+| L         |
+```
 
-INSERT INTO Sizes (size_name) VALUES ('S'), ('M'), ('L');
-
-CREATE TABLE Colors (
-    colour_name VARCHAR(20)
-);
-
-INSERT INTO Colors (colour_name) VALUES ('Red'), ('Blue'), ('Green');
+**Colors table:**
+```
+| colour_name |
+|-------------|
+| Red         |
+| Blue        |
+| Green       |
 ```
 
 Now cross join them:
@@ -175,30 +172,23 @@ Sometimes you need to match on more than one column.
 
 ### Example: Orders and OrderItems
 
-```sql
-CREATE TABLE Orders (
-    order_id INT,
-    customer_id INT,
-    order_date DATE
-);
+**Orders table:**
+```
+| order_id | customer_id | order_date  |
+|----------|-------------|-------------|
+| 1        | 1           | 2024-01-15  |
+| 2        | 1           | 2024-01-20  |
+| 3        | 2           | 2024-01-18  |
+```
 
-INSERT INTO Orders (order_id, customer_id, order_date) VALUES
-    (1, 1, '2024-01-15'),
-    (2, 1, '2024-01-20'),
-    (3, 2, '2024-01-18');
-
-CREATE TABLE OrderItems (
-    item_id INT,
-    order_id INT,
-    product VARCHAR(100),
-    quantity INT
-);
-
-INSERT INTO OrderItems (item_id, order_id, product, quantity) VALUES
-    (1, 1, 'Laptop', 1),
-    (2, 1, 'Mouse', 2),
-    (3, 2, 'Keyboard', 1),
-    (4, 3, 'Monitor', 2);
+**OrderItems table:**
+```
+| item_id | order_id | product  | quantity |
+|---------|----------|----------|----------|
+| 1       | 1        | Laptop   | 1        |
+| 2       | 1        | Mouse    | 2        |
+| 3       | 2        | Keyboard | 1        |
+| 4       | 3        | Monitor  | 2        |
 ```
 
 ### Joining on Multiple Columns
@@ -256,25 +246,14 @@ You can chain multiple JOINs together.
 
 ### Example: Customers → Orders → OrderItems → Products
 
-```sql
-CREATE TABLE Products (
-    product_id INT,
-    product_name VARCHAR(100),
-    price DECIMAL(10,2)
-);
-
-INSERT INTO Products (product_id, product_name, price) VALUES
-    (1, 'Laptop', 999.99),
-    (2, 'Mouse', 25.00),
-    (3, 'Keyboard', 75.00),
-    (4, 'Monitor', 300.00);
-
--- Update OrderItems to use product_id instead of product name
-ALTER TABLE OrderItems ADD COLUMN product_id INT;
-UPDATE OrderItems SET product_id = 1 WHERE item_id = 1;
-UPDATE OrderItems SET product_id = 2 WHERE item_id = 2;
-UPDATE OrderItems SET product_id = 3 WHERE item_id = 3;
-UPDATE OrderItems SET product_id = 4 WHERE item_id = 4;
+**Products table:**
+```
+| product_id | product_name | price   |
+|------------|--------------|---------|
+| 1          | Laptop       | 999.99  |
+| 2          | Mouse        | 25.00   |
+| 3          | Keyboard     | 75.00   |
+| 4          | Monitor      | 300.00  |
 ```
 
 Now join all four tables:

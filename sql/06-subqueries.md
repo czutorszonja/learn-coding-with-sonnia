@@ -34,20 +34,15 @@ This is the most common type of subquery.
 
 ### Example: Find Products Above Average Price
 
-```sql
--- First, let's see what we're working with
-CREATE TABLE Products (
-    product_id INT,
-    product_name VARCHAR(100),
-    price DECIMAL(10,2)
-);
-
-INSERT INTO Products (product_id, product_name, price) VALUES
-    (1, 'Laptop', 999.99),
-    (2, 'Mouse', 25.00),
-    (3, 'Keyboard', 75.00),
-    (4, 'Monitor', 300.00),
-    (5, 'Headphones', 150.00);
+**Products table:**
+```
+| product_id | product_name | price   |
+|------------|--------------|---------|
+| 1          | Laptop       | 999.99  |
+| 2          | Mouse        | 25.00   |
+| 3          | Keyboard     | 75.00   |
+| 4          | Monitor      | 300.00  |
+| 5          | Headphones   | 150.00  |
 ```
 
 **Goal:** Find all products that cost more than the average price.
@@ -87,29 +82,23 @@ Use `IN` when the subquery returns multiple values.
 
 ### Example: Find Customers Who Have Placed Orders
 
-```sql
-CREATE TABLE Customers (
-    customer_id INT,
-    name VARCHAR(100),
-    email VARCHAR(100)
-);
+**Customers table:**
+```
+| customer_id | name   | email              |
+|-------------|--------|------------------|
+| 1           | Szonja | szonja@email.com |
+| 2           | Arthur | arthur@email.com |
+| 3           | Maria  | maria@email.com  |
+| 4           | David  | david@email.com  |
+```
 
-INSERT INTO Customers (customer_id, name, email) VALUES
-    (1, 'Szonja', 'szonja@email.com'),
-    (2, 'Arthur', 'arthur@email.com'),
-    (3, 'Maria', 'maria@email.com'),
-    (4, 'David', 'david@email.com');
-
-CREATE TABLE Orders (
-    order_id INT,
-    customer_id INT,
-    product VARCHAR(100)
-);
-
-INSERT INTO Orders (order_id, customer_id, product) VALUES
-    (1, 1, 'Laptop'),
-    (2, 1, 'Mouse'),
-    (3, 2, 'Keyboard');
+**Orders table:**
+```
+| order_id | customer_id | product  |
+|----------|-------------|----------|
+| 1        | 1           | Laptop   |
+| 2        | 1           | Mouse    |
+| 3        | 2           | Keyboard |
 ```
 
 **Goal:** Find all customers who have placed at least one order.
@@ -211,20 +200,16 @@ You can treat a subquery result as a temporary table.
 
 ### Example: Find Departments with Above-Average Sales
 
-```sql
-CREATE TABLE Sales (
-    sale_id INT,
-    department VARCHAR(100),
-    amount DECIMAL(10,2)
-);
-
-INSERT INTO Sales (sale_id, department, amount) VALUES
-    (1, 'Electronics', 5000),
-    (2, 'Electronics', 3000),
-    (3, 'Clothing', 2000),
-    (4, 'Clothing', 1500),
-    (5, 'Food', 800),
-    (6, 'Food', 1200);
+**Sales table:**
+```
+| sale_id | department  | amount |
+|---------|-------------|--------|
+| 1       | Electronics | 5000   |
+| 2       | Electronics | 3000   |
+| 3       | Clothing    | 2000   |
+| 4       | Clothing    | 1500   |
+| 5       | Food        | 800    |
+| 6       | Food        | 1200   |
 ```
 
 **Goal:** Find departments with total sales above the overall average.
@@ -265,20 +250,15 @@ WHERE total_sales > (SELECT AVG(total_sales) FROM (
 
 ### Example: Find Employees Earning More Than Their Department Average
 
-```sql
-CREATE TABLE Employees (
-    employee_id INT,
-    name VARCHAR(100),
-    department VARCHAR(100),
-    salary DECIMAL(10,2)
-);
-
-INSERT INTO Employees (employee_id, name, department, salary) VALUES
-    (1, 'Szonja', 'Engineering', 95000),
-    (2, 'Arthur', 'Engineering', 85000),
-    (3, 'Maria', 'Sales', 70000),
-    (4, 'David', 'Sales', 60000),
-    (5, 'Emma', 'Engineering', 90000);
+**Employees table:**
+```
+| employee_id | name   | department  | salary |
+|-------------|--------|-------------|--------|
+| 1           | Szonja | Engineering | 95000  |
+| 2           | Arthur | Engineering | 85000  |
+| 3           | Maria  | Sales       | 70000  |
+| 4           | David  | Sales       | 60000  |
+| 5           | Emma   | Engineering | 90000  |
 ```
 
 ```sql
