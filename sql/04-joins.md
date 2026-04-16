@@ -529,10 +529,10 @@ INNER JOIN Products AS p ON o.product = p.product;
 1. Get all employees with their department names
 2. Get all employees with their department location
 3. Find which department each project belongs to (project name + department name)
-4. List all departments and their projects (department name + project name)
-5. Find employees who work in the same department as the "Mobile App" project (hint: use department_id)
-6. Count how many employees are in each department
-7. Find departments that have no employees (hint: use LEFT/RIGHT JOIN)
+4. Find employees who work in the same department as the "Mobile App" project (hint: use department_id)
+5. Count how many employees are in each department
+6. Find departments that have no employees (hint: use LEFT/RIGHT JOIN)
+7. Find departments that have no projects (hint: use LEFT JOIN)
 8. Get the total budget per department
 
 **Try it yourself first!** Then scroll down to check your answers.
@@ -557,29 +557,30 @@ SELECT p.name AS project_name, d.name AS department_name
 FROM Projects AS p
 INNER JOIN Departments AS d ON p.department_id = d.id;
 
--- 4. Departments and their projects
-SELECT d.name AS department_name, p.name AS project_name
-FROM Departments AS d
-INNER JOIN Projects AS p ON d.id = p.department_id;
-
--- 5. Employees in same department as Mobile App project
+-- 4. Employees in same department as Mobile App project
 SELECT e.name AS employee_name
 FROM Employees AS e
 INNER JOIN Departments AS d ON e.department_id = d.id
 INNER JOIN Projects AS p ON d.id = p.department_id
 WHERE p.name = 'Mobile App';
 
--- 6. Count employees per department
+-- 5. Count employees per department
 SELECT d.name AS department_name, COUNT(e.id) AS employee_count
 FROM Departments AS d
 INNER JOIN Employees AS e ON d.id = e.department_id
 GROUP BY d.name;
 
--- 7. Departments with no employees
+-- 6. Departments with no employees
 SELECT d.name AS department_name
 FROM Departments AS d
 LEFT JOIN Employees AS e ON d.id = e.department_id
 WHERE e.id IS NULL;
+
+-- 7. Departments with no projects
+SELECT d.name AS department_name
+FROM Departments AS d
+LEFT JOIN Projects AS p ON d.id = p.department_id
+WHERE p.id IS NULL;
 
 -- 8. Total budget per department
 SELECT d.name AS department_name, SUM(p.budget) AS total_budget
