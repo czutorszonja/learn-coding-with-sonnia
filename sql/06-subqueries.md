@@ -408,6 +408,26 @@ WHERE price > ALL (SELECT price FROM Products WHERE product_name LIKE '%Laptop%'
 
 **Scenario:** You have a `Students` table and a `Grades` table:
 
+**Students table:**
+```
+| student_id | name          | major          |
+|------------|---------------|----------------|
+| 1          | Emma Wilson   | Computer Science|
+| 2          | Liam Brown    | Mathematics    |
+| 3          | Olivia Davis  | Physics        |
+| 4          | Noah Martinez | Chemistry      |
+```
+
+**Grades table:**
+```
+| grade_id | student_id | course_name       | grade |
+|----------|------------|-------------------|-------|
+| 1        | 1          | Programming 101   | A     |
+| 2        | 1          | Data Structures   | B+    |
+| 3        | 2          | Calculus          | A-    |
+| 4        | 3          | Quantum Physics   | B     |
+```
+
 **Copy-paste values for Students (AUTO_INCREMENT):**
 ```sql
 ('Emma Wilson', 'Computer Science'),

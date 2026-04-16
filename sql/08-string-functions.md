@@ -477,6 +477,17 @@ FROM Employees;
 
 **Scenario:** You have a `Products` table:
 
+**Products table:**
+```
+| product_id | product_name       | price |
+|------------|--------------------|-------|
+| 1          | Laptop Pro         | 999   |
+| 2          | Wireless Mouse     | 25    |
+| 3          | USB-C Cable        | 15    |
+| 4          | 4K Monitor         | 300   |
+| 5          | Mechanical Keyboard| 75    |
+```
+
 **Copy-paste values (AUTO_INCREMENT):**
 ```sql
 ('Laptop Pro', 999),

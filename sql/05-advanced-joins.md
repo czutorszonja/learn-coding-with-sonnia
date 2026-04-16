@@ -336,6 +336,27 @@ NATURAL JOIN Orders;
 
 **Scenario:** You have a `Teachers` table and a `Classes` table:
 
+**Teachers table:**
+```
+| teacher_id | name          | department  |
+|------------|---------------|-------------|
+| 1          | Dr. Smith     | Math        |
+| 2          | Dr. Johnson   | Science     |
+| 3          | Dr. Williams  | Math        |
+| 4          | Dr. Brown     | History     |
+```
+
+**Classes table:**
+```
+| class_id | teacher_id | course_name      | room  |
+|----------|------------|------------------|-------|
+| 1        | 1          | Algebra 101      | 101   |
+| 2        | 1          | Calculus         | 102   |
+| 3        | 2          | Physics          | 201   |
+| 4        | 3          | Statistics       | 103   |
+| 5        | 4          | World History    | 301   |
+```
+
 **Copy-paste values for Teachers (AUTO_INCREMENT):**
 ```sql
 ('Dr. Smith', 'Math'),

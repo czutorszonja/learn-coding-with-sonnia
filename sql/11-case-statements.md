@@ -452,6 +452,17 @@ END DESC;
 
 **Scenario:** You have a `Students` table:
 
+**Students table:**
+```
+| student_id | name          | grade | score |
+|------------|---------------|-------|-------|
+| 1          | Emma Wilson   | A     | 92    |
+| 2          | Liam Brown    | B     | 85    |
+| 3          | Olivia Davis  | A     | 88    |
+| 4          | Noah Martinez | C     | 72    |
+| 5          | Ava Johnson   | F     | 45    |
+```
+
 **Copy-paste values (AUTO_INCREMENT):**
 ```sql
 ('Emma Wilson', 'A', 92),

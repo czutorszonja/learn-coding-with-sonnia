@@ -470,6 +470,17 @@ FROM Products;
 
 **Scenario:** You have a `Sales` table:
 
+**Sales table:**
+```
+| sale_id | product_name  | quantity | unit_price | discount_percent |
+|---------|---------------|----------|------------|------------------|
+| 1       | Laptop        | 2        | 999.99     | 10               |
+| 2       | Mouse         | 5        | 25.50      | 5                |
+| 3       | Keyboard      | 3        | 75.00      | 15               |
+| 4       | Monitor       | 1        | 299.99     | 0                |
+| 5       | Headphones    | 4        | 149.99     | 20               |
+```
+
 **Copy-paste values (AUTO_INCREMENT):**
 ```sql
 ('Laptop', 2, 999.99, 10),

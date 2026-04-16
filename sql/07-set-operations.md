@@ -391,6 +391,26 @@ SELECT name FROM Customers_A WHERE customer_id = 2;
 
 **Scenario:** You have two tables of product orders:
 
+**Orders_January table:**
+```
+| order_id | product_name  |
+|----------|---------------|
+| 1        | Laptop        |
+| 2        | Mouse         |
+| 3        | Keyboard      |
+| 4        | Monitor       |
+```
+
+**Orders_February table:**
+```
+| order_id | product_name  |
+|----------|---------------|
+| 5        | Mouse         |
+| 6        | Headphones    |
+| 7        | Laptop        |
+| 8        | Webcam        |
+```
+
 **Copy-paste values for Orders_January (AUTO_INCREMENT):**
 ```sql
 ('Laptop'),
