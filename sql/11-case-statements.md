@@ -32,22 +32,16 @@ A CASE statement works the same way — it checks conditions and returns differe
 
 ## Setting Up Example Table
 
-```sql
-CREATE TABLE Employees (
-    employee_id INT,
-    name VARCHAR(100),
-    department VARCHAR(100),
-    salary DECIMAL(10,2),
-    years_employed INT
-);
-
-INSERT INTO Employees (employee_id, name, department, salary, years_employed) VALUES
-    (1, 'Szonja', 'Engineering', 95000, 5),
-    (2, 'Arthur', 'Engineering', 85000, 3),
-    (3, 'Maria', 'Sales', 70000, 2),
-    (4, 'David', 'Sales', 60000, 1),
-    (5, 'Emma', 'HR', 75000, 4),
-    (6, 'Liam', 'Engineering', 90000, 6);
+**Employees table:**
+```
+| employee_id | name   | department  | salary | years_employed |
+|-------------|--------|-------------|--------|----------------|
+| 1           | Szonja | Engineering | 95000  | 5              |
+| 2           | Arthur | Engineering | 85000  | 3              |
+| 3           | Maria  | Sales       | 70000  | 2              |
+| 4           | David  | Sales       | 60000  | 1              |
+| 5           | Emma   | HR          | 75000  | 4              |
+| 6           | Liam   | Engineering | 90000  | 6              |
 ```
 
 ---

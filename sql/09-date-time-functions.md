@@ -18,21 +18,15 @@ In this lesson, you'll master:
 
 ## Setting Up Example Table
 
-```sql
-CREATE TABLE Orders (
-    order_id INT,
-    customer_name VARCHAR(100),
-    order_date DATE,
-    shipped_date DATE,
-    amount DECIMAL(10,2)
-);
-
-INSERT INTO Orders (order_id, customer_name, order_date, shipped_date, amount) VALUES
-    (1, 'Szonja', '2024-01-15', '2024-01-17', 999.99),
-    (2, 'Arthur', '2024-01-20', '2024-01-22', 25.00),
-    (3, 'Maria', '2024-02-01', '2024-02-03', 150.00),
-    (4, 'David', '2024-02-14', '2024-02-16', 75.50),
-    (5, 'Emma', '2024-03-01', NULL, 300.00);
+**Orders table:**
+```
+| order_id | customer_name | order_date  | shipped_date | amount   |
+|----------|---------------|-------------|--------------|----------|
+| 1        | Szonja        | 2024-01-15  | 2024-01-17   | 999.99   |
+| 2        | Arthur        | 2024-01-20  | 2024-01-22   | 25.00    |
+| 3        | Maria         | 2024-02-01  | 2024-02-03   | 150.00   |
+| 4        | David         | 2024-02-14  | 2024-02-16   | 75.50    |
+| 5        | Emma          | 2024-03-01  | NULL         | 300.00   |
 ```
 
 **Notice:** Emma's order has `NULL` for `shipped_date` (not shipped yet).

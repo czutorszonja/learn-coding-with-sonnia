@@ -19,21 +19,15 @@ In this lesson, you'll master:
 
 ## Setting Up Example Table
 
-```sql
-CREATE TABLE Products (
-    product_id INT,
-    product_name VARCHAR(100),
-    price DECIMAL(10,2),
-    cost DECIMAL(10,2),
-    stock_quantity INT
-);
-
-INSERT INTO Products (product_id, product_name, price, cost, stock_quantity) VALUES
-    (1, 'Laptop', 999.99, 750.00, 15),
-    (2, 'Mouse', 25.50, 12.00, 50),
-    (3, 'Keyboard', 75.00, 45.00, 30),
-    (4, 'Monitor', 299.99, 200.00, 20),
-    (5, 'Headphones', 149.99, 80.00, 25);
+**Products table:**
+```
+| product_id | product_name | price  | cost   | stock_quantity |
+|------------|--------------|--------|--------|----------------|
+| 1          | Laptop       | 999.99 | 750.00 | 15             |
+| 2          | Mouse        | 25.50  | 12.00  | 50             |
+| 3          | Keyboard     | 75.00  | 45.00  | 30             |
+| 4          | Monitor      | 299.99 | 200.00 | 20             |
+| 5          | Headphones   | 149.99 | 80.00  | 25             |
 ```
 
 ---

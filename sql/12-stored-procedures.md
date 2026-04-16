@@ -39,21 +39,15 @@ A stored procedure works the same way — you save a set of SQL commands and run
 
 ## Setting Up Example Table
 
-```sql
-CREATE TABLE Employees (
-    employee_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    department VARCHAR(100),
-    salary DECIMAL(10,2),
-    hire_date DATE
-);
-
-INSERT INTO Employees (name, department, salary, hire_date) VALUES
-    ('Szonja', 'Engineering', 95000, '2020-01-15'),
-    ('Arthur', 'Engineering', 85000, '2019-06-20'),
-    ('Maria', 'Sales', 70000, '2021-03-01'),
-    ('David', 'Sales', 60000, '2022-02-14'),
-    ('Emma', 'HR', 75000, '2018-11-30');
+**Employees table:**
+```
+| employee_id | name   | department  | salary | hire_date  |
+|-------------|--------|-------------|--------|------------|
+| 1           | Szonja | Engineering | 95000  | 2020-01-15 |
+| 2           | Arthur | Engineering | 85000  | 2019-06-20 |
+| 3           | Maria  | Sales       | 70000  | 2021-03-01 |
+| 4           | David  | Sales       | 60000  | 2022-02-14 |
+| 5           | Emma   | HR          | 75000  | 2018-11-30 |
 ```
 
 ---
