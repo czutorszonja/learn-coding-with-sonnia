@@ -213,7 +213,7 @@ Once connected, let's test that everything works:
 
 ### Intermediate Lessons
 
-4. **[JOINs](04-joins-explained.md)** — INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL JOIN
+4. **[JOINs](04-joins.md)** — INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL JOIN
 5. **[Advanced JOINs](05-advanced-joins.md)** — Self-joins, cross joins, multiple table joins
 6. **[Subqueries](06-subqueries.md)** — Queries within queries, IN, EXISTS, correlated subqueries
 7. **[Set Operations](07-set-operations.md)** — UNION, INTERSECT, EXCEPT

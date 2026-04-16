@@ -1,6 +1,6 @@
 # SQL Lesson 5: Advanced JOINs
 
-**← Back to [Lesson 4: JOINs](04-joins-explained.md)**
+**← Back to [Lesson 4: JOINs](04-joins.md)**
 
 ---
 
