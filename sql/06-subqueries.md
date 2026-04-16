@@ -408,7 +408,14 @@ WHERE price > ALL (SELECT price FROM Products WHERE product_name LIKE '%Laptop%'
 
 **Scenario:** You have a `Students` table and a `Grades` table:
 
-**Students table:**
+**Students table structure:**
+```
+| student_id | name   | major   |
+|------------|--------|---------|
+| INT        | VARCHAR| VARCHAR |
+```
+
+**Students table data:**
 ```
 | student_id | name          | major          |
 |------------|---------------|----------------|
@@ -418,7 +425,14 @@ WHERE price > ALL (SELECT price FROM Products WHERE product_name LIKE '%Laptop%'
 | 4          | Noah Martinez | Chemistry      |
 ```
 
-**Grades table:**
+**Grades table structure:**
+```
+| grade_id | student_id | course_name | grade |
+|----------|------------|-------------|-------|
+| INT      | INT        | VARCHAR     | VARCHAR|
+```
+
+**Grades table data:**
 ```
 | grade_id | student_id | course_name       | grade |
 |----------|------------|-------------------|-------|

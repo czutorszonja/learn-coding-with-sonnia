@@ -477,15 +477,22 @@ FROM Employees;
 
 **Scenario:** You have a `Products` table:
 
-**Products table:**
+**Products table structure:**
 ```
-| product_id | product_name       | price |
-|------------|--------------------|-------|
-| 1          | Laptop Pro         | 999   |
-| 2          | Wireless Mouse     | 25    |
-| 3          | USB-C Cable        | 15    |
-| 4          | 4K Monitor         | 300   |
-| 5          | Mechanical Keyboard| 75    |
+| product_id | product_name | price   |
+|------------|--------------|---------|
+| INT        | VARCHAR      | DECIMAL |
+```
+
+**Products table data:**
+```
+| product_id | product_name        | price |
+|------------|---------------------|-------|
+| 1          | Laptop Pro          | 999   |
+| 2          | Wireless Mouse      | 25    |
+| 3          | USB-C Cable         | 15    |
+| 4          | 4K Monitor          | 300   |
+| 5          | Mechanical Keyboard | 75    |
 ```
 
 **Copy-paste values (AUTO_INCREMENT):**

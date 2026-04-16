@@ -483,15 +483,22 @@ WHERE shipped_date IS NULL;
 
 **Scenario:** You have an `Employees` table:
 
-**Employees table:**
+**Employees table structure:**
 ```
-| employee_id | name          | hire_date  | salary |
-|-------------|---------------|------------|--------|
-| 1           | Szonja Smith  | 2020-01-15 | 95000  |
-| 2           | Arthur Johnson| 2019-06-20 | 85000  |
-| 3           | Maria Williams| 2021-03-01 | 70000  |
-| 4           | David Brown   | 2022-02-14 | 60000  |
-| 5           | Emma Davis    | 2018-11-30 | 90000  |
+| employee_id | name      | hire_date | salary  |
+|-------------|-----------|-----------|---------|
+| INT         | VARCHAR   | DATE      | DECIMAL |
+```
+
+**Employees table data:**
+```
+| employee_id | name           | hire_date  | salary |
+|-------------|----------------|------------|--------|
+| 1           | Szonja Smith   | 2020-01-15 | 95000  |
+| 2           | Arthur Johnson | 2019-06-20 | 85000  |
+| 3           | Maria Williams | 2021-03-01 | 70000  |
+| 4           | David Brown    | 2022-02-14 | 60000  |
+| 5           | Emma Davis     | 2018-11-30 | 90000  |
 ```
 
 **Copy-paste values (AUTO_INCREMENT):**

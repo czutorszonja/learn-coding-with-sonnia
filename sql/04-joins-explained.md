@@ -344,7 +344,14 @@ INNER JOIN OrderItems oi ON o.order_id = oi.order_id;
 
 **Scenario:** You have a `Students` table and an `Enrollments` table:
 
-**Students table:**
+**Students table structure:**
+```
+| student_id | name   | major  |
+|------------|--------|--------|
+| INT        | VARCHAR| VARCHAR|
+```
+
+**Students table data:**
 ```
 | student_id | name          | major          |
 |------------|---------------|----------------|
@@ -354,7 +361,14 @@ INNER JOIN OrderItems oi ON o.order_id = oi.order_id;
 | 4          | Noah Martinez | Chemistry      |
 ```
 
-**Enrollments table:**
+**Enrollments table structure:**
+```
+| enrollment_id | student_id | course_name | grade |
+|---------------|------------|-------------|-------|
+| INT           | INT        | VARCHAR     | VARCHAR|
+```
+
+**Enrollments table data:**
 ```
 | enrollment_id | student_id | course_name       | grade |
 |---------------|------------|-------------------|-------|

@@ -391,7 +391,14 @@ SELECT name FROM Customers_A WHERE customer_id = 2;
 
 **Scenario:** You have two tables of product orders:
 
-**Orders_January table:**
+**Orders_January table structure:**
+```
+| order_id   | product_name |
+|------------|--------------|
+| INT        | VARCHAR      |
+```
+
+**Orders_January table data:**
 ```
 | order_id | product_name  |
 |----------|---------------|
@@ -401,7 +408,14 @@ SELECT name FROM Customers_A WHERE customer_id = 2;
 | 4        | Monitor       |
 ```
 
-**Orders_February table:**
+**Orders_February table structure:**
+```
+| order_id   | product_name |
+|------------|--------------|
+| INT        | VARCHAR      |
+```
+
+**Orders_February table data:**
 ```
 | order_id | product_name  |
 |----------|---------------|

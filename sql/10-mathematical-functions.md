@@ -470,7 +470,14 @@ FROM Products;
 
 **Scenario:** You have a `Sales` table:
 
-**Sales table:**
+**Sales table structure:**
+```
+| sale_id    | product_id | quantity | unit_price    | discount_percent |
+|------------|------------|----------|---------------|------------------|
+| INT        | INT        | INT      | DECIMAL       | DECIMAL          |
+```
+
+**Sales table data:**
 ```
 | sale_id | product_name  | quantity | unit_price | discount_percent |
 |---------|---------------|----------|------------|------------------|

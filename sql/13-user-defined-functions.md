@@ -466,8 +466,15 @@ DROP FUNCTION IF EXISTS CalculateBonus;
 
 **Scenario:** You have a `Products` table:
 
+**Products table structure:**
 ```
-Products table:
+| product_id | product_name | price   | stock |
+|------------|--------------|---------|-------|
+| INT        | VARCHAR      | DECIMAL | INT   |
+```
+
+**Products table data:**
+```
 | product_id | product_name  | price  | stock |
 |------------|---------------|--------|-------|
 | 1          | Laptop        | 999.99 | 15    |
