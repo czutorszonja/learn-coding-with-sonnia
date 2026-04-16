@@ -468,14 +468,7 @@ INNER JOIN Products AS p ON o.product = p.product;
 
 **Scenario:** You have three tables:
 
-**Employees table structure:**
-```
-| id            | name            | department_id |
-|---------------|-----------------|---------------|
-| INT           | VARCHAR         | INT           |
-```
-
-**Employees table data:**
+**Employees table:**
 ```
 | id | name           | department_id |
 |----|----------------|---------------|
@@ -486,14 +479,7 @@ INNER JOIN Products AS p ON o.product = p.product;
 | 5  | Charlie Wilson | 3             |
 ```
 
-**Departments table structure:**
-```
-| id     | name     | location |
-|---------|----------|----------|
-| INT    | VARCHAR  | VARCHAR  |
-```
-
-**Departments table data:**
+**Departments table:**
 ```
 | id | name        | location      |
 |----|-------------|---------------|
@@ -503,14 +489,7 @@ INNER JOIN Products AS p ON o.product = p.product;
 | 4  | Marketing   | Boston        |
 ```
 
-**Projects table structure:**
-```
-| id              | name            | department_id | budget  |
-|-----------------|-----------------|---------------|---------|
-| INT             | VARCHAR         | INT           | DECIMAL |
-```
-
-**Projects table data:**
+**Projects table:**
 ```
 | id | name             | department_id | budget |
 |----|------------------|---------------|--------|
