@@ -6,15 +6,15 @@
 
 ## What is a Database?
 
-**Plain English:** A database is like a digital filing cabinet where you store organized information.
+**Plain English:** A database is like a digital filing cabinet where you store organised information.
 
 **Real-world analogy:** Imagine a library:
-- Books are organized by category (fiction, science, history)
+- Books are organised by category (fiction, science, history)
 - Each book has a title, author, ISBN, and location
 - You can search for books by title, author, or topic
 - The librarian helps you find exactly what you need
 
-A database works the same way — it stores data in organized tables, and you can ask it questions.
+A database works the same way — it stores data in organised tables, and you can ask it questions.
 
 ## What is SQL?
 
@@ -230,7 +230,7 @@ SELECT * FROM movies WHERE director = 'Christopher Nolan';
 
 ## Quick Recap
 
-- Database = organized storage (like a filing cabinet)
+- Database = organised storage (like a filing cabinet)
 - SQL = the language to talk to databases
 - `CREATE DATABASE` = make a new database
 - `USE` = switch to a database

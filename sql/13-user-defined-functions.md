@@ -634,7 +634,7 @@ You've completed all 13 SQL lessons! You now know:
 
 - Practice with real projects
 - Explore advanced topics (triggers, indexes, optimization)
-- Learn database design and normalization
+- Learn database design and normalisation
 - Try different SQL databases (PostgreSQL, SQL Server, Oracle)
 
 Keep practicing, and you'll be a SQL pro in no time! 💛

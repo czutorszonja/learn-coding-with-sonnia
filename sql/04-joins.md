@@ -28,7 +28,7 @@ In this lesson, you'll master:
 The Orders table only has `customer_id`, not the customer's name. To see which customer placed which order, you need to JOIN the two tables together.
 
 **Why use JOINs?**
-- Avoid duplicating data (normalization)
+- Avoid duplicating data (normalisation)
 - Keep related data in separate tables
 - Query across relationships
 
@@ -45,9 +45,9 @@ This is a common point of confusion! **Normalization** and **JOINs** are related
 
 ### What is Normalization?
 
-**Normalization** is about organizing your data INTO separate tables in the first place.
+**Normalization** is about organising your data INTO separate tables in the first place.
 
-**Example WITHOUT normalization (one big table):**
+**Example WITHOUT normalisation (one big table):**
 
 ```
 | customer_name | customer_email       | product    | price | quantity |
@@ -59,7 +59,7 @@ This is a common point of confusion! **Normalization** and **JOINs** are related
 
 **Problem:** John's info is repeated! If he changes his email, you need to update multiple rows.
 
-**Example WITH normalization (two tables):**
+**Example WITH normalisation (two tables):**
 
 **Customers table:**
 ```
@@ -80,7 +80,7 @@ This is a common point of confusion! **Normalization** and **JOINs** are related
 
 **Benefit:** John's info is stored ONCE. No repetition!
 
-**This is normalization** — splitting data into logical, separate tables.
+**This is normalisation** — splitting data into logical, separate tables.
 
 ### So Where Do JOINs Come In?
 
@@ -107,7 +107,7 @@ INNER JOIN Orders AS o ON c.id = o.customer_id;
 
 Think of it like LEGO:
 
-1. **Normalization** = Breaking a big LEGO structure into smaller, organized pieces (by color, size, etc.)
+1. **Normalization** = Breaking a big LEGO structure into smaller, organised pieces (by colour, size, etc.)
 2. **JOIN** = Snapping those pieces together when you want to see the full picture
 
 You **normalize first** (design phase), then you **JOIN later** (query phase).
@@ -153,7 +153,7 @@ The timeline:
 ```
 
 **In our lessons:**
-- Lesson 1: You learned to CREATE tables (this is where normalization happens!)
+- Lesson 1: You learned to CREATE tables (this is where normalisation happens!)
 - Lesson 4: You learned to JOIN tables (this is how you query normalized data)
 
 ---

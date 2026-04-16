@@ -120,23 +120,23 @@ CREATE TABLE Sizes (
 INSERT INTO Sizes (size_name) VALUES ('S'), ('M'), ('L');
 
 CREATE TABLE Colors (
-    color_name VARCHAR(20)
+    colour_name VARCHAR(20)
 );
 
-INSERT INTO Colors (color_name) VALUES ('Red'), ('Blue'), ('Green');
+INSERT INTO Colors (colour_name) VALUES ('Red'), ('Blue'), ('Green');
 ```
 
 Now cross join them:
 
 ```sql
-SELECT size_name, color_name
+SELECT size_name, colour_name
 FROM Sizes
 CROSS JOIN Colors;
 ```
 
 **Result:**
 ```
-| size_name | color_name |
+| size_name | colour_name |
 |-----------|------------|
 | S         | Red        |
 | S         | Blue       |
@@ -149,7 +149,7 @@ CROSS JOIN Colors;
 | L         | Green      |
 ```
 
-**What happened:** Every size was paired with every color (3 × 3 = 9 combinations).
+**What happened:** Every size was paired with every colour (3 × 3 = 9 combinations).
 
 ### When to Use CROSS JOIN:
 - Generating all possible combinations
@@ -161,7 +161,7 @@ CROSS JOIN Colors;
 You can also write it as:
 
 ```sql
-SELECT size_name, color_name
+SELECT size_name, colour_name
 FROM Sizes, Colors;
 ```
 
