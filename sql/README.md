@@ -203,6 +203,35 @@ Once connected, let's test that everything works:
 
 ---
 
+## SQL Lessons
+
+### Beginner Lessons
+
+1. **[What is a Database?](01-what-is-a-database.md)** — Databases, tables, INSERT, SELECT
+2. **[Filtering and Sorting](02-filtering-and-sorting.md)** — WHERE, ORDER BY, LIKE, AND/OR
+3. **[Aggregate Functions](03-aggregate-functions.md)** — COUNT, SUM, AVG, MIN, MAX, GROUP BY, HAVING
+
+### Intermediate Lessons
+
+4. **[JOINs](04-joins-explained.md)** — INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL JOIN
+5. **[Advanced JOINs](05-advanced-joins.md)** — Self-joins, cross joins, multiple table joins
+6. **[Subqueries](06-subqueries.md)** — Queries within queries, IN, EXISTS, correlated subqueries
+7. **[Set Operations](07-set-operations.md)** — UNION, INTERSECT, EXCEPT
+
+### Functions and Logic
+
+8. **[String Functions](08-string-functions.md)** — CONCAT, UPPER, LOWER, SUBSTRING, REPLACE, TRIM
+9. **[Date/Time Functions](09-date-time-functions.md)** — CURRENT_DATE, EXTRACT, DATE_TRUNC, TO_CHAR, intervals
+10. **[Mathematical Functions](10-mathematical-functions.md)** — ROUND, CEILING, FLOOR, ABS, POWER, SQRT, MOD
+11. **[CASE Statements](11-case-statements.md)** — Conditional logic, IF-THEN-ELSE in SQL
+
+### Advanced Topics
+
+12. **[Stored Procedures](12-stored-procedures.md)** — Creating procedures, parameters, variables, control flow
+13. **[User-Defined Functions](13-user-defined-functions.md)** — Scalar functions, table-valued functions
+
+---
+
 ## Quick Reference
 
 | Task | How To |
