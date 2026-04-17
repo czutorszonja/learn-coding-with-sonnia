@@ -208,24 +208,15 @@ WHERE LENGTH(last_name) > 6;
 ```
 | first_name | last_name |
 |------------|-----------|
-| Szonja     | Smith     |
 | Arthur     | Johnson   |
 | Maria      | Williams  |
 ```
 
-Wait, Smith is only 5 characters. Let me recalculate:
+**Explanation:**
 - Smith: 5 characters (not > 6)
 - Johnson: 7 characters (> 6) ✓
 - Williams: 8 characters (> 6) ✓
 - Brown: 5 characters (not > 6)
-
-**Corrected Result:**
-```
-| first_name | last_name |
-|------------|-----------|
-| Arthur     | Johnson   |
-| Maria      | Williams  |
-```
 
 ---
 
