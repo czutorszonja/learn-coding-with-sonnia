@@ -320,6 +320,27 @@ WHERE EXISTS (SELECT 1 FROM Orders WHERE Orders.customer_id = Customers.customer
 - If yes, `EXISTS` returns `TRUE` and the customer is included
 - If no, `EXISTS` returns `FALSE` and the customer is excluded
 
+### What Does `SELECT 1` Mean?
+
+You might wonder: **"Why `SELECT 1`? What does the 1 do?"**
+
+**Answer:** Nothing special! In an `EXISTS` subquery, the actual value doesn't matter because SQL only checks if rows exist — not what's in them.
+
+**These all work the same:**
+```sql
+-- All three are equivalent:
+WHERE EXISTS (SELECT 1 FROM Orders WHERE ...)
+WHERE EXISTS (SELECT * FROM Orders WHERE ...)
+WHERE EXISTS (SELECT 'any value' FROM Orders WHERE ...)
+```
+
+**Why use `SELECT 1`?**
+- It's a common convention among SQL developers
+- It's clear that you only care about existence, not the actual data
+- It's slightly more efficient (selecting a constant is fast)
+
+**Bottom line:** `SELECT 1` just means "check if any rows exist" — the `1` is arbitrary.
+
 ### EXISTS vs IN
 
 Both work, but `EXISTS` is often faster:
@@ -405,7 +426,7 @@ WHERE price > ALL (SELECT price FROM Products WHERE product_name LIKE '%Laptop%'
 2. Find students who have NOT received any grade (use subquery with NOT IN)
 3. Show each student with their total number of courses (use subquery in SELECT)
 4. Find the highest grade count among all students (use subquery to get MAX)
-5. Find students who have more than 1 grade (use subquery in SELECT with WHERE)
+5. Find students who have exactly 2 grades (use subquery in SELECT with WHERE)
 
 **Try it yourself first!** Then scroll down to check your answers.
 
@@ -438,11 +459,11 @@ FROM (
     GROUP BY student_id
 ) AS counts;
 
--- 5. Find students who have more than 1 grade
+-- 5. Find students who have exactly 2 grades
 SELECT name,
        (SELECT COUNT(*) FROM Grades g WHERE g.student_id = s.student_id) AS grade_count
 FROM Students s
-WHERE (SELECT COUNT(*) FROM Grades g WHERE g.student_id = s.student_id) > 1;
+WHERE (SELECT COUNT(*) FROM Grades g WHERE g.student_id = s.student_id) = 2;
 ```
 
 ---
