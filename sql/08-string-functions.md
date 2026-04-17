@@ -237,9 +237,11 @@ FROM Employees;
 |--------------------------|------------|
 | szonja.smith@email.com   | szonja     |
 | arthur.johnson@email.com | arthur     |
-| maria.williams@email.com | maria      |
-| david.brown@email.com    | david      |
+| maria.williams@email.com | maria.     |
+| david.brown@email.com    | david.     |
 ```
+
+**Note:** "maria" and "david" are only 5 characters, so the 6th character (the dot `.`) is included!
 
 **How it works:**
 - First argument: the string
