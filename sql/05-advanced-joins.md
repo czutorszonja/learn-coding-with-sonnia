@@ -4,6 +4,20 @@
 
 ---
 
+## ⚠️ Optional / Advanced Lesson
+
+**This lesson covers advanced topics** that may not be in your basic SQL course or exam.
+
+**If you're preparing for a basic SQL exam:**
+- ✅ Lessons 1-4 (basics through basic JOINs) are essential
+- ⚠️ Lesson 5 (Advanced JOINs) — optional, may not be on your exam
+- ⚠️ Lesson 6 (Subqueries) — check if covered in your course
+- ✅ Lessons 7-11 (functions, CASE) — usually covered in basics
+
+**Recommendation:** Master Lessons 1-4 first, then check your course syllabus before continuing.
+
+---
+
 ## What You'll Learn
 
 In this lesson, you'll master:

@@ -4,6 +4,20 @@
 
 ---
 
+## ⚠️ Optional / Advanced Lesson
+
+**This lesson covers advanced topics** that may not be in your basic SQL course or exam.
+
+**If you're preparing for a basic SQL exam:**
+- ✅ Basic subqueries with IN (covered in this lesson) — usually on exams
+- ⚠️ Correlated subqueries — may be too advanced for basic exams
+- ⚠️ EXISTS operator — advanced topic
+- ⚠️ Subqueries in FROM clause — advanced topic
+
+**Recommendation:** Focus on basic subqueries with IN and WHERE first. Check your course syllabus for the rest.
+
+---
+
 ## What You'll Learn
 
 In this lesson, you'll master:

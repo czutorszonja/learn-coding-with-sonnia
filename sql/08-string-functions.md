@@ -153,9 +153,27 @@ SELECT * FROM Employees
 WHERE LOWER(first_name) = 'szonja';
 ```
 
-**Result:** Returns Szonja even if the database has mixed case!
+**Result:**
+```
+| employee_id | first_name | last_name | email                  | phone      |
+|-------------|------------|-----------|------------------------|------------|
+| 1           | Szonja     | Smith     | szonja.smith@email.com | 555-1234   |
+```
 
-**Why this matters:** Without `LOWER()`, `'szonja'` might not match `'Szonja'` depending on the database.
+**Why this matters:** The `LOWER()` converts `first_name` to lowercase for comparison, so it matches `'szonja'` even though the stored value is `'Szonja'`. The result shows the **original** value (`Szonja`), not the lowercased version.
+
+**To return the lowercased value:**
+```sql
+SELECT LOWER(first_name) AS first_name FROM Employees
+WHERE LOWER(first_name) = 'szonja';
+```
+
+**Result:**
+```
+| first_name |
+|------------|
+| szonja     |
+```
 
 ---
 
