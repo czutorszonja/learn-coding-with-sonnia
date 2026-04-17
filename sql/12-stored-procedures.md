@@ -607,14 +607,7 @@ DROP PROCEDURE IF EXISTS GetAllEmployees;
 
 **Scenario:** You have a `Products` table:
 
-**Products table structure:**
-```
-| product_id | product_name | price   | stock |
-|------------|--------------|---------|-------|
-| INT        | VARCHAR      | DECIMAL | INT   |
-```
-
-**Products table data:**
+**Products table:**
 ```
 | product_id | product_name  | price  | stock |
 |------------|---------------|--------|-------|

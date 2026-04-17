@@ -477,14 +477,7 @@ WHERE shipped_date IS NULL;
 
 **Scenario:** You have an `Employees` table:
 
-**Employees table structure:**
-```
-| employee_id | name      | hire_date | salary  |
-|-------------|-----------|-----------|---------|
-| INT         | VARCHAR   | DATE      | DECIMAL |
-```
-
-**Employees table data:**
+**Employees table:**
 ```
 | employee_id | name           | hire_date  | salary |
 |-------------|----------------|------------|--------|

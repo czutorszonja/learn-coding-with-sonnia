@@ -446,14 +446,7 @@ END DESC;
 
 **Scenario:** You have a `Students` table:
 
-**Students table structure:**
-```
-| student_id | name   | grade | score |
-|------------|--------|-------|-------|
-| INT        | VARCHAR| VARCHAR| INT  |
-```
-
-**Students table data:**
+**Students table:**
 ```
 | student_id | name          | grade | score |
 |------------|---------------|-------|-------|

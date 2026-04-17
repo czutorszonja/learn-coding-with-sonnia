@@ -315,14 +315,7 @@ NATURAL JOIN Orders;
 
 **Scenario:** You have a `Teachers` table and a `Classes` table:
 
-**Teachers table structure:**
-```
-| teacher_id | name   | department |
-|------------|--------|------------|
-| INT        | VARCHAR| VARCHAR    |
-```
-
-**Teachers table data:**
+**Teachers table:**
 ```
 | teacher_id | name          | department  |
 |------------|---------------|-------------|
@@ -332,14 +325,7 @@ NATURAL JOIN Orders;
 | 4          | Dr. Brown     | History     |
 ```
 
-**Classes table structure:**
-```
-| class_id | teacher_id | course_name | room  |
-|----------|------------|-------------|-------|
-| INT      | INT        | VARCHAR     | VARCHAR|
-```
-
-**Classes table data:**
+**Classes table:**
 ```
 | class_id | teacher_id | course_name      | room  |
 |----------|------------|------------------|-------|
