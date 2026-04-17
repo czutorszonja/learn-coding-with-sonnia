@@ -404,8 +404,8 @@ WHERE price > ALL (SELECT price FROM Products WHERE product_name LIKE '%Laptop%'
 1. Find students who have received an 'A' grade (use subquery with IN)
 2. Find students who have NOT received any grade (use subquery with NOT IN)
 3. Show each student with their total number of courses (use subquery in SELECT)
-4. Find students whose grade count is above the average grade count (use subquery in FROM)
-5. Find students who have grades in courses that start with 'P' (use correlated subquery with EXISTS)
+4. Find the highest grade count among all students (use subquery to get MAX)
+5. Find students who have more than 1 grade (use subquery in SELECT with WHERE)
 
 **Try it yourself first!** Then scroll down to check your answers.
 
@@ -430,32 +430,19 @@ SELECT
     (SELECT COUNT(*) FROM Grades g WHERE g.student_id = s.student_id) AS course_count
 FROM Students s;
 
--- 4. Students with above-average grade count
-SELECT name, course_count
+-- 4. Find the highest grade count among all students
+SELECT MAX(course_count) AS highest_count
 FROM (
-    SELECT 
-        s.name,
-        COUNT(g.grade_id) AS course_count
-    FROM Students s
-    LEFT JOIN Grades g ON s.student_id = g.student_id
-    GROUP BY s.student_id, s.name
-) AS student_counts
-WHERE course_count > (
-    SELECT AVG(cnt) FROM (
-        SELECT COUNT(*) AS cnt
-        FROM Grades
-        GROUP BY student_id
-    ) AS counts
-);
+    SELECT COUNT(*) AS course_count
+    FROM Grades
+    GROUP BY student_id
+) AS counts;
 
--- 5. Students with grades in courses starting with 'P' (using EXISTS)
-SELECT name
+-- 5. Find students who have more than 1 grade
+SELECT name,
+       (SELECT COUNT(*) FROM Grades g WHERE g.student_id = s.student_id) AS grade_count
 FROM Students s
-WHERE EXISTS (
-    SELECT 1 FROM Grades g 
-    WHERE g.student_id = s.student_id 
-    AND g.course_name LIKE 'P%'
-);
+WHERE (SELECT COUNT(*) FROM Grades g WHERE g.student_id = s.student_id) > 1;
 ```
 
 ---
