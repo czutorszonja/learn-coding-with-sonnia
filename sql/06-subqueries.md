@@ -283,31 +283,6 @@ WHERE salary > (
 |--------|-------------|--------|--------------|
 | Szonja | Engineering | 95000  | 90000        |
 | Maria  | Sales       | 70000  | 65000        |
-| Emma   | Engineering | 90000  | 90000        |
-```
-
-**Wait, Emma shouldn't be there!** Her salary equals the average, not exceeds it. Let me fix the example:
-
-```sql
--- Emma's salary is 90000, Engineering average is (95000+85000+90000)/3 = 90000
--- So Emma's salary = average, not > average. Let me recalculate...
--- Actually the query is correct, Emma's salary = 90000 which is NOT > 90000
--- So the result should only show Szonja and Maria. Let me verify:
--- Engineering: (95000 + 85000 + 90000) / 3 = 270000 / 3 = 90000
--- Sales: (70000 + 60000) / 2 = 130000 / 2 = 65000
--- Szonja: 95000 > 90000 ✓
--- Arthur: 85000 > 90000 ✗
--- Maria: 70000 > 65000 ✓
--- David: 60000 > 65000 ✗
--- Emma: 90000 > 90000 ✗
-```
-
-**Corrected Result:**
-```
-| name   | department  | salary | dept_average |
-|--------|-------------|--------|--------------|
-| Szonja | Engineering | 95000  | 90000        |
-| Maria  | Sales       | 70000  | 65000        |
 ```
 
 **How correlated subqueries work:**
