@@ -84,6 +84,8 @@ SELECT NOW() AS current_datetime;
 
 Same result as `CURRENT_TIMESTAMP`!
 
+**Note:** These functions don't need a `FROM` clause — they work on their own!
+
 ---
 
 ## EXTRACT — Get Parts of a Date
@@ -119,9 +121,7 @@ SELECT
     CURRENT_TIMESTAMP AS now,
     EXTRACT(HOUR FROM CURRENT_TIMESTAMP) AS hour,
     EXTRACT(MINUTE FROM CURRENT_TIMESTAMP) AS minute,
-    EXTRACT(SECOND FROM CURRENT_TIMESTAMP) AS second
-FROM Orders
-LIMIT 1;
+    EXTRACT(SECOND FROM CURRENT_TIMESTAMP) AS second;
 ```
 
 **Result:**
@@ -130,6 +130,8 @@ LIMIT 1;
 |---------------------|------|--------|--------|
 | 2024-03-15 14:30:45 | 14   | 30     | 45     |
 ```
+
+**Note:** No `FROM` clause needed! These functions work on their own.
 
 ### Alternative: YEAR(), MONTH(), DAY() Functions
 

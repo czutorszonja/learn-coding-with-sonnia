@@ -511,7 +511,7 @@ FROM Employees;
 5. Replace all spaces in product names with hyphens
 6. Get the length of each product name
 7. Create a SKU by combining first 3 letters of product name with price (e.g., "Lap999")
-8. Extract everything after the first space in the product name
+8. Extract the text after the first space (e.g., "Laptop Pro" → "Pro")
 
 **Try it yourself first!** Then scroll down to check your answers.
 
