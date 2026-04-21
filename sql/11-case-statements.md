@@ -429,16 +429,26 @@ FROM Employees;
 
 ### Use Case 3: Dynamic Sorting
 
+Sort by department priority first, then by salary:
+
 ```sql
 SELECT name, department, salary
 FROM Employees
-ORDER BY CASE
-    WHEN department = 'Engineering' THEN salary * 1.0
-    WHEN department = 'HR' THEN salary * 1.1
-    WHEN department = 'Sales' THEN salary * 1.2
-    ELSE salary
-END DESC;
+ORDER BY 
+    CASE department
+        WHEN 'Sales' THEN 1
+        WHEN 'HR' THEN 2
+        WHEN 'Engineering' THEN 3
+        ELSE 4
+    END ASC,
+    salary DESC;
 ```
+
+**What this does:**
+1. First, sorts by department priority (Sales first, then HR, then Engineering)
+2. Within each department, sorts by salary (highest first)
+
+**Why this is better than multipliers:** Clearer and easier to understand!
 
 ---
 
