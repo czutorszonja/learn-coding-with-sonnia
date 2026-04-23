@@ -310,180 +310,57 @@ print(f"Skills to learn: {missing}")
 
 ---
 
-## Practice Exercises
+## Practice Exercise
 
-### Exercise 1: Remove Duplicates
-
-**Scenario:** You have a list of email addresses with some duplicates. Use a set to remove them!
+**Scenario:** You're managing invitations for an event!
 
 **Your task:**
-1. Create a list called `emails` with 5 email addresses (include some duplicates)
-2. Convert the list to a set to remove duplicates
-3. Convert it back to a list
-4. Print the unique emails
+1. Create a set called `invited` with 5 guest names
+2. Create a set called `confirmed` with 3 names (some should be in `invited`, some not)
+3. Find guests who confirmed but weren't invited (use set operations)
+4. Find guests who were invited but haven't confirmed
+5. Add 2 more guests to the `invited` set
+6. Remove one guest from `invited` who cancelled
+7. Print the final invited list and show the total count
 
 **Try it yourself first!** Scroll down when ready.
 
 ---
 
-### Exercise 2: Find Common Friends
-
-**Scenario:** Two people have friend lists. Find who they have in common!
-
-**Your task:**
-1. Create two sets: `friends_alice` and `friends_bob` with 4-5 names each
-2. Use the intersection operator (`&`) to find common friends
-3. Print the common friends
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 3: Combine Collections
-
-**Scenario:** You have two stamp collections. Combine them without duplicates!
-
-**Your task:**
-1. Create two sets: `collection_1` and `collection_2` with country names
-2. Use the union operator (`|`) to combine them
-3. Print the complete collection
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 4: Find Missing Items
-
-**Scenario:** You're checking what ingredients you need to buy!
-
-**Your task:**
-1. Create a set called `required` with 5 ingredients
-2. Create a set called `have` with 3 ingredients (some overlap with required)
-3. Use the difference operator (`-`) to find what's missing
-4. Print what you need to buy
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 5: Create Your Own Set
-
-**Scenario:** Create a set of your favourite things!
-
-**Your task:**
-1. Create a set with 5 items (movies, books, songs, or anything you like)
-2. Add a new item using `.add()`
-3. Remove an item using `.discard()`
-4. Check if a specific item exists using `in`
-5. Print the final set
-
-**Try it yourself first!** Share your creation if you'd like! 💛
-
----
-
-## Solutions
-
-### Solution 1: Remove Duplicates
+## Solution
 
 ```python
-# List of email addresses with duplicates
-emails = ['alice@example.com', 'bob@example.com', 'alice@example.com', 'charlie@example.com', 'bob@example.com']
+# Create sets
+invited = {'Alice', 'Bob', 'Charlie', 'David', 'Eve'}
+confirmed = {'Charlie', 'David', 'Frank'}
 
-# Convert to set to remove duplicates, then back to list
-unique_emails = list(set(emails))
-print(unique_emails)
+# Find who confirmed but wasn't invited
+uninvited_confirmed = confirmed - invited
+print(f"Confirmed but not invited: {uninvited_confirmed}")
+
+# Find who was invited but hasn't confirmed
+not_confirmed = invited - confirmed
+print(f"Invited but not confirmed: {not_confirmed}")
+
+# Add more guests
+invited.add('Grace')
+invited.add('Henry')
+
+# Remove a guest who cancelled
+invited.discard('Bob')
+
+# Print final list
+print(f"\nFinal invited guests: {invited}")
+print(f"Total guests: {len(invited)}")
 ```
 
 **Output:**
 ```
-['alice@example.com', 'bob@example.com', 'charlie@example.com']
-```
+Confirmed but not invited: {'Frank'}
+Invited but not confirmed: {'Eve', 'Alice', 'Bob'}
 
----
-
-### Solution 2: Find Common Friends
-
-```python
-# Two people's friend lists
-friends_alice = {'Bob', 'Charlie', 'David', 'Eve'}
-friends_bob = {'Charlie', 'Eve', 'Frank', 'Grace'}
-
-# Find common friends using intersection
-common_friends = friends_alice & friends_bob
-print(f"Common friends: {common_friends}")
-```
-
-**Output:**
-```
-Common friends: {'Charlie', 'Eve'}
-```
-
----
-
-### Solution 3: Combine Collections
-
-```python
-# Two stamp collections
-collection_1 = {'UK', 'USA', 'France', 'Germany'}
-collection_2 = {'France', 'Italy', 'Spain', 'UK'}
-
-# Combine both collections using union
-full_collection = collection_1 | collection_2
-print(f"Complete collection: {full_collection}")
-```
-
-**Output:**
-```
-Complete collection: {'UK', 'USA', 'France', 'Germany', 'Italy', 'Spain'}
-```
-
----
-
-### Solution 4: Find Missing Items
-
-```python
-# All required ingredients
-required = {'flour', 'sugar', 'eggs', 'butter', 'milk'}
-
-# What you have in the kitchen
-have = {'flour', 'eggs', 'milk'}
-
-# Find what's missing using difference
-missing = required - have
-print(f"Need to buy: {missing}")
-```
-
-**Output:**
-```
-Need to buy: {'sugar', 'butter'}
-```
-
----
-
-### Solution 5: Create Your Own Set
-
-```python
-# Create a set of favourite movies
-favourites = {'Inception', 'The Matrix', 'Interstellar', 'Pulp Fiction', 'The Dark Knight'}
-
-# Add a new item
-favourites.add('Forrest Gump')
-
-# Remove an item
-favourites.discard('Pulp Fiction')
-
-# Check if an item exists
-if 'Inception' in favourites:
-    print("Inception is in the set!")
-
-# Print the final set
-print(f"My favourite movies: {favourites}")
-```
-
-**Output:**
-```
-Inception is in the set!
-My favourite movies: {'The Matrix', 'Interstellar', 'Forrest Gump', 'Inception', 'The Dark Knight'}
+Final invited guests: {'Charlie', 'David', 'Eve', 'Grace', 'Henry'}
+Total guests: 5
 ```
 
 ---

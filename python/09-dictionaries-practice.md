@@ -316,187 +316,69 @@ else:
 
 ---
 
-## Part 5: Practice Exercises
+## Practice Exercise
 
-### Exercise 1: Using `.pop()`
-
-**Scenario:** You have a to-do list dictionary and need to mark tasks as complete!
+**Scenario:** You're building a student grade tracker!
 
 **Your task:**
-1. Create a dictionary called `tasks` with three tasks (use keys like "task_1", "task_2", "task_3")
-2. Use `.pop()` to remove "task_1" and store the returned value in a variable called `completed`
-3. Print a message showing what task was completed
-4. Print the remaining tasks dictionary
+1. Create a dictionary called `student` with these keys: `name`, `age`, `city`
+2. Add your own values for each key
+3. Create a nested dictionary called `grades` inside `student` with subjects as keys and scores as values (at least 3 subjects)
+4. Use `.pop()` to remove one subject from grades
+5. Use `.update()` to add a new subject with a grade
+6. Loop through the grades and print each subject with its score
+7. Calculate and print the average grade
 
 **Try it yourself first!** Scroll down when ready.
 
 ---
 
-### Exercise 2: List of Dictionaries
-
-**Scenario:** You're organizing your favourite books!
-
-**Your task:**
-1. Create a list called `books` with 3 books
-2. Each book should be a dictionary with keys: `title`, `author`, `year`, `genre`
-3. Loop through the list and print each book's title and author
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 3: Nested Dictionary
-
-**Scenario:** You're creating a menu for a restaurant!
-
-**Your task:**
-1. Create a nested dictionary called `menu` with three categories: "starters", "mains", "desserts"
-2. Each category should have at least 2 items with prices
-3. Loop through the "mains" section using `.items()` and print each dish name and its price
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 4: Build Your Own Project
-
-**Scenario:** Create a dictionary-based project of your choice!
-
-**Ideas:**
-- Movie collection (title, director, year, rating)
-- Recipe book (recipe name, ingredients, cooking time)
-- Travel log (country, cities visited, dates)
-- Music playlist (song, artist, duration)
-
-**Your task:**
-1. Choose one idea (or your own!)
-2. Create the appropriate dictionary or list of dictionaries
-3. Add at least 3 items
-4. Print the data in a nice format
-
-**Try it yourself first!** Share your creation if you'd like! 💛
-
----
-
-## Solutions
-
-### Solution 1: Using `.pop()`
+## Solution
 
 ```python
-# Create a to-do list dictionary
-tasks = {
-    "task_1": "Buy groceries",
-    "task_2": "Write report",
-    "task_3": "Call mum"
+# Create student dictionary
+student = {
+    "name": "Szonja",
+    "age": 30,
+    "city": "London"
 }
 
-# Remove task_1 and store the value
-completed = tasks.pop("task_1")
-print(f"Completed: {completed}")
-print(f"Remaining tasks: {tasks}")
-```
-
-**Output:**
-```
-Completed: Buy groceries
-Remaining tasks: {'task_2': 'Write report', 'task_3': 'Call mum'}
-```
-
----
-
-### Solution 2: List of Dictionaries
-
-```python
-# Create a list of 3 books
-books = [
-    {"title": "1984", "author": "George Orwell", "year": 1949, "genre": "Dystopian"},
-    {"title": "To Kill a Mockingbird", "author": "Harper Lee", "year": 1960, "genre": "Fiction"},
-    {"title": "The Great Gatsby", "author": "F. Scott Fitzgerald", "year": 1925, "genre": "Classic"}
-]
-
-# Print all book titles
-for book in books:
-    print(f"Title: {book['title']} by {book['author']}")
-```
-
-**Output:**
-```
-Title: 1984 by George Orwell
-Title: To Kill a Mockingbird by Harper Lee
-Title: The Great Gatsby by F. Scott Fitzgerald
-```
-
----
-
-### Solution 3: Nested Dictionary
-
-```python
-# Create a nested dictionary for a restaurant menu
-menu = {
-    "starters": {
-        "bruschetta": 6.50,
-        "calamari": 8.00
-    },
-    "mains": {
-        "pizza": 12.00,
-        "pasta": 10.50
-    },
-    "desserts": {
-        "tiramisu": 5.50,
-        "gelato": 4.00
-    }
+# Add nested grades dictionary
+student["grades"] = {
+    "Python": 85,
+    "SQL": 90,
+    "Data Science": 78
 }
 
-# Print all main courses and their prices
-for dish, price in menu["mains"].items():
-    print(f"{dish}: £{price:.2f}")
+# Remove one subject
+removed_subject = student["grades"].pop("Data Science")
+print(f"Removed: {removed_subject}")
+
+# Add a new subject
+student["grades"].update({"Machine Learning": 92})
+
+# Print all grades
+print(f"\nGrades for {student['name']}:")
+for subject, score in student["grades"].items():
+    print(f"  {subject}: {score}")
+
+# Calculate average
+total = sum(student["grades"].values())
+count = len(student["grades"])
+average = total / count
+print(f"\nAverage grade: {average:.1f}")
 ```
 
 **Output:**
 ```
-pizza: £12.00
-pasta: £10.50
-```
+Removed: Data Science
 
----
+Grades for Szonja:
+  Python: 85
+  SQL: 90
+  Machine Learning: 92
 
-### Solution 4: Build Your Own Project
-
-Here's an example using a movie collection:
-
-```python
-# Movie collection
-movies = [
-    {"title": "Inception", "director": "Christopher Nolan", "year": 2010, "rating": 8.8},
-    {"title": "The Matrix", "director": "The Wachowskis", "year": 1999, "rating": 8.7},
-    {"title": "Interstellar", "director": "Christopher Nolan", "year": 2014, "rating": 8.6}
-]
-
-# Print all movies
-print("My Movie Collection:")
-print("=" * 40)
-for movie in movies:
-    print(f"{movie['title']} ({movie['year']})")
-    print(f"  Director: {movie['director']}")
-    print(f"  Rating: {movie['rating']}/10")
-    print()
-```
-
-**Output:**
-```
-My Movie Collection:
-========================================
-Inception (2010)
-  Director: Christopher Nolan
-  Rating: 8.8/10
-
-The Matrix (1999)
-  Director: The Wachowskis
-  Rating: 8.7/10
-
-Interstellar (2014)
-  Director: Christopher Nolan
-  Rating: 8.6/10
+Average grade: 89.0
 ```
 
 ---
