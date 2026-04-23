@@ -320,6 +320,68 @@ else:
 
 ### Exercise 1: Using `.pop()`
 
+**Scenario:** You have a to-do list dictionary and need to mark tasks as complete!
+
+**Your task:**
+1. Start with the `tasks` dictionary provided
+2. Use `.pop()` to remove "task_1" and store the returned value in a variable called `completed`
+3. Print a message showing what task was completed
+4. Print the remaining tasks
+
+**Try it yourself first!** Solution below.
+
+---
+
+### Exercise 2: List of Dictionaries
+
+**Scenario:** You're organizing your favourite books!
+
+**Your task:**
+1. Create a list called `books` with 3 books
+2. Each book should be a dictionary with keys: `title`, `author`, `year`, `genre`
+3. Loop through the list and print each book's title and author
+
+**Try it yourself first!** Solution below.
+
+---
+
+### Exercise 3: Nested Dictionary
+
+**Scenario:** You're creating a menu for a restaurant!
+
+**Your task:**
+1. Start with the `menu` dictionary provided
+2. Loop through the "mains" section using `.items()`
+3. Print each dish name and its price in a nice format
+
+**Try it yourself first!** Solution below.
+
+---
+
+### Exercise 4: Build Your Own Project
+
+**Scenario:** Create a dictionary-based project of your choice!
+
+**Ideas:**
+- Movie collection (title, director, year, rating)
+- Recipe book (recipe name, ingredients, cooking time)
+- Travel log (country, cities visited, dates)
+- Music playlist (song, artist, duration)
+
+**Your task:**
+1. Choose one idea (or your own!)
+2. Create the appropriate dictionary or list of dictionaries
+3. Add at least 3 items
+4. Print the data in a nice format
+
+**Try it yourself first!** Share your creation if you'd like! 💛
+
+---
+
+## Solutions
+
+### Solution 1: Using `.pop()`
+
 ```python
 # You have a to-do list dictionary
 tasks = {
@@ -329,22 +391,27 @@ tasks = {
 }
 
 # Complete and remove task_1
-# Your code here: use .pop() to remove task_1 and store it in 'completed'
-completed = ...
+completed = tasks.pop("task_1")
 print(f"Completed: {completed}")
 print(f"Remaining tasks: {tasks}")
 ```
 
+**Output:**
+```
+Completed: Buy groceries
+Remaining tasks: {'task_2': 'Write report', 'task_3': 'Call mum'}
+```
+
 ---
 
-### Exercise 2: List of Dictionaries
+### Solution 2: List of Dictionaries
 
 ```python
 # Create a list of 3 books
-# Each book should have: title, author, year, genre
 books = [
-    # Add your 3 books here as dictionaries
-    # Example: {"title": "...", "author": "...", "year": ..., "genre": "..."}
+    {"title": "1984", "author": "George Orwell", "year": 1949, "genre": "Dystopian"},
+    {"title": "To Kill a Mockingbird", "author": "Harper Lee", "year": 1960, "genre": "Fiction"},
+    {"title": "The Great Gatsby", "author": "F. Scott Fitzgerald", "year": 1925, "genre": "Classic"}
 ]
 
 # Print all book titles
@@ -352,13 +419,19 @@ for book in books:
     print(f"Title: {book['title']} by {book['author']}")
 ```
 
+**Output:**
+```
+Title: 1984 by George Orwell
+Title: To Kill a Mockingbird by Harper Lee
+Title: The Great Gatsby by F. Scott Fitzgerald
+```
+
 ---
 
-### Exercise 3: Nested Dictionary
+### Solution 3: Nested Dictionary
 
 ```python
 # Create a nested dictionary for a restaurant menu
-# Structure: category -> dish name -> price
 menu = {
     "starters": {
         "bruschetta": 6.50,
@@ -375,20 +448,56 @@ menu = {
 }
 
 # Print all main courses and their prices
-# Your code here: loop through menu["mains"].items()
-for dish, price in ...:
+for dish, price in menu["mains"].items():
     print(f"{dish}: £{price:.2f}")
+```
+
+**Output:**
+```
+pizza: £12.00
+pasta: £10.50
 ```
 
 ---
 
-### Exercise 4: Build Your Own Project
+### Solution 4: Build Your Own Project
 
-Create a dictionary-based project of your choice! Ideas:
-- Movie collection (title, director, year, rating)
-- Recipe book (recipe name, ingredients, cooking time)
-- Travel log (country, cities visited, dates)
-- Music playlist (song, artist, duration)
+Here's an example using a movie collection:
+
+```python
+# Movie collection
+movies = [
+    {"title": "Inception", "director": "Christopher Nolan", "year": 2010, "rating": 8.8},
+    {"title": "The Matrix", "director": "The Wachowskis", "year": 1999, "rating": 8.7},
+    {"title": "Interstellar", "director": "Christopher Nolan", "year": 2014, "rating": 8.6}
+]
+
+# Print all movies
+print("My Movie Collection:")
+print("=" * 40)
+for movie in movies:
+    print(f"{movie['title']} ({movie['year']})")
+    print(f"  Director: {movie['director']}")
+    print(f"  Rating: {movie['rating']}/10")
+    print()
+```
+
+**Output:**
+```
+My Movie Collection:
+========================================
+Inception (2010)
+  Director: Christopher Nolan
+  Rating: 8.8/10
+
+The Matrix (1999)
+  Director: The Wachowskis
+  Rating: 8.7/10
+
+Interstellar (2014)
+  Director: Christopher Nolan
+  Rating: 8.6/10
+```
 
 ---
 
