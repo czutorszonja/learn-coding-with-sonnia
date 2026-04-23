@@ -402,7 +402,7 @@ Create a set of your favourite movies, books, or songs. Then:
 
 ## What's Next?
 
-Lesson 11 will cover **File Handling** — how to read from and write to files on your computer! This is essential for working with real data. 📁
+Ready for more? Continue to **[Mini Project 1: Study Tracker](mini-project-1-study-tracker.md)**! 📁
 
 ---
 

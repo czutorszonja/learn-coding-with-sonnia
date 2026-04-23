@@ -399,7 +399,7 @@ Create a dictionary-based project of your choice! Ideas:
 
 ## What's Next?
 
-You've completed the dictionary deep-dive! **Lesson 10** covers **Sets** — a data structure for storing unique items and performing cool set operations like union, intersection, and difference! 🎯
+Ready for more? Continue to **[Lesson 10: Sets Explained](10-sets-explained.md)**! 🎯
 
 ---
 
