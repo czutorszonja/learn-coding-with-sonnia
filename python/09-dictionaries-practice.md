@@ -323,12 +323,12 @@ else:
 **Scenario:** You have a to-do list dictionary and need to mark tasks as complete!
 
 **Your task:**
-1. Start with the `tasks` dictionary provided
+1. Create a dictionary called `tasks` with three tasks (use keys like "task_1", "task_2", "task_3")
 2. Use `.pop()` to remove "task_1" and store the returned value in a variable called `completed`
 3. Print a message showing what task was completed
-4. Print the remaining tasks
+4. Print the remaining tasks dictionary
 
-**Try it yourself first!** Solution below.
+**Try it yourself first!** Scroll down when ready.
 
 ---
 
@@ -338,10 +338,10 @@ else:
 
 **Your task:**
 1. Create a list called `books` with 3 books
-2. Each book should be a dictionary with keys: `title`, `author`, `year`, `genre`
+2. Each book should be a dictionary with these keys: `title`, `author`, `year`, `genre`
 3. Loop through the list and print each book's title and author
 
-**Try it yourself first!** Solution below.
+**Try it yourself first!** Scroll down when ready.
 
 ---
 
@@ -350,11 +350,11 @@ else:
 **Scenario:** You're creating a menu for a restaurant!
 
 **Your task:**
-1. Start with the `menu` dictionary provided
-2. Loop through the "mains" section using `.items()`
-3. Print each dish name and its price in a nice format
+1. Create a nested dictionary called `menu` with three categories: "starters", "mains", "desserts"
+2. Each category should have at least 2 items with prices
+3. Loop through the "mains" section using `.items()` and print each dish name and its price
 
-**Try it yourself first!** Solution below.
+**Try it yourself first!** Scroll down when ready.
 
 ---
 
@@ -383,14 +383,14 @@ else:
 ### Solution 1: Using `.pop()`
 
 ```python
-# You have a to-do list dictionary
+# Create a to-do list dictionary
 tasks = {
     "task_1": "Buy groceries",
     "task_2": "Write report",
     "task_3": "Call mum"
 }
 
-# Complete and remove task_1
+# Remove task_1 and store the value
 completed = tasks.pop("task_1")
 print(f"Completed: {completed}")
 print(f"Remaining tasks: {tasks}")
