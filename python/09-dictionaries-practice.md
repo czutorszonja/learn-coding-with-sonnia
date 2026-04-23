@@ -329,7 +329,8 @@ tasks = {
 }
 
 # Complete and remove task_1
-completed = tasks.pop("task_1")
+# Your code here: use .pop() to remove task_1 and store it in 'completed'
+completed = ...
 print(f"Completed: {completed}")
 print(f"Remaining tasks: {tasks}")
 ```
@@ -342,7 +343,8 @@ print(f"Remaining tasks: {tasks}")
 # Create a list of 3 books
 # Each book should have: title, author, year, genre
 books = [
-    # Add your books here
+    # Add your 3 books here as dictionaries
+    # Example: {"title": "...", "author": "...", "year": ..., "genre": "..."}
 ]
 
 # Print all book titles
@@ -373,7 +375,8 @@ menu = {
 }
 
 # Print all main courses and their prices
-for dish, price in menu["mains"].items():
+# Your code here: loop through menu["mains"].items()
+for dish, price in ...:
     print(f"{dish}: £{price:.2f}")
 ```
 
