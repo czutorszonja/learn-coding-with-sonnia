@@ -151,6 +151,10 @@ print(student["courses"][0])  # Output: Python
 # Loop through courses
 for course in student["courses"]:
     print(f"Course: {course}")
+    # Output:
+    # Course: Python
+    # Course: SQL
+    # Course: Data Science
 ```
 
 ---
