@@ -323,26 +323,12 @@ else:
 **Scenario:** You have a to-do list dictionary and need to mark tasks as complete!
 
 **Your task:**
-1. Start with the `tasks` dictionary provided
+1. Create a dictionary called `tasks` with three tasks (use keys like "task_1", "task_2", "task_3")
 2. Use `.pop()` to remove "task_1" and store the returned value in a variable called `completed`
 3. Print a message showing what task was completed
 4. Print the remaining tasks dictionary
 
 **Try it yourself first!** Scroll down when ready.
-
-```python
-# You have a to-do list dictionary
-tasks = {
-    "task_1": "Buy groceries",
-    "task_2": "Write report",
-    "task_3": "Call mum"
-}
-
-# Complete and remove task_1
-completed = ...
-print(f"Completed: {completed}")
-print(f"Remaining tasks: {tasks}")
-```
 
 ---
 
@@ -357,17 +343,6 @@ print(f"Remaining tasks: {tasks}")
 
 **Try it yourself first!** Scroll down when ready.
 
-```python
-# Create a list of 3 books
-books = [
-    # Add your books here
-]
-
-# Print all book titles
-for book in books:
-    print(f"Title: {book['title']} by {book['author']}")
-```
-
 ---
 
 ### Exercise 3: Nested Dictionary
@@ -375,33 +350,11 @@ for book in books:
 **Scenario:** You're creating a menu for a restaurant!
 
 **Your task:**
-1. Start with the `menu` dictionary provided
-2. Loop through the "mains" section using `.items()`
-3. Print each dish name and its price in a nice format
+1. Create a nested dictionary called `menu` with three categories: "starters", "mains", "desserts"
+2. Each category should have at least 2 items with prices
+3. Loop through the "mains" section using `.items()` and print each dish name and its price
 
 **Try it yourself first!** Scroll down when ready.
-
-```python
-# Create a nested dictionary for a restaurant menu
-menu = {
-    "starters": {
-        "bruschetta": 6.50,
-        "calamari": 8.00
-    },
-    "mains": {
-        "pizza": 12.00,
-        "pasta": 10.50
-    },
-    "desserts": {
-        "tiramisu": 5.50,
-        "gelato": 4.00
-    }
-}
-
-# Print all main courses and their prices
-for dish, price in ...:
-    print(f"{dish}: £{price:.2f}")
-```
 
 ---
 
