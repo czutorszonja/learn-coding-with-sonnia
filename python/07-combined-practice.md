@@ -300,7 +300,11 @@ You've now practiced combining:
 
 ## What's Next?
 
-Ready for more? Continue to **[Lesson 8: Dictionaries](08-dictionaries-explained.md)**! 🚀
+You've got a solid foundation now! Before moving on to more advanced topics, try building this project to practice everything you've learned:
+
+**📁 [Mini Project 1: Study Tracker](mini-project-1-study-tracker.md)** — Build a practical study task tracker!
+
+When you're ready to continue, head to **[Lesson 8: Dictionaries](08-dictionaries-explained.md)**! 🚀
 
 ---
 

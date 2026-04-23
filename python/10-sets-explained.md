@@ -508,7 +508,7 @@ My favourite movies: {'The Matrix', 'Interstellar', 'Forrest Gump', 'Inception',
 
 ## What's Next?
 
-Ready for more? Continue to **[Mini Project 1: Study Tracker](mini-project-1-study-tracker.md)**! 📁
+Ready for more? Continue to **[Lesson 11: File Handling](11-file-handling.md)** — learn to read from and write to files! 📁
 
 ---
 
