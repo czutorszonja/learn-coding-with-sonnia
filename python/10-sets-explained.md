@@ -314,71 +314,177 @@ print(f"Skills to learn: {missing}")
 
 ### Exercise 1: Remove Duplicates
 
-You have a list of email addresses with some duplicates. Use a set to remove them!
+**Scenario:** You have a list of email addresses with some duplicates. Use a set to remove them!
 
-```python
-emails = ['alice@example.com', 'bob@example.com', 'alice@example.com', 'charlie@example.com', 'bob@example.com']
+**Your task:**
+1. Create a list called `emails` with 5 email addresses (include some duplicates)
+2. Convert the list to a set to remove duplicates
+3. Convert it back to a list
+4. Print the unique emails
 
-# Your code here: convert to set and back to list
-unique_emails = ...
-print(unique_emails)
-```
+**Try it yourself first!** Scroll down when ready.
 
 ---
 
 ### Exercise 2: Find Common Friends
 
-Two people have friend lists. Find who they have in common!
+**Scenario:** Two people have friend lists. Find who they have in common!
 
-```python
-friends_alice = {'Bob', 'Charlie', 'David', 'Eve'}
-friends_bob = {'Charlie', 'Eve', 'Frank', 'Grace'}
+**Your task:**
+1. Create two sets: `friends_alice` and `friends_bob` with 4-5 names each
+2. Use the intersection operator (`&`) to find common friends
+3. Print the common friends
 
-# Your code here: find intersection
-common_friends = ...
-print(common_friends)
-```
+**Try it yourself first!** Scroll down when ready.
 
 ---
 
 ### Exercise 3: Combine Collections
 
-You have two stamp collections. Combine them without duplicates!
+**Scenario:** You have two stamp collections. Combine them without duplicates!
 
-```python
-collection_1 = {'UK', 'USA', 'France', 'Germany'}
-collection_2 = {'France', 'Italy', 'Spain', 'UK'}
+**Your task:**
+1. Create two sets: `collection_1` and `collection_2` with country names
+2. Use the union operator (`|`) to combine them
+3. Print the complete collection
 
-# Your code here: find union
-full_collection = ...
-print(full_collection)
-```
+**Try it yourself first!** Scroll down when ready.
 
 ---
 
 ### Exercise 4: Find Missing Items
 
-```python
-# All required ingredients for a recipe
-required = {'flour', 'sugar', 'eggs', 'butter', 'milk'}
+**Scenario:** You're checking what ingredients you need to buy!
 
-# What you have in the kitchen
-have = {'flour', 'eggs', 'milk'}
+**Your task:**
+1. Create a set called `required` with 5 ingredients
+2. Create a set called `have` with 3 ingredients (some overlap with required)
+3. Use the difference operator (`-`) to find what's missing
+4. Print what you need to buy
 
-# Find what's missing
-missing = ...
-print(f"Need to buy: {missing}")
-```
+**Try it yourself first!** Scroll down when ready.
 
 ---
 
 ### Exercise 5: Create Your Own Set
 
-Create a set of your favourite movies, books, or songs. Then:
-1. Add a new item
-2. Remove an item
-3. Check if a specific item exists
-4. Print the final set
+**Scenario:** Create a set of your favourite things!
+
+**Your task:**
+1. Create a set with 5 items (movies, books, songs, or anything you like)
+2. Add a new item using `.add()`
+3. Remove an item using `.discard()`
+4. Check if a specific item exists using `in`
+5. Print the final set
+
+**Try it yourself first!** Share your creation if you'd like! 💛
+
+---
+
+## Solutions
+
+### Solution 1: Remove Duplicates
+
+```python
+# List of email addresses with duplicates
+emails = ['alice@example.com', 'bob@example.com', 'alice@example.com', 'charlie@example.com', 'bob@example.com']
+
+# Convert to set to remove duplicates, then back to list
+unique_emails = list(set(emails))
+print(unique_emails)
+```
+
+**Output:**
+```
+['alice@example.com', 'bob@example.com', 'charlie@example.com']
+```
+
+---
+
+### Solution 2: Find Common Friends
+
+```python
+# Two people's friend lists
+friends_alice = {'Bob', 'Charlie', 'David', 'Eve'}
+friends_bob = {'Charlie', 'Eve', 'Frank', 'Grace'}
+
+# Find common friends using intersection
+common_friends = friends_alice & friends_bob
+print(f"Common friends: {common_friends}")
+```
+
+**Output:**
+```
+Common friends: {'Charlie', 'Eve'}
+```
+
+---
+
+### Solution 3: Combine Collections
+
+```python
+# Two stamp collections
+collection_1 = {'UK', 'USA', 'France', 'Germany'}
+collection_2 = {'France', 'Italy', 'Spain', 'UK'}
+
+# Combine both collections using union
+full_collection = collection_1 | collection_2
+print(f"Complete collection: {full_collection}")
+```
+
+**Output:**
+```
+Complete collection: {'UK', 'USA', 'France', 'Germany', 'Italy', 'Spain'}
+```
+
+---
+
+### Solution 4: Find Missing Items
+
+```python
+# All required ingredients
+required = {'flour', 'sugar', 'eggs', 'butter', 'milk'}
+
+# What you have in the kitchen
+have = {'flour', 'eggs', 'milk'}
+
+# Find what's missing using difference
+missing = required - have
+print(f"Need to buy: {missing}")
+```
+
+**Output:**
+```
+Need to buy: {'sugar', 'butter'}
+```
+
+---
+
+### Solution 5: Create Your Own Set
+
+```python
+# Create a set of favourite movies
+favourites = {'Inception', 'The Matrix', 'Interstellar', 'Pulp Fiction', 'The Dark Knight'}
+
+# Add a new item
+favourites.add('Forrest Gump')
+
+# Remove an item
+favourites.discard('Pulp Fiction')
+
+# Check if an item exists
+if 'Inception' in favourites:
+    print("Inception is in the set!")
+
+# Print the final set
+print(f"My favourite movies: {favourites}")
+```
+
+**Output:**
+```
+Inception is in the set!
+My favourite movies: {'The Matrix', 'Interstellar', 'Forrest Gump', 'Inception', 'The Dark Knight'}
+```
 
 ---
 
