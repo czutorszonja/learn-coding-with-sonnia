@@ -250,35 +250,10 @@ Google is your friend! Search for your error message — someone has probably ha
 
 ---
 
-## Python Curriculum 📚
-
-Here's the full lesson list. Work through them in order, or jump to any topic you want to review!
-
-### **Foundations**
-- **Lesson 1:** [Variables Explained](01-variables-explained.md) — What are variables, naming rules, data types
-- **Lesson 2:** [Operations with Variables](02-operations-with-variables.md) — Math, string operations, type conversion
-- **Lesson 3:** [Lists Explained](03-lists-explained.md) — Creating, accessing, modifying lists
-- **Lesson 4:** [Loops Explained](04-loops-explained.md) — For loops, ranges, iterating through lists
-- **Lesson 5:** [While Loops and Conditionals](05-while-loops-and-conditionals.md) — While loops, if/else, user input
-
-### **Building Blocks**
-- **Lesson 6:** [Functions Explained](06-functions-explained.md) — Defining functions, parameters, return values
-- **Lesson 7:** [Combined Practice](07-combined-practice.md) — Putting it all together with exercises
-
-### **Data Structures**
-- **Lesson 8:** [Dictionaries Explained](08-dictionaries-explained.md) — Key-value pairs, accessing, adding, removing
-- **Lesson 9:** [Advanced Dictionaries Practice](09-dictionaries-practice.md) — .pop(), nested dicts, lists in dicts, real-world projects
-- **Lesson 10:** [Sets Explained](10-sets-explained.md) — Unique items, set operations, removing duplicates
-
-### **Projects**
-- **Mini Project 1:** [Study Tracker](mini-project-1-study-tracker.md) — Build a practical study tracking app
-
----
-
 ## What's Next?
 
-Once you're set up, start with **Lesson 1** and work your way through! 🚀
+Once you're set up, head back to the lessons and start coding! 🚀
 
-**Start here:** [Lesson 1: Variables Explained](01-variables-explained.md)
+**Lesson 1:** [Variables Explained](01-variables-explained.md)
 
 Happy coding! 💛
