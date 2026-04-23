@@ -196,7 +196,7 @@ for dept, info in company.items():
 ```
 
 **Output:**
-```
+```text
 engineering:
   Head: Arthur
   Budget: £500,000
