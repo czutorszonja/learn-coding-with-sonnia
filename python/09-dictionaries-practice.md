@@ -193,21 +193,22 @@ for dept, info in company.items():
     print(f"  Head: {info['head']}")
     print(f"  Budget: £{info['budget']:,}")
     print(f"  Employees: {', '.join(info['employees'])}")
-    # Output:
-    # engineering:
-    #   Head: Arthur
-    #   Budget: £500,000
-    #   Employees: Szonja, Emma, David
-    #
-    # marketing:
-    #   Head: Sarah
-    #   Budget: £300,000
-    #   Employees: John, Lisa
-    #
-    # sales:
-    #   Head: Mike
-    #   Budget: £400,000
-    #   Employees: Tom, Anna, Chris
+
+# Output:
+# engineering:
+#   Head: Arthur
+#   Budget: £500,000
+#   Employees: Szonja, Emma, David
+#
+# marketing:
+#   Head: Sarah
+#   Budget: £300,000
+#   Employees: John, Lisa
+#
+# sales:
+#   Head: Mike
+#   Budget: £400,000
+#   Employees: Tom, Anna, Chris
 
 ---
 
