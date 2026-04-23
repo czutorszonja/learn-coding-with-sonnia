@@ -281,7 +281,7 @@ address: 123 Main Street, London
 
 ## What's Next?
 
-Lesson 9 will cover **more dictionary practice** — combining dictionaries with lists, nested dictionaries, and real-world projects!
+**Lesson 9** is a deep-dive practice session — you'll learn `.pop()`, nested dictionaries, combining dicts with lists, and build real-world projects like a shopping cart and grade tracker! 🎯
 
 ---
 
