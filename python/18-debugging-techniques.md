@@ -213,7 +213,7 @@ $ python -m pdb script.py
 
 ---
 
-## 5. IDE Debugger (VSCode / PyCharm)
+## 5. IDE Debugger
 
 **What it is:** Visual debugger with breakpoints, variable panels, and step controls.
 
@@ -223,47 +223,24 @@ $ python -m pdb script.py
 - Team collaboration (easier to show others)
 - Daily development work
 
-### VSCode Setup:
+### Setting Up Breakpoints:
 
-1. Install Python extension
-2. Click left of line number to add red breakpoint
-3. Press F5 to start debugging
-4. Use top bar controls: Continue, Step Over, Step Into, Step Out
-5. See variables in left panel
+**In any IDE:**
+1. Click to the left of a line number to add a breakpoint (red dot)
+2. Run the code in debug mode
+3. Execution pauses at the breakpoint
+4. Inspect variables in the debug panel
+5. Use controls: Continue, Step Over, Step Into, Step Out
 
-**Create `.vscode/launch.json`:**
-```json
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Python: Current File",
-            "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal"
-        }
-    ]
-}
-```
+**Common IDEs:**
+- VSCode — Free, highly customisable
+- PyCharm — Built specifically for Python
+- Sublime Text — Lightweight with plugins
 
-### PyCharm Setup:
-
-1. Click left of line number for breakpoint
-2. Right-click → Debug
-3. Similar controls to VSCode
-
-**Why PyCharm feels easier:**
-- Built specifically for Python
-- Auto-configures debug environment
-- Better variable inspection (shows nested structures)
-- Smarter step-through (handles frameworks better)
-- Console integration is smoother
-
-**VSCode limitations:**
-- Requires `launch.json` configuration for complex projects
-- Extensions needed for full features
-- Can be finicky with virtual environments
+**Limitations:**
+- Requires IDE setup
+- Can be overwhelming for simple scripts
+- Project-specific configuration
 
 **Why choose it:** Visual, interactive, best for complex debugging.
 
@@ -321,31 +298,6 @@ def divide(a, b):
 **Use:** IDE debugger or `pdb`
 - Step through line by line
 - Watch how variables change
-
----
-
-## VSCode vs PyCharm: Why the Difference?
-
-**PyCharm advantages:**
-- Built specifically for Python
-- Auto-configures debug environment
-- Better variable inspection (shows nested structures)
-- Smarter step-through (handles frameworks better)
-- Console integration is smoother
-
-**VSCode advantages:**
-- Free and open source
-- Works with any language
-- Highly customizable
-- Good for polyglot projects
-
-**Why PyCharm works better out of the box:**
-PyCharm has better defaults for Python debugging. VSCode requires more manual setup (launch.json, Python extension, virtual env configuration).
-
-**Fix VSCode debugging:**
-1. Install Python extension
-2. Create `.vscode/launch.json` (see above)
-3. Select your virtual environment (Ctrl+Shift+P → "Python: Select Interpreter")
 
 ---
 
@@ -462,7 +414,3 @@ Result: {'sum': 60, 'average': 20.0, 'max': 30}
 ## What's Next?
 
 Ready for more? Continue to **[Lesson 19: Working with Databases](19-working-with-databases.md)** — learn to use SQLite and SQLAlchemy! 🗄️
-
----
-
-**Your turn:** Try the exercise above! Debugging is a crucial skill for every programmer. Ask if you get stuck! 💛🌞
