@@ -290,48 +290,20 @@ FastAPI auto-generates docs!
 
 ---
 
-## Practice Exercises
+## Practice Exercise
 
-### Exercise 1: Create a Simple API
-
-**Scenario:** You're building a greeting API!
+### Scenario: You're building a book library API!
 
 **Your task:**
 1. Install FastAPI and uvicorn
 2. Create a FastAPI app
-3. Add a GET endpoint at `/` that returns `{"message": "Hello!"}`
-4. Add a GET endpoint at `/greet/{name}` that returns `{"message": "Hello, {name}!"}`
-5. Run the server and test in browser
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 2: Create a Todo API
-
-**Scenario:** You're building a todo list API!
-
-**Your task:**
-1. Create a `Todo` model with `title` and `completed` fields
-2. Create an in-memory list to store todos
-3. Add a POST endpoint to create a todo
-4. Add a GET endpoint to list all todos
-5. Test with Swagger UI (`/docs`)
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 3: Add Database to Todo API
-
-**Scenario:** Persist todos to a database!
-
-**Your task:**
-1. Set up SQLite database with a `todos` table
-2. Update POST endpoint to save to database
-3. Update GET endpoint to fetch from database
-4. Add a DELETE endpoint to remove a todo
-5. Test all endpoints
+3. Create a Pydantic model called `Book` with `title`, `author`, and `year` fields
+4. Create an in-memory list to store books
+5. Add a GET `/` endpoint that returns a welcome message
+6. Add a GET `/books` endpoint that returns all books
+7. Add a POST `/books` endpoint that adds a new book
+8. Add a GET `/books/{book_id}` endpoint that returns a specific book
+9. Test all endpoints with Swagger UI (`/docs`)
 
 **Try it yourself first!** Scroll down when ready.
 
@@ -339,21 +311,48 @@ FastAPI auto-generates docs!
 
 ## Solutions
 
-### Solution 1: Simple Greeting API
+### Solution 1: Build a Book Library API
 
 ```python
 # main.py
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 
 app = FastAPI()
 
+# Book model
+class Book(BaseModel):
+    title: str
+    author: str
+    year: int
+
+# In-memory storage
+books = []
+
+# Welcome endpoint
 @app.get("/")
 def read_root():
-    return {"message": "Hello!"}
+    return {"message": "Welcome to the Book Library!"}
 
-@app.get("/greet/{name}")
-def greet(name: str):
-    return {"message": f"Hello, {name}!"}
+# Get all books
+@app.get("/books")
+def get_books():
+    return {"books": books}
+
+# Add a book
+@app.post("/books")
+def create_book(book: Book):
+    book_dict = book.dict()
+    book_dict["id"] = len(books)
+    books.append(book_dict)
+    return book_dict
+
+# Get specific book
+@app.get("/books/{book_id}")
+def get_book(book_id: int):
+    if book_id < 0 or book_id >= len(books):
+        raise HTTPException(status_code=404, detail="Book not found!")
+    return books[book_id]
 ```
 
 **Run:**
@@ -362,122 +361,11 @@ uvicorn main:app --reload
 ```
 
 **Test:**
-- Visit `http://127.0.0.1:8000/` → `{"message": "Hello!"}`
-- Visit `http://127.0.0.1:8000/greet/Alice` → `{"message": "Hello, Alice!"}`
-
----
-
-### Solution 2: Todo API (In-Memory)
-
-```python
-# main.py
-from fastapi import FastAPI
-from pydantic import BaseModel
-
-app = FastAPI()
-
-class Todo(BaseModel):
-    title: str
-    completed: bool = False
-
-# In-memory storage
-todos = []
-
-@app.post("/todos")
-def create_todo(todo: Todo):
-    todo_dict = todo.dict()
-    todo_dict["id"] = len(todos)
-    todos.append(todo_dict)
-    return todo_dict
-
-@app.get("/todos")
-def get_todos():
-    return {"todos": todos}
-```
-
-**Test:**
 1. Visit `http://127.0.0.1:8000/docs`
-2. Try POST `/todos` with `{"title": "Buy milk", "completed": false}`
-3. Try GET `/todos` to see all todos
-
----
-
-### Solution 3: Todo API with Database
-
-```python
-# main.py
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-import sqlite3
-
-app = FastAPI()
-
-# Database setup
-def get_db():
-    conn = sqlite3.connect("todos.db")
-    conn.row_factory = sqlite3.Row
-    return conn
-
-def init_db():
-    conn = get_db()
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS todos (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            completed BOOLEAN DEFAULT 0
-        )
-    """)
-    conn.commit()
-    conn.close()
-
-class Todo(BaseModel):
-    title: str
-    completed: bool = False
-
-@app.post("/todos")
-def create_todo(todo: Todo):
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute(
-        "INSERT INTO todos (title, completed) VALUES (?, ?)",
-        (todo.title, todo.completed)
-    )
-    conn.commit()
-    todo_id = cursor.lastrowid
-    conn.close()
-    return {"id": todo_id, "title": todo.title, "completed": todo.completed}
-
-@app.get("/todos")
-def get_todos():
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM todos")
-    todos = cursor.fetchall()
-    conn.close()
-    return {"todos": [dict(t) for t in todos]}
-
-@app.delete("/todos/{todo_id}")
-def delete_todo(todo_id: int):
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM todos WHERE id = ?", (todo_id,))
-    conn.commit()
-    affected = cursor.rowcount
-    conn.close()
-    
-    if affected == 0:
-        raise HTTPException(status_code=404, detail="Todo not found!")
-    
-    return {"message": f"Todo {todo_id} deleted!"}
-
-# Initialize database
-init_db()
-```
-
-**Test:**
-1. Run `uvicorn main:app --reload`
-2. Visit `http://127.0.0.1:8000/docs`
-3. Test all endpoints!
+2. Try GET `/` → Welcome message
+3. Try POST `/books` with `{"title": "1984", "author": "George Orwell", "year": 1949}`
+4. Try GET `/books` → See all books
+5. Try GET `/books/0` → Get first book
 
 ---
 
@@ -508,4 +396,3 @@ init_db()
 
 ---
 
-**Your turn:** Try the exercises above! APIs are the backbone of modern software. Ask if you get stuck! 💛🌞

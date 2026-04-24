@@ -197,4 +197,3 @@ Ready for more? Continue to **[Lesson 3: Lists Explained](03-lists-explained.md)
 
 ---
 
-**Your turn:** Try the bakery exercise! If you get stuck, just ask. 💛

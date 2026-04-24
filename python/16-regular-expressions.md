@@ -308,57 +308,18 @@ print(matches)  # Output: ['Second']
 
 ---
 
-## Practice Exercises
+## Practice Exercise
 
-### Exercise 1: Find All Numbers
-
-**Scenario:** You need to extract all numbers from a text!
+### Scenario: You're analyzing a server log file!
 
 **Your task:**
 1. Import the `re` module
-2. Create a text string with several numbers in it
-3. Use `re.findall()` to find all digits
-4. Print the list of numbers found
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 2: Validate Email Address
-
-**Scenario:** You need to check if an email is valid!
-
-**Your task:**
-1. Create a regex pattern for email validation
-2. Test it with a valid email (e.g., "user@example.com")
-3. Test it with an invalid email (e.g., "invalid-email")
-4. Print whether each email is valid or not
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 3: Extract Dates
-
-**Scenario:** You need to extract dates from a document!
-
-**Your task:**
-1. Create a text with dates in YYYY-MM-DD format
-2. Use `re.findall()` to extract all dates
-3. Print the list of dates found
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 4: Replace Sensitive Data
-
-**Scenario:** You need to redact credit card numbers from text!
-
-**Your task:**
-1. Create a text with credit card numbers (16 digits)
-2. Use `re.sub()` to replace card numbers with "****"
-3. Print the redacted text
+2. Create a text variable with log entries containing IP addresses, dates, and error codes
+3. Use `re.findall()` to extract all IP addresses
+4. Use `re.findall()` to extract all dates
+5. Use `re.findall()` to extract all error codes
+6. Print each category of findings separately
+7. Count and print the total number of errors found
 
 **Try it yourself first!** Scroll down when ready.
 
@@ -366,78 +327,62 @@ print(matches)  # Output: ['Second']
 
 ## Solutions
 
-### Solution 1: Find All Numbers
+### Solution 1: Build a Log File Analyzer
 
 ```python
 import re
 
-text = "I have 3 apples, 5 oranges, and 10 bananas"
-
-# Find all digits
-numbers = re.findall(r"\d+", text)
-
-print(numbers)  # Output: ['3', '5', '10']
-```
-
----
-
-### Solution 2: Validate Email Address
-
-```python
-import re
-
-def validate_email(email):
-    pattern = r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-    match = re.search(pattern, email)
-    return match is not None
-
-# Test with valid email
-email1 = "user@example.com"
-print(f"{email1}: {validate_email(email1)}")  # True
-
-# Test with invalid email
-email2 = "invalid-email"
-print(f"{email2}: {validate_email(email2)}")  # False
-```
-
----
-
-### Solution 3: Extract Dates
-
-```python
-import re
-
-text = """
-Meeting scheduled for 2024-01-15
-Follow-up on 2024-02-20
-Deadline: 2024-03-30
+# Sample log text
+log_text = """
+Server started at 2024-01-15
+Connection from 192.168.1.100
+ERROR: 404 - Page not found
+Connection from 10.0.0.1
+ERROR: 500 - Internal server error
+Request completed on 2024-01-16
+Connection from 192.168.1.101
+ERROR: 403 - Forbidden
 """
 
-# Find all dates in YYYY-MM-DD format
-dates = re.findall(r"\d{4}-\d{2}-\d{2}", text)
+# Find all IP addresses
+ips = re.findall(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", log_text)
+print("IP Addresses found:")
+for ip in ips:
+    print(f"  {ip}")
 
-print(dates)  # Output: ['2024-01-15', '2024-02-20', '2024-03-30']
+# Find all dates
+dates = re.findall(r"\d{4}-\d{2}-\d{2}", log_text)
+print("\nDates found:")
+for date in dates:
+    print(f"  {date}")
+
+# Find all error codes
+errors = re.findall(r"ERROR: \d+", log_text)
+print("\nErrors found:")
+for error in errors:
+    print(f"  {error}")
+
+# Count total errors
+print(f"\nTotal errors: {len(errors)}")
 ```
 
----
+**Output:**
+```
+IP Addresses found:
+  192.168.1.100
+  10.0.0.1
+  192.168.1.101
 
-### Solution 4: Replace Sensitive Data
+Dates found:
+  2024-01-15
+  2024-01-16
 
-```python
-import re
+Errors found:
+  ERROR: 404
+  ERROR: 500
+  ERROR: 403
 
-text = """
-Customer paid with card 1234567890123456
-Another card: 9876543210987654
-"""
-
-# Replace 16-digit card numbers with ****
-redacted = re.sub(r"\d{16}", "****", text)
-
-print(redacted)
-# Output:
-# Customer paid with card ****
-# Another card: ****
+Total errors: 3
 ```
 
 ---
@@ -463,4 +408,3 @@ Ready for more? Continue to **[Lesson 17: Virtual Environments and Packages](17-
 
 ---
 
-**Your turn:** Try the exercises above! Regex is powerful for text processing. Ask if you get stuck! 💛🌞

@@ -343,4 +343,3 @@ Ready for more? Continue to **[Lesson 5: While Loops and Conditionals](05-while-
 
 ---
 
-**Your turn:** Try the bookshelf exercise! Use your actual favorite books if you want! 📚💛

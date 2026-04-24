@@ -389,4 +389,3 @@ Ready for more? Continue to **[Lesson 11: File Handling](11-file-handling.md)** 
 
 ---
 
-**Your turn:** Try the exercises above! Sets are super useful for data cleaning and comparison tasks. Ask if you get stuck! 💛🌞

@@ -307,60 +307,18 @@ def test_b():
 
 ---
 
-## Practice Exercises
+## Practice Exercise
 
-### Exercise 1: Write Your First Test
-
-**Scenario:** You have a function and need to test it!
+### Scenario: You're testing a calculator module!
 
 **Your task:**
-1. Create a function called `multiply` that takes two numbers and returns their product
-2. Create a test file called `test_math.py`
-3. Write a test function that checks `multiply(3, 4)` returns `12`
-4. Run the test with `pytest`
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 2: Test Edge Cases
-
-**Scenario:** You need to test a function that handles different inputs!
-
-**Your task:**
-1. Create a function called `is_even` that returns `True` if a number is even
-2. Write three test functions:
-   - Test with an even number
-   - Test with an odd number
-   - Test with zero
-3. Run the tests
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 3: Test for Exceptions
-
-**Scenario:** Your function should raise an error for invalid input!
-
-**Your task:**
-1. Create a function called `divide` that divides two numbers
-2. Raise `ValueError` if dividing by zero
-3. Write a test that checks `divide(10, 0)` raises `ValueError`
-4. Write a test that checks `divide(10, 2)` returns `5`
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 4: Test with Fixtures
-
-**Scenario:** Multiple tests need the same test data!
-
-**Your task:**
-1. Create a pytest fixture that returns a dictionary: `{"name": "Bob", "age": 25}`
-2. Write two test functions that use the fixture
-3. One test checks the name, another checks the age
+1. Create a file called `test_calculator.py`
+2. Create functions: `add(a, b)`, `subtract(a, b)`, `multiply(a, b)`
+3. Write a test that checks `add(2, 3)` returns `5`
+4. Write a test that checks `subtract(5, 2)` returns `3`
+5. Write a test that checks `multiply(3, 4)` returns `12`
+6. Add a test for edge case: `add(0, 0)` returns `0`
+7. Run all tests with `pytest -v`
 
 **Try it yourself first!** Scroll down when ready.
 
@@ -368,123 +326,46 @@ def test_b():
 
 ## Solutions
 
-### Solution 1: Write Your First Test
+### Solution 1: Build a Test Suite for a Calculator
 
 ```python
-# test_math.py
+# test_calculator.py
+
+# Functions to test
+def add(a, b):
+    return a + b
+
+def subtract(a, b):
+    return a - b
 
 def multiply(a, b):
     return a * b
 
+# Test functions
+def test_add():
+    assert add(2, 3) == 5
+
+def test_subtract():
+    assert subtract(5, 2) == 3
+
 def test_multiply():
-    result = multiply(3, 4)
-    assert result == 12
+    assert multiply(3, 4) == 12
+
+def test_add_zero():
+    assert add(0, 0) == 0
 ```
 
 **Run:**
 ```bash
-pytest test_math.py
+pytest test_calculator.py -v
 ```
 
 **Output:**
 ```
-test_math.py .                                                         [100%]
-1 passed in 0.01s
-```
-
----
-
-### Solution 2: Test Edge Cases
-
-```python
-# test_parity.py
-
-def is_even(number):
-    return number % 2 == 0
-
-def test_even_number():
-    assert is_even(4) == True
-
-def test_odd_number():
-    assert is_even(3) == False
-
-def test_zero():
-    assert is_even(0) == True
-```
-
-**Run:**
-```bash
-pytest test_parity.py -v
-```
-
-**Output:**
-```
-test_parity.py::test_even_number PASSED
-test_parity.py::test_odd_number PASSED
-test_parity.py::test_zero PASSED
-```
-
----
-
-### Solution 3: Test for Exceptions
-
-```python
-# test_division.py
-import pytest
-
-def divide(a, b):
-    if b == 0:
-        raise ValueError("Cannot divide by zero!")
-    return a / b
-
-def test_divide_by_zero():
-    with pytest.raises(ValueError):
-        divide(10, 0)
-
-def test_divide_normal():
-    result = divide(10, 2)
-    assert result == 5
-```
-
-**Run:**
-```bash
-pytest test_division.py -v
-```
-
-**Output:**
-```
-test_division.py::test_divide_by_zero PASSED
-test_division.py::test_divide_normal PASSED
-```
-
----
-
-### Solution 4: Test with Fixtures
-
-```python
-# test_user.py
-import pytest
-
-@pytest.fixture
-def sample_user():
-    return {"name": "Bob", "age": 25}
-
-def test_user_name(sample_user):
-    assert sample_user["name"] == "Bob"
-
-def test_user_age(sample_user):
-    assert sample_user["age"] == 25
-```
-
-**Run:**
-```bash
-pytest test_user.py -v
-```
-
-**Output:**
-```
-test_user.py::test_user_name PASSED
-test_user.py::test_user_age PASSED
+test_calculator.py::test_add PASSED
+test_calculator.py::test_subtract PASSED
+test_calculator.py::test_multiply PASSED
+test_calculator.py::test_add_zero PASSED
 ```
 
 ---
@@ -508,4 +389,3 @@ Ready for more? Continue to **[Lesson 15: Building Your Own API](15-building-api
 
 ---
 
-**Your turn:** Try the exercises above! Testing is essential for professional code. Ask if you get stuck! 💛🌞

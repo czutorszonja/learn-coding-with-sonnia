@@ -279,64 +279,17 @@ except Exception as e:
 
 ---
 
-## Practice Exercises
+## Practice Exercise
 
-### Exercise 1: Read a File
-
-**Scenario:** You have a file with a list of names!
+### Scenario: You're managing a guest list file!
 
 **Your task:**
-1. Create a file called `names.txt` with 5 names (one per line)
-2. Write code to read the file
-3. Print each name
-4. Print the total number of names
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 2: Write a Diary Entry
-
-**Scenario:** You want to save your thoughts to a file!
-
-**Your task:**
-1. Ask the user for their diary entry (use `input()`)
-2. Get the current date and time
-3. Save both to a file called `diary.txt` (append mode)
-4. Confirm it was saved
-
-**Hint:** Use `datetime.now()` to get the current time!
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 3: Copy a File
-
-**Scenario:** You need to copy contents from one file to another!
-
-**Your task:**
-1. Create a file called `source.txt` with some text
-2. Read the contents of `source.txt`
-3. Write the contents to `destination.txt`
-4. Print a success message
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 4: Count Words in a File
-
-**Scenario:** You need to analyze a text file!
-
-**Your task:**
-1. Create a file called `story.txt` with a paragraph of text
-2. Read the file
-3. Count the total number of words
-4. Count the total number of lines
-5. Print the statistics
-
-**Hint:** Use `.split()` to split text into words!
+1. Create a file called `guests.txt` with 5 guest names (one per line)
+2. Read the file and print each guest name
+3. Count and print the total number of guests
+4. Append 2 more guests to the file
+5. Read the file again and print the updated list
+6. Print the new total count
 
 **Try it yourself first!** Scroll down when ready.
 
@@ -344,104 +297,64 @@ except Exception as e:
 
 ## Solutions
 
-### Solution 1: Read a File
+### Solution 1: Manage a Guest List File
 
 ```python
-# Read names from file
-with open("names.txt", "r") as file:
-    names = file.readlines()
+# Step 1: Create file with 5 guests
+with open("guests.txt", "w") as file:
+    file.write("Alice\n")
+    file.write("Bob\n")
+    file.write("Charlie\n")
+    file.write("Diana\n")
+    file.write("Eve\n")
 
-# Print each name
-print("Names in the file:")
-for name in names:
-    print(name.strip())
+# Step 2: Read and print each guest
+with open("guests.txt", "r") as file:
+    guests = file.readlines()
+    print("Guest list:")
+    for guest in guests:
+        print(guest.strip())
 
-# Print total count
-print(f"\nTotal names: {len(names)}")
+# Step 3: Count total guests
+print(f"\nTotal guests: {len(guests)}")
+
+# Step 4: Append 2 more guests
+with open("guests.txt", "a") as file:
+    file.write("Frank\n")
+    file.write("Grace\n")
+
+# Step 5: Read updated list
+with open("guests.txt", "r") as file:
+    updated_guests = file.readlines()
+    print("\nUpdated guest list:")
+    for guest in updated_guests:
+        print(guest.strip())
+
+# Step 6: Print new total
+print(f"\nNew total: {len(updated_guests)}")
 ```
 
 **Output:**
 ```
-Names in the file:
+Guest list:
 Alice
 Bob
 Charlie
 Diana
 Eve
 
-Total names: 5
-```
+Total guests: 5
 
----
+Updated guest list:
+Alice
+Bob
+Charlie
+Diana
+Eve
+Frank
+Grace
 
-### Solution 2: Write a Diary Entry
-
-```python
-from datetime import datetime
-
-# Get user input
-entry = input("What's on your mind? ")
-
-# Get current timestamp
-timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-# Write to file (append mode)
-with open("diary.txt", "a") as file:
-    file.write(f"[{timestamp}] {entry}\n")
-
-print("Diary entry saved!")
-```
-
-**Output:**
-```
-What's on your mind? Today was a great day!
-Diary entry saved!
-```
-
----
-
-### Solution 3: Copy a File
-
-```python
-# Read from source file
-with open("source.txt", "r") as source:
-    content = source.read()
-
-# Write to destination file
-with open("destination.txt", "w") as dest:
-    dest.write(content)
-
-print("File copied successfully!")
-```
-
-**Output:**
-```
-File copied successfully!
-```
-
----
-
-### Solution 4: Count Words in a File
-
-```python
-# Read the file
-with open("story.txt", "r") as file:
-    content = file.read()
-
-# Count words and lines
-words = content.split()
-lines = content.splitlines()
-
-print("File Statistics:")
-print(f"Total words: {len(words)}")
-print(f"Total lines: {len(lines)}")
-```
-
-**Output:**
-```
-File Statistics:
-Total words: 42
-Total lines: 3
+New total: 7
 ```
 
 ---
@@ -464,7 +377,3 @@ Total lines: 3
 ## What's Next?
 
 Ready for more? Continue to **[Lesson 12: Error Handling and Debugging](12-error-handling.md)** — learn to handle errors gracefully and debug your code! 🐛
-
----
-
-**Your turn:** Try the exercises above! File handling is essential for real-world applications. Ask if you get stuck! 💛🌞

@@ -118,4 +118,3 @@ Ready for more? Continue to **[Lesson 2: Operations with Variables](02-operation
 
 ---
 
-**Your turn:** Try the exercise above. If you get stuck or have questions, just ask! 💛

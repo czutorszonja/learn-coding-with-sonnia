@@ -248,63 +248,21 @@ pip install -r requirements.txt
 
 ---
 
-## Practice Exercises
+## Practice Exercise
 
-### Exercise 1: Create Your First Virtual Environment
-
-**Scenario:** You're starting a new project!
+### Scenario: You're setting up a Python project!
 
 **Your task:**
-1. Create a new folder called `my_project`
+1. Create a new folder called `scraper_project`
 2. Navigate into it
 3. Create a virtual environment called `venv`
-4. Activate it
-5. Verify it's activated (look for `(venv)` in terminal)
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 2: Install Packages
-
-**Scenario:** You need to install dependencies for a web scraping project!
-
-**Your task:**
-1. Make sure your virtual environment is activated
-2. Install `requests` package
-3. Install `beautifulsoup4` package
-4. List installed packages to verify
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 3: Create requirements.txt
-
-**Scenario:** You want to share your project with a friend!
-
-**Your task:**
-1. Make sure packages are installed
-2. Generate `requirements.txt` using `pip freeze`
-3. View the contents of the file
-4. Deactivate and reactivate the virtual environment
-5. Reinstall all packages from requirements.txt
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 4: Set Up a Complete Project
-
-**Scenario:** You're starting a real project!
-
-**Your task:**
-1. Create a project folder called `api_project`
-2. Create a virtual environment
-3. Install `fastapi` and `uvicorn`
-4. Create a `requirements.txt` file
-5. Create a `src` folder with `main.py`
-6. Write a simple FastAPI app
+4. Activate the virtual environment
+5. Install `requests` and `beautifulsoup4` packages
+6. Generate `requirements.txt` using `pip freeze`
+7. View the contents to verify both packages are listed
+8. Deactivate and reactivate the virtual environment
+9. Reinstall all packages from `requirements.txt`
+10. Verify installation with `pip list`
 
 **Try it yourself first!** Scroll down when ready.
 
@@ -312,110 +270,50 @@ pip install -r requirements.txt
 
 ## Solutions
 
-### Solution 1: Create Virtual Environment
+### Solution 1: Set Up a Complete Python Project
 
 ```bash
-# Create project folder
-mkdir my_project
-cd my_project
+# Step 1-2: Create and navigate to project folder
+mkdir scraper_project
+cd scraper_project
 
-# Create virtual environment
+# Step 3: Create virtual environment
 python -m venv venv
 
-# Activate (macOS/Linux)
+# Step 4: Activate (macOS/Linux)
 source venv/bin/activate
 
-# Activate (Windows)
-venv\Scripts\activate
+# For Windows: venv\Scripts\activate
 
-# Verify activation
-# You should see (venv) in your terminal
-```
-
----
-
-### Solution 2: Install Packages
-
-```bash
-# Activate virtual environment first
-source venv/bin/activate  # macOS/Linux
-
-# Install packages
+# Step 5: Install packages
 pip install requests
 pip install beautifulsoup4
 
-# List installed packages
-pip list
-
-# Output should include:
-# requests          2.31.0
-# beautifulsoup4    4.12.0
-```
-
----
-
-### Solution 3: Create requirements.txt
-
-```bash
-# Generate requirements.txt
+# Step 6: Generate requirements.txt
 pip freeze > requirements.txt
 
-# View contents
+# Step 7: View contents
 cat requirements.txt
+# Should show both packages
 
-# Example output:
-# beautifulsoup4==4.12.0
-# requests==2.31.0
-
-# Deactivate
+# Step 8: Deactivate and reactivate
 deactivate
-
-# Reactivate
 source venv/bin/activate
 
-# Install from requirements.txt
+# Step 9: Reinstall from requirements.txt
 pip install -r requirements.txt
+
+# Step 10: Verify installation
+pip list
 ```
 
----
-
-### Solution 4: Complete Project Setup
-
-```bash
-# Create project folder
-mkdir api_project
-cd api_project
-
-# Create virtual environment
-python -m venv venv
-
-# Activate
-source venv/bin/activate  # macOS/Linux
-
-# Install packages
-pip install fastapi uvicorn
-
-# Create requirements.txt
-pip freeze > requirements.txt
-
-# Create src folder
-mkdir src
-cd src
-
-# Create main.py
-cat > main.py << 'EOF'
-from fastapi import FastAPI
-
-app = FastAPI()
-
-@app.get("/")
-def read_root():
-    return {"message": "Hello, World!"}
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-EOF
+**Expected output:**
+```
+Package          Version
+---------------- -------
+beautifulsoup4   4.12.0
+requests         2.31.0
+...
 ```
 
 ---
@@ -440,4 +338,3 @@ Ready for more? Continue to **[Lesson 18: Working with Databases](18-working-wit
 
 ---
 
-**Your turn:** Try the exercises above! Virtual environments are essential for professional Python development. Ask if you get stuck! 💛🌞

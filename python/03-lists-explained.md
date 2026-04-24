@@ -285,4 +285,3 @@ Ready for more? Continue to **[Lesson 4: Loops Explained](04-loops-explained.md)
 
 ---
 
-**Your turn:** Try the playlist exercise! Make it fun — use your actual favorite songs if you want! 🎵💛

@@ -308,4 +308,3 @@ When you're ready to continue, head to **[Lesson 8: Dictionaries](08-dictionarie
 
 ---
 
-**Your turn:** Try all 5 exercises! Don't worry if they take time — that's how you learn! 💛

@@ -305,4 +305,3 @@ Ready for more? Continue to **[Lesson 7: Combined Practice](07-combined-practice
 
 ---
 
-**Your turn:** Try the coffee shop exercise! Maybe add more sizes or drinks! ☕💛

@@ -304,74 +304,18 @@ else:
 
 ---
 
-## Practice Exercises
+## Practice Exercise
 
-### Exercise 1: Safe Division
-
-**Scenario:** You're building a calculator that handles errors gracefully!
+### Scenario: You're building a calculator that handles errors!
 
 **Your task:**
-1. Create a function called `safe_divide` that takes two parameters: `a` and `b`
-2. Try to divide `a` by `b`
-3. Handle `ZeroDivisionError` by returning `None`
-4. Handle `TypeError` by returning `None`
-5. If successful, return the result
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 2: Read File Safely
-
-**Scenario:** You need to read a file that might not exist!
-
-**Your task:**
-1. Create a function called `read_file_safely` that takes a `filename` parameter
-2. Try to open and read the file
-3. Handle `FileNotFoundError` by returning "File not found!"
-4. Handle any other errors by returning "An error occurred!"
-5. If successful, return the file content
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 3: Validate User Input
-
-**Scenario:** You're asking for user input and need to handle invalid entries!
-
-**Your task:**
-1. Ask the user to enter their age
-2. Try to convert it to an integer
-3. Handle `ValueError` by printing "Please enter a valid number!"
-4. Check if age is between 0 and 150
-5. If not, raise a `ValueError` with message "Invalid age!"
-6. If valid, print "Age accepted!"
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 4: Debug the Code
-
-**Scenario:** Here's broken code. Find and fix the bugs!
-
-```python
-def calculate_discount(price, discount_percent):
-    discount = price * discount_percent / 100
-    final_price = price - discount
-    return final_price
-
-# Test cases
-print(calculate_discount(100, 20))  # Should be 80
-print(calculate_discount(50, 10))   # Should be 45
-print(calculate_discount(100, 150))  # Should handle negative price
-```
-
-**Your task:**
-1. Identify what's wrong
-2. Add error handling or validation
-3. Test with the provided cases
+1. Ask the user to enter two numbers (use `input()`)
+2. Convert both inputs to integers
+3. Handle `ValueError` if the input is not a valid number
+4. Try to divide the first number by the second
+5. Handle `ZeroDivisionError` if the second number is zero
+6. Use an `else` block to print the result if successful
+7. Use a `finally` block to print "Calculation complete!"
 
 **Try it yourself first!** Scroll down when ready.
 
@@ -379,91 +323,33 @@ print(calculate_discount(100, 150))  # Should handle negative price
 
 ## Solutions
 
-### Solution 1: Safe Division
+### Solution 1: Build a Robust Calculator
 
 ```python
-def safe_divide(a, b):
-    try:
-        result = a / b
-        return result
-    except ZeroDivisionError:
-        return None
-    except TypeError:
-        return None
-
-# Test
-print(safe_divide(10, 2))    # Output: 5.0
-print(safe_divide(10, 0))    # Output: None
-print(safe_divide("10", 2))  # Output: None
-```
-
----
-
-### Solution 2: Read File Safely
-
-```python
-def read_file_safely(filename):
-    try:
-        with open(filename, "r") as file:
-            content = file.read()
-            return content
-    except FileNotFoundError:
-        return "File not found!"
-    except Exception:
-        return "An error occurred!"
-
-# Test
-print(read_file_safely("existing.txt"))  # Output: file content
-print(read_file_safely("missing.txt"))   # Output: File not found!
-```
-
----
-
-### Solution 3: Validate User Input
-
-```python
-def validate_age():
-    try:
-        age = int(input("Enter your age: "))
-        if age < 0 or age > 150:
-            raise ValueError("Invalid age!")
-        print("Age accepted!")
-    except ValueError as e:
-        if str(e) == "Invalid age!":
-            print(e)
-        else:
-            print("Please enter a valid number!")
-
-# Run
-validate_age()
+try:
+    # Get user input
+    num1 = int(input("Enter first number: "))
+    num2 = int(input("Enter second number: "))
+    
+    # Try to divide
+    result = num1 / num2
+    
+except ValueError:
+    print("Please enter valid numbers!")
+except ZeroDivisionError:
+    print("Can't divide by zero!")
+else:
+    print(f"Result: {result}")
+finally:
+    print("Calculation complete!")
 ```
 
 **Output:**
 ```
-Enter your age: -5
-Invalid age!
-```
-
----
-
-### Solution 4: Debug the Code
-
-```python
-def calculate_discount(price, discount_percent):
-    # Validate inputs
-    if price < 0:
-        raise ValueError("Price cannot be negative!")
-    if discount_percent < 0 or discount_percent > 100:
-        raise ValueError("Discount must be between 0 and 100!")
-    
-    discount = price * discount_percent / 100
-    final_price = price - discount
-    return final_price
-
-# Test cases
-print(calculate_discount(100, 20))  # Output: 80.0
-print(calculate_discount(50, 10))   # Output: 45.0
-print(calculate_discount(100, 150))  # Raises ValueError
+Enter first number: 10
+Enter second number: 0
+Can't divide by zero!
+Calculation complete!
 ```
 
 ---
@@ -488,4 +374,3 @@ Ready for more? Continue to **[Lesson 13: Working with APIs](13-working-with-api
 
 ---
 
-**Your turn:** Try the exercises above! Error handling is crucial for robust applications. Ask if you get stuck! 💛🌞

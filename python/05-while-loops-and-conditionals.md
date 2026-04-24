@@ -314,4 +314,3 @@ Ready for more? Continue to **[Lesson 6: Functions Explained](06-functions-expla
 
 ---
 
-**Your turn:** Try the countdown exercise! Make it your own — maybe countdown from 5, or add a custom message! 🚀💛

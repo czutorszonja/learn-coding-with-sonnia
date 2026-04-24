@@ -285,4 +285,3 @@ Ready for more? Continue to **[Lesson 9: Advanced Dictionaries Practice](09-dict
 
 ---
 
-**Your turn:** Try the contact book exercise! Use your own contact info or make up a fictional character! 📇💛

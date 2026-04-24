@@ -401,4 +401,3 @@ Ready for more? Continue to **[Lesson 10: Sets Explained](10-sets-explained.md)*
 
 ---
 
-**Your turn:** Try the exercises above! Start with Exercise 1 and work your way up. Ask if you get stuck! 💛🌞

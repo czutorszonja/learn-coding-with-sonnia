@@ -309,61 +309,17 @@ search_github_repos("python machine learning")
 
 ---
 
-## Practice Exercises
+## Practice Exercise
 
-### Exercise 1: Fetch and Display Data
-
-**Scenario:** You want to fetch data from a public API!
+### Scenario: You're fetching user data from an API!
 
 **Your task:**
 1. Import the `requests` library
-2. Make a GET request to `https://jsonplaceholder.typicode.com/posts/1`
-3. Print the status code
-4. Print the title of the post
-5. Print the body of the post
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 2: Get Multiple Items
-
-**Scenario:** You need to fetch a list of items!
-
-**Your task:**
-1. Make a GET request to `https://jsonplaceholder.typicode.com/users`
-2. Loop through the users
-3. Print each user's name and email
-4. Count and print the total number of users
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 3: Create a New Resource
-
-**Scenario:** You need to add a new post to a blog!
-
-**Your task:**
-1. Create a dictionary with `title`, `body`, and `userId`
-2. Make a POST request to `https://jsonplaceholder.typicode.com/posts`
-3. Print the status code
-4. Print the created post (including the new ID)
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-### Exercise 4: Handle API Errors
-
-**Scenario:** You're fetching data that might not exist!
-
-**Your task:**
-1. Try to fetch a post with ID 9999 from `https://jsonplaceholder.typicode.com/posts/9999`
-2. Check the status code
-3. If status is 404, print "Post not found!"
-4. If status is 200, print the post title
-5. Handle any other errors gracefully
+2. Make a GET request to `https://jsonplaceholder.typicode.com/users`
+3. Check if the request was successful (status code 200)
+4. Loop through the users and print each user's name and email
+5. Count and print the total number of users
+6. Handle any errors that might occur
 
 **Try it yourself first!** Scroll down when ready.
 
@@ -371,49 +327,30 @@ search_github_repos("python machine learning")
 
 ## Solutions
 
-### Solution 1: Fetch and Display Data
+### Solution 1: Build a User Data Fetcher
 
 ```python
 import requests
 
-# Make GET request
-response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
-
-# Print status code
-print(f"Status: {response.status_code}")
-
-# Parse JSON
-post = response.json()
-
-# Print title and body
-print(f"Title: {post['title']}")
-print(f"Body: {post['body']}")
-```
-
-**Output:**
-```
-Status: 200
-Title: sunt aut facere repellat provident occaecati excepturi optio reprehenderit
-Body: quia et suscipit...
-```
-
----
-
-### Solution 2: Get Multiple Items
-
-```python
-import requests
-
-# Fetch users
-response = requests.get("https://jsonplaceholder.typicode.com/users")
-users = response.json()
-
-# Print each user
-for user in users:
-    print(f"{user['name']} - {user['email']}")
-
-# Print total count
-print(f"\nTotal users: {len(users)}")
+try:
+    # Make GET request
+    response = requests.get("https://jsonplaceholder.typicode.com/users")
+    
+    # Check if successful
+    if response.status_code == 200:
+        users = response.json()
+        
+        # Print each user
+        for user in users:
+            print(f"{user['name']} - {user['email']}")
+        
+        # Print total count
+        print(f"\nTotal users: {len(users)}")
+    else:
+        print(f"Error: Status code {response.status_code}")
+        
+except requests.exceptions.RequestException as e:
+    print(f"Network error: {e}")
 ```
 
 **Output:**
@@ -421,65 +358,8 @@ print(f"\nTotal users: {len(users)}")
 Leanne Graham - Sincere@april.biz
 Ervin Howell - Shanna@melissa.tv
 ...
+
 Total users: 10
-```
-
----
-
-### Solution 3: Create a New Resource
-
-```python
-import requests
-
-# Data to send
-new_post = {
-    "title": "My First Post",
-    "body": "This is the content of my post.",
-    "userId": 1
-}
-
-# Make POST request
-response = requests.post(
-    "https://jsonplaceholder.typicode.com/posts",
-    json=new_post
-)
-
-# Print result
-print(f"Status: {response.status_code}")
-print(f"Created post: {response.json()}")
-```
-
-**Output:**
-```
-Status: 201
-Created post: {'title': 'My First Post', 'body': 'This is the content of my post.', 'userId': 1, 'id': 101}
-```
-
----
-
-### Solution 4: Handle API Errors
-
-```python
-import requests
-
-try:
-    response = requests.get("https://jsonplaceholder.typicode.com/posts/9999")
-    
-    if response.status_code == 404:
-        print("Post not found!")
-    elif response.status_code == 200:
-        post = response.json()
-        print(f"Title: {post['title']}")
-    else:
-        print(f"Unexpected status: {response.status_code}")
-        
-except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
-```
-
-**Output:**
-```
-Post not found!
 ```
 
 ---
@@ -504,4 +384,3 @@ Ready for more? Continue to **[Lesson 14: Testing Your Code](14-testing.md)** �
 
 ---
 
-**Your turn:** Try the exercises above! APIs are everywhere in modern development. Ask if you get stuck! 💛🌞
