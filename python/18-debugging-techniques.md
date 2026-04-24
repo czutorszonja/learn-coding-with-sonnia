@@ -357,7 +357,7 @@ print(f"Result: {result}")
 
 ---
 
-## Solution
+## Solutions
 
 ```python
 def calculate_statistics(numbers):
