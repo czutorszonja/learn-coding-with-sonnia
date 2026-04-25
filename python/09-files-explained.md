@@ -160,20 +160,36 @@ Day 3: Now learning file handling!
 
 **Scenario:** You're building a word counter for text files!
 
+### Step 1: Create the sample file
+
+First, create a file called `sample.txt` with this exact content:
+
+```
+Python is an amazing programming language.
+It is great for beginners and experts.
+You can build anything with Python!
+```
+
+**How to create the file:**
+1. Open a text editor (Notepad, VS Code, etc.)
+2. Copy and paste the text above
+3. Save it as `sample.txt` in the same folder as your Python script
+
+### Step 2: Write the functions
+
 **Your task:**
 1. Create a function called `count_words_in_file` that takes one parameter: `filename`
 2. The function should open the file, read all content, and count the total words
 3. Return the word count
 4. Create another function called `find_longest_word` that takes the same parameter
 5. This function should find and return the longest word in the file
-6. Create a sample text file called `sample.txt` with at least 3 sentences
-7. Test both functions and print the results with nice messages
+6. Test both functions with your `sample.txt` file and print the results
 
 **Example output:**
 ```
 File: sample.txt
 Total words: 15
-Longest word: Python
+Longest word: programming
 ```
 
 **Try it yourself first!** Solution below.
