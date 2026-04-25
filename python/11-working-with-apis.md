@@ -201,13 +201,16 @@ Saved to favorites.txt!
 
 ```python
 import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 def fetch_random_quote():
     """Fetch a random quote from the API."""
     url = "https://api.quotable.io/random"
     
     try:
-        response = requests.get(url, timeout=10)
+        # verify=False bypasses SSL certificate check (needed for some APIs)
+        response = requests.get(url, verify=False, timeout=10)
         
         if response.status_code == 200:
             quote_data = response.json()
@@ -258,15 +261,7 @@ except FileNotFoundError:
 
 **Note:** The API returns a different quote each time you run it!
 
-**If you get SSL errors**, add this at the top of your script:
-```python
-import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-
-# Then use verify=False in requests.get()
-response = requests.get(url, verify=False)
-```
+**Why `verify=False`?** Some APIs have expired or self-signed SSL certificates. For learning purposes, we bypass this check. In production code, you'd fix the certificate instead.
 
 ---
 
