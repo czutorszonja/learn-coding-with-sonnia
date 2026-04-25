@@ -207,7 +207,7 @@ def fetch_random_quote():
     url = "https://api.quotable.io/random"
     
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)
         
         if response.status_code == 200:
             quote_data = response.json()
@@ -248,12 +248,25 @@ for i in range(3):
 
 # Display all saved quotes
 print("=== Your Favorite Quotes ===")
-with open("favorites.txt", "r") as file:
-    content = file.read()
-    print(content)
+try:
+    with open("favorites.txt", "r") as file:
+        content = file.read()
+        print(content)
+except FileNotFoundError:
+    print("No quotes saved (API may be unavailable)")
 ```
 
 **Note:** The API returns a different quote each time you run it!
+
+**If you get SSL errors**, add this at the top of your script:
+```python
+import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+# Then use verify=False in requests.get()
+response = requests.get(url, verify=False)
+```
 
 ---
 
@@ -275,4 +288,9 @@ Ready for more? Continue to **[Lesson 12: Testing Your Code](12-testing-your-cod
 
 ---
 
-**Your turn:** Try the quote generator! Maybe add features like rating quotes or searching by author! 🌐💛
+**Your turn:** Try the quote exercise! Then explore other free APIs like:
+- `https://api.chucknorris.io/jokes/random` — Random Chuck Norris jokes
+- `https://dog.ceo/api/breeds/image/random` — Random dog pictures
+- `https://api.coindesk.com/v1/bpi/currentprice.json` — Bitcoin prices
+
+🌐💛
