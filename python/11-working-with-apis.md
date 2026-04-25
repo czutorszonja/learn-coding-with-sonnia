@@ -164,16 +164,34 @@ print(data["age"])   # Output: 30
 
 ## Practice Exercise
 
-**Scenario:** You're building a simple app that fetches random jokes from an API!
+**Scenario:** You're building a random quote generator that saves favorites to a file!
 
 **Your task:**
 1. Import the `requests` library
-2. Create a function called `get_random_joke` that:
-   - Makes a GET request to `https://official-joke-api.appspot.com/random_joke`
+2. Create a function called `fetch_random_quote` that:
+   - Makes a GET request to `https://api.quotable.io/random`
    - Checks if the status code is 200
-   - Returns the joke as a dictionary
-3. Create a function called `print_joke` that takes a joke dictionary and prints it nicely
-4. Test it by calling both functions
+   - Returns the quote as a dictionary (with `content` and `author` keys)
+   - Handles errors gracefully (return None if something fails)
+3. Create a function called `save_quote_to_file` that takes a quote dictionary and:
+   - Opens a file called `favorites.txt` in append mode
+   - Writes the quote and author in a nice format
+   - Adds a newline at the end
+4. Create a function called `display_quote` that prints a quote nicely
+5. Test by fetching 3 quotes and saving them
+6. Read the file and display all saved quotes
+
+**Example output:**
+```
+Fetching quote 1...
+Quote: "The only way to do great work is to love what you do."
+Author: Steve Jobs
+Saved to favorites.txt!
+
+=== Your Favorite Quotes ===
+"The only way to do great work is to love what you do." - Steve Jobs
+...
+```
 
 **Try it yourself first!** Solution below.
 
@@ -184,51 +202,58 @@ print(data["age"])   # Output: 30
 ```python
 import requests
 
-def get_random_joke():
-    """Fetch a random joke from the API."""
-    url = "https://official-joke-api.appspot.com/random_joke"
+def fetch_random_quote():
+    """Fetch a random quote from the API."""
+    url = "https://api.quotable.io/random"
     
     try:
         response = requests.get(url)
         
-        # Check if request was successful
         if response.status_code == 200:
-            joke = response.json()
-            return joke
+            quote_data = response.json()
+            return {
+                "content": quote_data["content"],
+                "author": quote_data["author"]
+            }
         else:
             print(f"Error: Status code {response.status_code}")
             return None
-    
     except Exception as e:
-        print(f"Error fetching joke: {e}")
+        print(f"Error fetching quote: {e}")
         return None
 
-def print_joke(joke):
-    """Print a joke nicely formatted."""
-    if joke:
-        print(f"Setup: {joke['setup']}")
-        print(f"Punchline: {joke['punchline']}")
-        print(f"Type: {joke['type']}")
-    else:
-        print("No joke to display!")
+def save_quote_to_file(quote):
+    """Save a quote to favorites.txt."""
+    if quote is None:
+        return
+    
+    with open("favorites.txt", "a") as file:
+        file.write(f'"{quote["content"]}" - {quote["author"]}\n')
+    print("Saved to favorites.txt!")
 
-# Test the functions
-print("Here's a random joke for you!")
-print("-" * 40)
-joke = get_random_joke()
-print_joke(joke)
+def display_quote(quote):
+    """Display a quote nicely."""
+    if quote:
+        print(f'Quote: "{quote["content"]}"')
+        print(f'Author: {quote["author"]}')
+
+# Fetch and save 3 quotes
+print("Fetching quotes...\n")
+for i in range(3):
+    print(f"Fetching quote {i + 1}...")
+    quote = fetch_random_quote()
+    display_quote(quote)
+    save_quote_to_file(quote)
+    print()
+
+# Display all saved quotes
+print("=== Your Favorite Quotes ===")
+with open("favorites.txt", "r") as file:
+    content = file.read()
+    print(content)
 ```
 
-**Example output:**
-```
-Here's a random joke for you!
-----------------------------------------
-Setup: What do you call a fish with no eyes?
-Punchline: Fsh!
-Type: general
-```
-
-**Note:** The joke changes every time you run it!
+**Note:** The API returns a different quote each time you run it!
 
 ---
 
@@ -250,9 +275,4 @@ Ready for more? Continue to **[Lesson 12: Testing Your Code](12-testing-your-cod
 
 ---
 
-**Your turn:** Try the joke exercise! Then explore other free APIs like:
-- `https://api.chucknorris.io/jokes/random` — Random Chuck Norris jokes
-- `https://dog.ceo/api/breeds/image/random` — Random dog pictures
-- `https://api.coindesk.com/v1/bpi/currentprice.json` — Bitcoin prices
-
-🌐💛
+**Your turn:** Try the quote generator! Maybe add features like rating quotes or searching by author! 🌐💛

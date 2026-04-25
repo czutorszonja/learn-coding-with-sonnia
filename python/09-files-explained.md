@@ -158,14 +158,23 @@ Day 3: Now learning file handling!
 
 ## Practice Exercise
 
-**Scenario:** You're building a simple note-taking app!
+**Scenario:** You're building a word counter for text files!
 
 **Your task:**
-1. Create a function called `save_note` that takes two parameters: `filename` and `note`
-2. The function should open the file in append mode and add the note
-3. Create a function called `read_notes` that takes one parameter: `filename`
-4. The function should read and return all notes from the file
-5. Test it by saving a few notes and reading them back
+1. Create a function called `count_words_in_file` that takes one parameter: `filename`
+2. The function should open the file, read all content, and count the total words
+3. Return the word count
+4. Create another function called `find_longest_word` that takes the same parameter
+5. This function should find and return the longest word in the file
+6. Create a sample text file called `sample.txt` with at least 3 sentences
+7. Test both functions and print the results with nice messages
+
+**Example output:**
+```
+File: sample.txt
+Total words: 15
+Longest word: Python
+```
 
 **Try it yourself first!** Solution below.
 
@@ -174,45 +183,48 @@ Day 3: Now learning file handling!
 ## Solution
 
 ```python
-def save_note(filename, note):
-    """Save a note to a file."""
-    with open(filename, "a") as file:
-        file.write(note + "\n")
-    print(f"Note saved to {filename}")
-
-def read_notes(filename):
-    """Read all notes from a file."""
-    notes = []
+def count_words_in_file(filename):
+    """Count the total words in a file."""
     with open(filename, "r") as file:
-        for line in file:
-            notes.append(line.strip())
-    return notes
+        content = file.read()
+        words = content.split()
+        return len(words)
+
+def find_longest_word(filename):
+    """Find the longest word in a file."""
+    with open(filename, "r") as file:
+        content = file.read()
+        words = content.split()
+        longest = ""
+        for word in words:
+            if len(word) > len(longest):
+                longest = word
+        return longest
+
+# Create a sample file
+with open("sample.txt", "w") as f:
+    f.write("Python is an amazing programming language.\n")
+    f.write("It is great for beginners and experts.\n")
+    f.write("You can build anything with Python!")
 
 # Test the functions
-save_note("notes.txt", "Learn Python")
-save_note("notes.txt", "Build something cool")
-save_note("notes.txt", "Practice every day")
+filename = "sample.txt"
+word_count = count_words_in_file(filename)
+longest = find_longest_word(filename)
 
-# Read and display notes
-print("\nYour Notes:")
-all_notes = read_notes("notes.txt")
-for note in all_notes:
-    print(f"- {note}")
+print(f"File: {filename}")
+print(f"Total words: {word_count}")
+print(f"Longest word: {longest}")
 ```
 
 **Output:**
 ```
-Note saved to notes.txt
-Note saved to notes.txt
-Note saved to notes.txt
-
-Your Notes:
-- Learn Python
-- Build something cool
-- Practice every day
+File: sample.txt
+Total words: 15
+Longest word: programming
 ```
 
-**Note:** `line.strip()` removes the newline character from each line!
+**Note:** `content.split()` splits the text by whitespace into a list of words!
 
 ---
 
@@ -234,4 +246,4 @@ Ready for more? Continue to **[Lesson 10: Error Handling](10-error-handling.md)*
 
 ---
 
-**Your turn:** Try the note-taking exercise! Maybe add features like numbering notes or deleting notes! 📝💛
+**Your turn:** Try the word counter exercise! Maybe add features like counting lines or finding the most common word! 📝💛

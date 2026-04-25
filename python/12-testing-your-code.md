@@ -201,37 +201,43 @@ def test_divide_by_zero():
 
 ---
 
-## Organising Tests
-
-**Keep tests near your code:**
-```
-my_project/
-├── calculator.py
-├── test_calculator.py
-├── utils.py
-└── test_utils.py
-```
-
-**One test file per module:**
-- `calculator.py` → `test_calculator.py`
-- `utils.py` → `test_utils.py`
-
----
-
 ## Practice Exercise
 
-**Scenario:** You've built a string utility library, and now you need to write tests for it!
+**Scenario:** You've been given a buggy temperature converter module, and your job is to write tests that catch the bugs!
 
 **Your task:**
-1. Create a file called `test_string_utils.py`
-2. Write tests for these functions:
-   - `test_reverse_string` — Test that `reverse_string("hello")` returns `"olleh"`
-   - `test_is_palindrome` — Test that `is_palindrome("racecar")` returns `True`
-   - `test_count_words` — Test that `count_words("Hello world")` returns `2`
-   - `test_reverse_string_empty` — Test edge case: empty string returns empty string
-   - `test_is_palindrome_sentence` — Test with a sentence (ignore spaces and case)
-3. Run the tests with `pytest -v`
-4. Fix any failing tests
+1. Create a file called `temperature.py` with these buggy functions:
+   ```python
+   def celsius_to_fahrenheit(celsius):
+       return celsius * 9/5 + 32
+   
+   def fahrenheit_to_celsius(fahrenheit):
+       return fahrenheit - 32 * 5/9  # BUG: Missing parentheses!
+   
+   def is_freezing(temp, unit="celsius"):
+       if unit == "celsius":
+           return temp <= 0
+       elif unit == "fahrenheit":
+           return temp <= 30  # BUG: Should be 32!
+   ```
+2. Create a test file called `test_temperature.py`
+3. Write at least 6 tests that cover:
+   - Normal conversions (celsius to fahrenheit and vice versa)
+   - Edge cases (freezing point, boiling point)
+   - The `is_freezing` function with both units
+4. Run the tests and watch them fail
+5. Look at the error messages to identify the bugs
+6. Fix the bugs in `temperature.py`
+7. Run the tests again - they should all pass!
+
+**Example test to get you started:**
+```python
+from temperature import celsius_to_fahrenheit
+
+def test_celsius_to_fahrenheit():
+    result = celsius_to_fahrenheit(0)
+    assert result == 32, f"Expected 32, got {result}"
+```
 
 **Try it yourself first!** Solution below.
 
@@ -239,69 +245,81 @@ my_project/
 
 ## Solution
 
+### test_temperature.py
+
 ```python
-# test_string_utils.py
-
 import pytest
-from string_utils import reverse_string, is_palindrome, count_words
+from temperature import celsius_to_fahrenheit, fahrenheit_to_celsius, is_freezing
 
 
-def test_reverse_string():
-    """Test reversing a string."""
-    result = reverse_string("hello")
-    assert result == "olleh"
+def test_celsius_to_fahrenheit_freezing():
+    """Test Celsius to Fahrenheit at freezing point."""
+    result = celsius_to_fahrenheit(0)
+    assert result == 32
 
 
-def test_reverse_string_empty():
-    """Test reversing an empty string (edge case)."""
-    result = reverse_string("")
-    assert result == ""
+def test_celsius_to_fahrenheit_boiling():
+    """Test Celsius to Fahrenheit at boiling point."""
+    result = celsius_to_fahrenheit(100)
+    assert result == 212
 
 
-def test_is_palindrome():
-    """Test palindrome detection."""
-    result = is_palindrome("racecar")
-    assert result == True
-
-
-def test_is_palindrome_sentence():
-    """Test palindrome with sentence (ignore spaces and case)."""
-    result = is_palindrome("A man a plan a canal Panama")
-    assert result == True
-
-
-def test_count_words():
-    """Test word counting."""
-    result = count_words("Hello world")
-    assert result == 2
-
-
-def test_count_words_empty():
-    """Test counting words in empty string."""
-    result = count_words("")
+def test_fahrenheit_to_celsius_freezing():
+    """Test Fahrenheit to Celsius at freezing point."""
+    result = fahrenheit_to_celsius(32)
     assert result == 0
+
+
+def test_fahrenheit_to_celsius_boiling():
+    """Test Fahrenheit to Celsius at boiling point."""
+    result = fahrenheit_to_celsius(212)
+    assert result == 100
+
+
+def test_is_freezing_celsius():
+    """Test freezing point in Celsius."""
+    assert is_freezing(0, "celsius") == True
+    assert is_freezing(-10, "celsius") == True
+    assert is_freezing(10, "celsius") == False
+
+
+def test_is_freezing_fahrenheit():
+    """Test freezing point in Fahrenheit."""
+    assert is_freezing(32, "fahrenheit") == True
+    assert is_freezing(20, "fahrenheit") == True
+    assert is_freezing(40, "fahrenheit") == False
+```
+
+### Fixed temperature.py
+
+```python
+def celsius_to_fahrenheit(celsius):
+    """Convert Celsius to Fahrenheit."""
+    return celsius * 9/5 + 32
+
+
+def fahrenheit_to_celsius(fahrenheit):
+    """Convert Fahrenheit to Celsius."""
+    return (fahrenheit - 32) * 5/9  # FIXED: Added parentheses!
+
+
+def is_freezing(temp, unit="celsius"):
+    """Check if temperature is at or below freezing."""
+    if unit == "celsius":
+        return temp <= 0
+    elif unit == "fahrenheit":
+        return temp <= 32  # FIXED: Changed from 30 to 32!
 ```
 
 **To run the tests:**
 ```bash
-# First, create string_utils.py with the functions
-# Then run:
-pytest test_string_utils.py -v
-```
+# First run (with bugs) - tests will fail
+pytest test_temperature.py -v
 
-**Expected output:**
-```
-============================= test session starts =============================
-collected 6 items
+# Fix the bugs in temperature.py
 
-test_string_utils.py::test_reverse_string PASSED                         [ 16%]
-test_string_utils.py::test_reverse_string_empty PASSED                   [ 33%]
-test_string_utils.py::test_is_palindrome PASSED                          [ 50%]
-test_string_utils.py::test_is_palindrome_sentence PASSED                 [ 66%]
-test_string_utils.py::test_count_words PASSED                            [ 83%]
-test_string_utils.py::test_count_words_empty PASSED                      [100%]
-
-============================== 6 passed in 0.03s ==============================
+# Second run (after fix) - all tests should pass!
+pytest test_temperature.py -v
 ```
 
 ---
@@ -324,4 +342,4 @@ Ready for more? Continue to **[Lesson 13: Building Your Own API](13-building-you
 
 ---
 
-**Your turn:** Try the string utils exercise! Then write tests for your own functions from previous lessons! ✅💛
+**Your turn:** Try the temperature converter exercise! Add more tests for edge cases like -40 (where both scales meet)! ✅💛

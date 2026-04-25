@@ -154,14 +154,26 @@ Error: Not enough money!
 
 ## Practice Exercise
 
-**Scenario:** You're building a calculator that needs to handle user mistakes gracefully!
+**Scenario:** You're building a user registration system that validates age input!
 
 **Your task:**
-1. Create a function called `safe_divide` that takes two parameters: `a` and `b`
-2. The function should try to divide `a` by `b` and return the result
-3. Handle `ZeroDivisionError` by returning `None` and printing an error message
-4. Handle `TypeError` (if user passes non-numbers) by returning `None` and printing an error message
-5. Test it with different inputs (including edge cases)
+1. Create a function called `get_user_age` that asks for age input and returns it as an integer
+2. Handle `ValueError` if the user types non-numbers (print error and return None)
+3. Handle the case if age is negative (raise a `ValueError` with a message)
+4. Handle the case if age is over 150 (raise a `ValueError` with a message)
+5. Create another function called `register_user` that takes name and age as parameters
+6. This function should check if age is valid (use try/except) and print a welcome message
+7. Test with different inputs: valid age, text, negative number, very large number
+
+**Example output:**
+```
+Enter your age: hello
+Error: Age must be a number!
+Enter your age: -5
+Error: Age cannot be negative!
+Enter your age: 25
+Welcome, Arthur! You are 25 years old.
+```
 
 **Try it yourself first!** Solution below.
 
@@ -170,41 +182,53 @@ Error: Not enough money!
 ## Solution
 
 ```python
-def safe_divide(a, b):
-    """Divide a by b with error handling."""
+def get_user_age():
+    """Get age from user with error handling."""
     try:
-        result = a / b
-        return result
-    except ZeroDivisionError:
-        print("Error: Cannot divide by zero!")
+        age_input = input("Enter your age: ")
+        age = int(age_input)
+        
+        if age < 0:
+            raise ValueError("Age cannot be negative!")
+        if age > 150:
+            raise ValueError("Age cannot be over 150!")
+        
+        return age
+    except ValueError as e:
+        print(f"Error: {e}")
         return None
-    except TypeError:
-        print("Error: Both arguments must be numbers!")
-        return None
 
-# Test the function
-print("Test 1: Normal division")
-print(f"10 / 2 = {safe_divide(10, 2)}")
+def register_user(name, age):
+    """Register a user with validation."""
+    if age is None:
+        print("Registration failed: Invalid age")
+        return
+    
+    print(f"Welcome, {name}! You are {age} years old.")
+    print("Registration successful!")
 
-print("\nTest 2: Division by zero")
-print(f"10 / 0 = {safe_divide(10, 0)}")
-
-print("\nTest 3: String instead of number")
-print(f"10 / 'hello' = {safe_divide(10, 'hello')}")
+# Test the functions
+print("=== User Registration ===")
+name = input("Enter your name: ")
+age = get_user_age()
+register_user(name, age)
 ```
 
-**Output:**
+**Example runs:**
 ```
-Test 1: Normal division
-10 / 2 = 5.0
+=== User Registration ===
+Enter your name: Arthur
+Enter your age: hello
+Error: Age must be a number!
+Registration failed: Invalid age
+```
 
-Test 2: Division by zero
-Error: Cannot divide by zero!
-10 / 0 = None
-
-Test 3: String instead of number
-Error: Both arguments must be numbers!
-10 / 'hello' = None
+```
+=== User Registration ===
+Enter your name: Szonja
+Enter your age: 25
+Welcome, Szonja! You are 25 years old.
+Registration successful!
 ```
 
 ---
@@ -227,4 +251,4 @@ Ready for more? Continue to **[Lesson 11: Working with APIs](11-working-with-api
 
 ---
 
-**Your turn:** Try the calculator exercise! Add more error checks or create your own functions with error handling! 🛡️💛
+**Your turn:** Try the registration exercise! Add more validations like checking if name is empty! 🛡️💛
