@@ -184,6 +184,68 @@ def divide(a, b):
     return a / b
 ```
 
+**Test it with pytest:**
+```python
+# test_calculator.py
+import pytest
+
+def test_divide_by_zero():
+    """Test that dividing by zero raises an error."""
+    with pytest.raises(ValueError):
+        divide(10, 0)
+```
+
+**What it does:**
+- Test passes if `ValueError` is raised
+- Test fails if no error is raised
+
+**Test it with unittest:**
+```python
+# test_calculator.py
+import unittest
+
+class TestCalculator(unittest.TestCase):
+    def test_divide_by_zero(self):
+        """Test that dividing by zero raises an error."""
+        with self.assertRaises(ValueError):
+            divide(10, 0)
+```
+
+---
+
+## Organising Tests
+
+**Keep tests near your code:**
+```
+my_project/
+├── calculator.py
+├── test_calculator.py
+├── utils.py
+└── test_utils.py
+```
+
+**One test file per module:**
+- `calculator.py` → `test_calculator.py`
+- `utils.py` → `test_utils.py`
+
+**Test file naming:**
+- Start with `test_` (e.g., `test_calculator.py`)
+- OR end with `_test.py` (e.g., `calculator_test.py`)
+
+**Inside test files:**
+- Group related tests in classes (unittest)
+- OR use separate functions (pytest)
+- Use descriptive names: `test_add_positive_numbers` not `test1`
+
+```python
+# calculator.py
+def divide(a, b):
+    """Divide a by b."""
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+    return a / b
+```
+
 **Test it:**
 ```python
 # test_calculator.py
@@ -324,15 +386,125 @@ pytest test_temperature.py -v
 
 ---
 
+## Other Testing Frameworks
+
+### `unittest` — Python's Built-in Testing Framework
+
+Python comes with a built-in testing framework called `unittest`. It uses a different style:
+
+**pytest style (what we taught):**
+```python
+def test_add():
+    assert add(2, 3) == 5
+```
+
+**unittest style:**
+```python
+import unittest
+
+class TestCalculator(unittest.TestCase):
+    def test_add(self):
+        self.assertEqual(add(2, 3), 5)
+```
+
+**Key differences:**
+| pytest | unittest |
+|--------|----------|
+| `assert x == y` | `self.assertEqual(x, y)` |
+| Plain functions | Classes required |
+| Simple, clean syntax | More verbose |
+| External package (`pip install pytest`) | Built into Python |
+
+**Common `unittest` assertions:**
+```python
+self.assertEqual(a, b)          # Check if a == b
+self.assertNotEqual(a, b)       # Check if a != b
+self.assertTrue(x)              # Check if x is True
+self.assertFalse(x)             # Check if x is False
+self.assertIsNone(x)            # Check if x is None
+self.assertIsNotNone(x)         # Check if x is not None
+self.assertIn(item, list)       # Check if item is in list
+self.assertNotIn(item, list)    # Check if item is not in list
+self.assertRaises(Error)        # Check if error is raised
+self.assertIsInstance(obj, type)  # Check if obj is a type
+```
+
+**pytest vs unittest — Assertion Comparison:**
+
+| What to Test | pytest Style | unittest Style |
+|--------------|--------------|----------------|
+| Equality | `assert a == b` | `self.assertEqual(a, b)` |
+| Inequality | `assert a != b` | `self.assertNotEqual(a, b)` |
+| True | `assert x` | `self.assertTrue(x)` |
+| False | `assert not x` | `self.assertFalse(x)` |
+| None | `assert x is None` | `self.assertIsNone(x)` |
+| In list | `assert item in list` | `self.assertIn(item, list)` |
+| Exception | `with pytest.raises(Error):` | `with self.assertRaises(Error):` |
+| Type check | `assert isinstance(obj, type)` | `self.assertIsInstance(obj, type)` |
+
+**Running unittest:**
+```bash
+python -m unittest test_calculator.py
+```
+
+---
+
+### pytest vs unittest — When to Use Which?
+
+**Use pytest when:**
+- ✅ Starting a new project (modern choice)
+- ✅ You want simpler, cleaner syntax
+- ✅ You want better error messages
+- ✅ You're writing Python 3 code
+- ✅ Most open-source Python projects
+
+**Use unittest when:**
+- ✅ Working on legacy code (older projects)
+- ✅ Your team already uses unittest
+- ✅ You need built-in (no external dependencies)
+- ✅ Enterprise environments with strict policies
+
+**Industry trend:** Most modern Python projects use **pytest**!
+
+---
+
+### Other Testing Tools
+
+**`doctest`** — Test examples in docstrings:
+```python
+def add(a, b):
+    """Add two numbers.
+    
+    >>> add(2, 3)
+    5
+    >>> add(0, 0)
+    0
+    """
+    return a + b
+
+# Run with: python -m doctest calculator.py
+```
+
+**`coverage.py`** — Measure test coverage:
+```bash
+pip install coverage
+coverage run -m pytest
+coverage report  # Shows which lines are tested
+```
+
+---
+
 ## Quick Recap
 
 - **Testing** — Running code with known inputs to verify outputs
-- **pytest** — Python testing framework
+- **pytest** — Modern Python testing framework (recommended)
+- **unittest** — Built-in Python testing framework (legacy/enterprise)
 - **Test functions** — Start with `test_`
-- **`assert`** — Checks if condition is true
+- **`assert`** — Checks if condition is true (pytest)
+- **`assertEqual`, `assertTrue`** — unittest assertion methods
 - **Edge cases** — Test unusual inputs (zeros, negatives, empty values)
 - **`pytest.raises()`** — Test that errors are raised
-- **Run tests:** `pytest` or `pytest -v`
+- **Run tests:** `pytest` or `python -m unittest`
 
 ---
 
@@ -342,4 +514,4 @@ Ready for more? Continue to **[Lesson 13: Building Your Own API](13-building-you
 
 ---
 
-**Your turn:** Try the temperature converter exercise! Add more tests for edge cases like -40 (where both scales meet)! ✅💛
+**Your turn:** Try the temperature converter exercise! Then experiment with unittest style to see the difference! ✅💛
