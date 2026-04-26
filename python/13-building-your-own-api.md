@@ -276,6 +276,268 @@ Status code: 201
 
 ---
 
+## Updating Data with PUT
+
+**PUT** lets you update existing data in your API:
+
+```python
+# app.py
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+users = [
+    {"id": 1, "name": "Emma"},
+    {"id": 2, "name": "Arthur"}
+]
+
+@app.route('/users/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    user = next((u for u in users if u['id'] == user_id), None)
+    
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    
+    data = request.get_json()
+    user['name'] = data.get('name', user['name'])
+    
+    return jsonify(user)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+**Test with curl (macOS/Linux):**
+```bash
+curl -X PUT http://localhost:5000/users/1 \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Emma Updated"}'
+```
+
+**Test with curl (Windows PowerShell):**
+```powershell
+curl.exe -X PUT http://localhost:5000/users/1 `
+  -H "Content-Type: application/json" `
+  -d '{"name": "Emma Updated"}'
+```
+
+**Test with PowerShell Invoke-RestMethod (Windows):**
+```powershell
+$body = @{ name = "Emma Updated" } | ConvertTo-Json
+Invoke-RestMethod -Uri http://localhost:5000/users/1 -Method PUT -Body $body -ContentType "application/json"
+```
+
+**Test with Python (Cross-platform):**
+```python
+import requests
+
+url = "http://localhost:5000/users/1"
+data = {"name": "Emma Updated"}
+
+response = requests.put(url, json=data)
+print(f"Updated: {response.json()}")
+print(f"Status: {response.status_code}")
+```
+
+**Expected output:**
+```json
+{"id": 1, "name": "Emma Updated"}
+```
+Status code: 200
+
+---
+
+## Deleting Data with DELETE
+
+**DELETE** lets you remove data from your API:
+
+```python
+# app.py
+from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+users = [
+    {"id": 1, "name": "Emma"},
+    {"id": 2, "name": "Arthur"}
+]
+
+@app.route('/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    global users
+    user = next((u for u in users if u['id'] == user_id), None)
+    
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    
+    users = [u for u in users if u['id'] != user_id]
+    
+    return jsonify({"message": "User deleted"})
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+**Test with curl (macOS/Linux):**
+```bash
+curl -X DELETE http://localhost:5000/users/1
+```
+
+**Test with curl (Windows PowerShell):**
+```powershell
+curl.exe -X DELETE http://localhost:5000/users/1
+```
+
+**Test with PowerShell Invoke-RestMethod (Windows):**
+```powershell
+Invoke-RestMethod -Uri http://localhost:5000/users/1 -Method DELETE
+```
+
+**Test with Python (Cross-platform):**
+```python
+import requests
+
+url = "http://localhost:5000/users/1"
+
+response = requests.delete(url)
+print(f"Deleted: {response.json()}")
+print(f"Status: {response.status_code}")
+```
+
+**Expected output:**
+```json
+{"message": "User deleted"}
+```
+Status code: 200
+
+---
+
+## Testing All Methods Together
+
+Now let's test all HTTP methods on a task API:
+
+```python
+# task_api.py
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+tasks = []
+task_id_counter = 1
+
+@app.route('/tasks', methods=['GET'])
+def get_tasks():
+    return jsonify(tasks)
+
+@app.route('/tasks/<int:task_id>', methods=['GET'])
+def get_task(task_id):
+    task = next((t for t in tasks if t['id'] == task_id), None)
+    if task:
+        return jsonify(task)
+    return jsonify({"error": "Task not found"}), 404
+
+@app.route('/tasks', methods=['POST'])
+def create_task():
+    global task_id_counter
+    data = request.get_json()
+    if not data or 'title' not in data:
+        return jsonify({"error": "Title is required"}), 400
+    
+    new_task = {
+        "id": task_id_counter,
+        "title": data['title'],
+        "priority": data.get('priority', 'medium'),
+        "completed": False
+    }
+    tasks.append(new_task)
+    task_id_counter += 1
+    return jsonify(new_task), 201
+
+@app.route('/tasks/<int:task_id>', methods=['PUT'])
+def update_task(task_id):
+    task = next((t for t in tasks if t['id'] == task_id), None)
+    if not task:
+        return jsonify({"error": "Task not found"}), 404
+    task['completed'] = True
+    return jsonify(task)
+
+@app.route('/tasks/<int:task_id>', methods=['DELETE'])
+def delete_task(task_id):
+    global tasks
+    task = next((t for t in tasks if t['id'] == task_id), None)
+    if not task:
+        return jsonify({"error": "Task not found"}), 404
+    tasks = [t for t in tasks if t['id'] != task_id]
+    return jsonify({"message": "Task deleted"})
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
+```
+
+**Test with Python (Cross-platform - works on all systems):**
+```python
+# test_full_api.py
+import requests
+
+BASE = "http://localhost:5000"
+
+# 1. Create a task (POST)
+print("1. Create task...")
+r = requests.post(f"{BASE}/tasks", json={
+    "title": "Learn Python",
+    "priority": "high"
+})
+print(f"   Created: {r.json()}, Status: {r.status_code}")
+
+# 2. Get all tasks (GET)
+print("\n2. Get all tasks...")
+r = requests.get(f"{BASE}/tasks")
+print(f"   Tasks: {r.json()}")
+
+# 3. Get specific task (GET)
+print("\n3. Get task #1...")
+r = requests.get(f"{BASE}/tasks/1")
+print(f"   Task: {r.json()}, Status: {r.status_code}")
+
+# 4. Update task (PUT)
+print("\n4. Mark task #1 as complete...")
+r = requests.put(f"{BASE}/tasks/1")
+print(f"   Updated: {r.json()}, Status: {r.status_code}")
+
+# 5. Delete task (DELETE)
+print("\n5. Delete task #1...")
+r = requests.delete(f"{BASE}/tasks/1")
+print(f"   Deleted: {r.json()}, Status: {r.status_code}")
+
+# 6. Try to get deleted task (should be 404)
+print("\n6. Try to get deleted task...")
+r = requests.get(f"{BASE}/tasks/1")
+print(f"   Response: {r.json()}, Status: {r.status_code}")
+```
+
+**Expected output:**
+```
+1. Create task...
+   Created: {'id': 1, 'title': 'Learn Python', 'priority': 'high', 'completed': false}, Status: 201
+
+2. Get all tasks...
+   Tasks: [{'id': 1, 'title': 'Learn Python', 'priority': 'high', 'completed': false}]
+
+3. Get task #1...
+   Task: {'id': 1, 'title': 'Learn Python', 'priority': 'high', 'completed': false}, Status: 200
+
+4. Mark task #1 as complete...
+   Updated: {'id': 1, 'title': 'Learn Python', 'priority': 'high', 'completed': true}, Status: 200
+
+5. Delete task #1...
+   Deleted: {'message': 'Task deleted'}, Status: 200
+
+6. Try to get deleted task...
+   Response: {'error': 'Task not found'}, Status: 404
+```
+
+---
+
 ## Understanding JSON
 
 **JSON** (JavaScript Object Notation) is how data is sent in APIs.
