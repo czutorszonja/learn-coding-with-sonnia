@@ -19,7 +19,7 @@ Testing is "tasting" your code before giving it to users!
 
 ## Why Test Your Code?
 
-**Without testing:**
+**Without testing (manual):**
 ```python
 # You manually test every time
 result = add(2, 3)
@@ -28,7 +28,7 @@ print(result)  # Is 5 correct? Did I type it right?
 # Change something? Test everything again manually!
 ```
 
-**With testing:**
+**With testing (automated):**
 ```python
 # Automated tests run in seconds
 def test_add():
@@ -44,6 +44,114 @@ def test_add():
 - Saves time (no manual testing)
 - Gives confidence to make changes
 - Documents what your code should do
+
+---
+
+## Manual Testing vs Automated Testing
+
+### Manual Testing (using `print()`)
+
+**What it is:** Running your code and checking output with `print()` statements.
+
+**Example:**
+```python
+# Manual testing with print()
+result = add(2, 3)
+print(f"Result: {result}")  # You look at output and decide if it's right
+
+result = add(0, 0)
+print(f"Result: {result}")  # You check each one manually
+```
+
+**When to use:**
+- ✅ Quick experiments while learning
+- ✅ Exploring how a function behaves
+- ✅ One-off checks during development
+- ✅ Debugging (temporarily adding print statements)
+
+**Pros:**
+- Simple and intuitive
+- No setup required
+- Good for exploration
+
+**Cons:**
+- You must read output and decide if it's correct
+- Slow for many tests
+- Easy to miss errors
+- Tests aren't saved for later
+- Must re-run manually after changes
+
+---
+
+### Automated Testing (using `assert` and `pytest`)
+
+**What it is:** Writing code that checks if your code works correctly.
+
+**Example:**
+```python
+# Automated testing with assert
+def test_add():
+    assert add(2, 3) == 5  # pytest checks automatically!
+    assert add(0, 0) == 0
+    assert add(-1, 1) == 0
+```
+
+**When to use:**
+- ✅ Code that will be used repeatedly
+- ✅ Projects that will change over time
+- ✅ Sharing code with others
+- ✅ Catching regressions (bugs that come back)
+- ✅ Professional development
+
+**Pros:**
+- Tests run automatically
+- Clear pass/fail results
+- Tests are saved and reusable
+- Fast — run hundreds of tests in seconds
+- Catches bugs you might miss
+
+**Cons:**
+- Takes time to write tests
+- Requires learning pytest
+- Overkill for tiny scripts
+
+---
+
+### Comparison Table
+
+| Aspect | Manual (`print()`) | Automated (`assert`) |
+|--------|-------------------|---------------------|
+| **Speed** | Slow (check each output) | Fast (all at once) |
+| **Accuracy** | You might miss errors | Computer never misses |
+| **Reusability** | Run manually each time | Run anytime with `pytest` |
+| **Best for** | Learning, debugging | Production code |
+| **Setup** | None | Install pytest |
+
+---
+
+### The Professional Workflow
+
+**During development:**
+1. Start with `print()` to explore and understand
+2. Once you understand, write `assert` tests
+3. Use `pytest` to run all tests
+
+**Example:**
+```python
+# Step 1: Explore with print()
+result = celsius_to_fahrenheit(0)
+print(f"0°C = {result}°F")  # You see: 0°C = 32.0°F
+
+# Step 2: Write automated test
+def test_celsius_to_fahrenheit():
+    assert celsius_to_fahrenheit(0) == 32
+
+# Step 3: Run with pytest
+# bash: pytest test_temp.py -v
+# PASSED ✅
+```
+
+**Key insight:** `print()` is for **you** (while coding). `assert` is for **the computer** (to check automatically).
 
 ---
 
