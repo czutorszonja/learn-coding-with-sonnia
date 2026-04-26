@@ -541,6 +541,435 @@ PASSED test_temperature.py::test_fahrenheit_to_celsius_freezing
 
 ---
 
+## Other Testing Frameworks
+
+### `unittest` — Python's Built-in Testing Framework
+
+Python comes with a built-in testing framework called `unittest`. It's part of the standard library (no installation needed!) and uses a class-based approach.
+
+**pytest style (what we taught):**
+```python
+def test_add():
+    assert add(2, 3) == 5
+```
+
+**unittest style:**
+```python
+import unittest
+
+class TestCalculator(unittest.TestCase):
+    def test_add(self):
+        self.assertEqual(add(2, 3), 5)
+```
+
+---
+
+### Why Does unittest Require Classes?
+
+**unittest** uses an object-oriented approach because:
+
+1. **Test grouping:** Related tests are grouped in one class
+2. **Setup/teardown:** Common setup code runs before each test
+3. **Inheritance:** Test classes inherit from `unittest.TestCase`
+4. **Test discovery:** unittest finds all `test_*` methods in classes
+
+**Example with setup:**
+```python
+import unittest
+
+class TestCalculator(unittest.TestCase):
+    def setUp(self):
+        """Runs before EACH test method."""
+        self.calc = Calculator()
+        print("Setting up test")
+    
+    def tearDown(self):
+        """Runs after EACH test method."""
+        print("Cleaning up test")
+    
+    def test_add(self):
+        result = self.calc.add(2, 3)
+        self.assertEqual(result, 5)
+    
+    def test_subtract(self):
+        result = self.calc.subtract(5, 2)
+        self.assertEqual(result, 3)
+```
+
+**`setUp` and `tearDown`:**
+- `setUp()` — Runs before each test (prepare data, connections, etc.)
+- `tearDown()` — Runs after each test (clean up, close files, etc.)
+
+---
+
+### Running unittest Tests
+
+**Method 1: Command line**
+```bash
+python -m unittest test_calculator.py
+```
+
+**Method 2: With `unittest.main()`**
+```python
+import unittest
+
+class TestCalculator(unittest.TestCase):
+    def test_add(self):
+        self.assertEqual(add(2, 3), 5)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**Run it:**
+```bash
+python test_calculator.py
+```
+
+**What `if __name__ == "__main__":` does:**
+- Checks if the file is being run directly (not imported)
+- If yes, runs `unittest.main()` which discovers and runs all tests
+- This pattern allows the file to be both runnable AND importable
+
+**Output:**
+```
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+```
+
+---
+
+### Complete unittest Example
+
+**temperature.py:**
+```python
+def celsius_to_fahrenheit(celsius):
+    return celsius * 9/5 + 32
+
+def fahrenheit_to_celsius(fahrenheit):
+    return (fahrenheit - 32) * 5/9
+
+def is_freezing(temp, unit="celsius"):
+    if unit == "celsius":
+        return temp <= 0
+    elif unit == "fahrenheit":
+        return temp <= 32
+```
+
+**test_temperature.py (unittest version):**
+```python
+import unittest
+from temperature import celsius_to_fahrenheit, fahrenheit_to_celsius, is_freezing
+
+
+class TestTemperatureConversions(unittest.TestCase):
+    """Test temperature conversion functions."""
+    
+    def test_celsius_to_fahrenheit_freezing(self):
+        """Test Celsius to Fahrenheit at freezing point."""
+        result = celsius_to_fahrenheit(0)
+        self.assertEqual(result, 32)
+    
+    def test_celsius_to_fahrenheit_boiling(self):
+        """Test Celsius to Fahrenheit at boiling point."""
+        result = celsius_to_fahrenheit(100)
+        self.assertEqual(result, 212)
+    
+    def test_fahrenheit_to_celsius_freezing(self):
+        """Test Fahrenheit to Celsius at freezing point."""
+        result = fahrenheit_to_celsius(32)
+        self.assertEqual(result, 0)
+    
+    def test_fahrenheit_to_celsius_boiling(self):
+        """Test Fahrenheit to Celsius at boiling point."""
+        result = fahrenheit_to_celsius(212)
+        self.assertEqual(result, 100)
+
+
+class TestIsFreezing(unittest.TestCase):
+    """Test is_freezing function."""
+    
+    def test_is_freezing_celsius(self):
+        """Test freezing point in Celsius."""
+        self.assertTrue(is_freezing(0, "celsius"))
+        self.assertTrue(is_freezing(-10, "celsius"))
+        self.assertFalse(is_freezing(10, "celsius"))
+    
+    def test_is_freezing_fahrenheit(self):
+        """Test freezing point in Fahrenheit."""
+        self.assertTrue(is_freezing(32, "fahrenheit"))
+        self.assertTrue(is_freezing(20, "fahrenheit"))
+        self.assertFalse(is_freezing(40, "fahrenheit"))
+
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**Run it:**
+```bash
+# Method 1: python -m unittest
+python -m unittest test_temperature.py -v
+
+# Method 2: Run file directly
+python test_temperature.py -v
+```
+
+**Output:**
+```
+test_celsius_to_fahrenheit_boiling (__main__.TestTemperatureConversions) ... ok
+test_celsius_to_fahrenheit_freezing (__main__.TestTemperatureConversions) ... ok
+test_fahrenheit_to_celsius_boiling (__main__.TestTemperatureConversions) ... ok
+test_fahrenheit_to_celsius_freezing (__main__.TestTemperatureConversions) ... ok
+test_is_freezing_celsius (__main__.TestIsFreezing) ... ok
+test_is_freezing_fahrenheit (__main__.TestIsFreezing) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+OK
+```
+
+---
+
+### unittest Test Methods Reference
+
+| Method | Checks | Example |
+|--------|--------|--------|
+| `assertEqual(a, b)` | `a == b` | `self.assertEqual(add(2, 3), 5)` |
+| `assertNotEqual(a, b)` | `a != b` | `self.assertNotEqual(x, y)` |
+| `assertTrue(x)` | `x is True` | `self.assertTrue(is_valid)` |
+| `assertFalse(x)` | `x is False` | `self.assertFalse(is_error)` |
+| `assertIsNone(x)` | `x is None` | `self.assertIsNone(result)` |
+| `assertIsNotNone(x)` | `x is not None` | `self.assertIsNotNotNone(result)` |
+| `assertIn(a, b)` | `a in b` | `self.assertIn(item, list)` |
+| `assertNotIn(a, b)` | `a not in b` | `self.assertNotIn(item, list)` |
+| `assertIsInstance(a, b)` | `isinstance(a, b)` | `self.assertIsInstance(obj, str)` |
+| `assertRaises(error)` | Exception raised | `with self.assertRaises(ValueError):` |
+
+---
+
+### pytest vs unittest — Assertion Comparison
+
+| What to Test | pytest Style | unittest Style |
+|--------------|--------------|----------------|
+| Equality | `assert a == b` | `self.assertEqual(a, b)` |
+| Inequality | `assert a != b` | `self.assertNotEqual(a, b)` |
+| True | `assert x` | `self.assertTrue(x)` |
+| False | `assert not x` | `self.assertFalse(x)` |
+| None | `assert x is None` | `self.assertIsNone(x)` |
+| In list | `assert item in list` | `self.assertIn(item, list)` |
+| Exception | `with pytest.raises(Error):` | `with self.assertRaises(Error):` |
+| Type check | `assert isinstance(obj, type)` | `self.assertIsInstance(obj, type)` |
+
+**Running tests:**
+```bash
+# pytest
+pytest test_file.py -v
+
+# unittest
+python -m unittest test_file.py -v
+```
+
+---
+
+### pytest vs unittest — Detailed Comparison
+
+**Use pytest when:**
+- ✅ Starting a new project (modern choice)
+- ✅ You want simpler, cleaner syntax
+- ✅ You want better error messages
+- ✅ You're writing Python 3 code
+- ✅ Most open-source Python projects
+- ✅ You want fixtures for setup/teardown
+- ✅ You want plugins and extensions
+
+**Use unittest when:**
+- ✅ Working on legacy code (older projects)
+- ✅ Your team already uses unittest
+- ✅ You need built-in (no external dependencies)
+- ✅ Enterprise environments with strict policies
+- ✅ You want Java-style test structure (JUnit)
+- ✅ Academic/educational settings (often taught in schools)
+- ✅ You want unittest's built-in test discovery
+
+**Industry trend:** Most modern Python projects use **pytest**, but unittest is still widely used in enterprise!
+
+---
+
+### Feature Comparison Table
+
+| Feature | pytest | unittest |
+|---------|--------|----------|
+| **Installation** | `pip install pytest` | Built into Python |
+| **Test structure** | Functions | Classes required |
+| **Syntax** | `assert x == y` | `self.assertEqual(x, y)` |
+| **Setup/teardown** | `@pytest.fixture` | `setUp()` / `tearDown()` methods |
+| **Test discovery** | Automatic | Automatic |
+| **Plugins** | Extensive plugin ecosystem | Limited |
+| **Error messages** | Very clear, detailed | Good, but verbose |
+| **Learning curve** | Gentle | Steeper (OOP required) |
+| **Community** | Large, active | Mature, stable |
+| **Best for** | Modern Python projects | Enterprise, legacy, education |
+
+---
+
+### Code Comparison: Same Tests in Both Frameworks
+
+**pytest version:**
+```python
+# test_calculator_pytest.py
+import pytest
+from calculator import Calculator
+
+@pytest.fixture
+def calc():
+    """Create a Calculator instance for tests."""
+    return Calculator()
+
+def test_add(calc):
+    result = calc.add(2, 3)
+    assert result == 5
+
+def test_subtract(calc):
+    result = calc.subtract(5, 2)
+    assert result == 3
+
+def test_multiply(calc):
+    result = calc.multiply(4, 3)
+    assert result == 12
+
+def test_divide(calc):
+    result = calc.divide(10, 2)
+    assert result == 5
+
+def test_divide_by_zero(calc):
+    with pytest.raises(ValueError):
+        calc.divide(10, 0)
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
+```
+
+**unittest version:**
+```python
+# test_calculator_unittest.py
+import unittest
+from calculator import Calculator
+
+class TestCalculator(unittest.TestCase):
+    def setUp(self):
+        """Create a Calculator instance before each test."""
+        self.calc = Calculator()
+    
+    def test_add(self):
+        result = self.calc.add(2, 3)
+        self.assertEqual(result, 5)
+    
+    def test_subtract(self):
+        result = self.calc.subtract(5, 2)
+        self.assertEqual(result, 3)
+    
+    def test_multiply(self):
+        result = self.calc.multiply(4, 3)
+        self.assertEqual(result, 12)
+    
+    def test_divide(self):
+        result = self.calc.divide(10, 2)
+        self.assertEqual(result, 5)
+    
+    def test_divide_by_zero(self):
+        with self.assertRaises(ValueError):
+            self.calc.divide(10, 0)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**Run pytest version:**
+```bash
+pytest test_calculator_pytest.py -v
+```
+
+**Run unittest version:**
+```bash
+python -m unittest test_calculator_unittest.py -v
+```
+
+**Both produce similar output:**
+```
+test_add ... ok
+test_divide ... ok
+test_divide_by_zero ... ok
+test_multiply ... ok
+test_subtract ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+OK
+```
+
+---
+
+### Choosing the Right Testing Approach
+
+**For learning Python:**
+- Start with `print()` for exploration
+- Learn `assert` for simple checks
+- Learn `unittest` for structured testing (often required in courses)
+- Learn `pytest` for modern Python development
+
+**For school/university:**
+- Follow what your instructor teaches
+- Often `unittest` is required for assignments
+- Understand both frameworks for exams
+
+**For personal projects:**
+- Start with `pytest` (simpler, more Pythonic)
+- Use `unittest` if you prefer class-based structure
+
+**For work/professional:**
+- Follow team conventions
+- New projects: usually `pytest`
+- Legacy projects: often `unittest`
+
+**For open source:**
+- Check what the project uses
+- Most modern projects: `pytest`
+- Older projects: `unittest`
+
+---
+
+### Other Testing Tools
+
+**`doctest`** — Test examples in docstrings:
+```python
+def add(a, b):
+    """Add two numbers.
+    
+    >>> add(2, 3)
+    5
+    >>> add(0, 0)
+    0
+    """
+    return a + b
+
+# Run with: python -m doctest calculator.py
+```
+
+**`coverage.py`** — Measure test coverage:
+```bash
+pip install coverage
+coverage run -m pytest
+coverage report  # Shows which lines are tested
+```
+
+---
+
 ## Practice Exercise
 
 **Scenario:** You've been given a buggy temperature converter module, and your job is to write tests that catch the bugs!
@@ -663,8 +1092,6 @@ pytest test_temperature.py -v
 ```
 
 ---
-
-## Other Testing Frameworks
 
 ### `unittest` — Python's Built-in Testing Framework
 
