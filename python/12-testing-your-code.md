@@ -107,6 +107,20 @@ result = add(2, 3)
 assert result == 5, f"Expected 5, but got {result}"
 ```
 
+**Important:** Don't add extra `if` checks after `assert` — it's redundant!
+
+```python
+# WRONG - redundant code
+assert result == 32
+if result != 32:
+    raise AssertionError  # This never runs!
+
+# RIGHT - just use assert
+assert result == 32
+```
+
+The `assert` statement ALREADY raises an error if the condition is false. No need for extra code!
+
 ---
 
 ## Running Tests
@@ -121,7 +135,7 @@ pytest
 pytest -v  # -v means verbose
 ```
 
-**Output:**
+**Output (all tests pass):**
 ```
 ============================= test session starts =============================
 collected 2 items
@@ -135,6 +149,67 @@ test_calculator.py::test_subtract PASSED                                 [100%]
 **Test results:**
 - `PASSED` ✅ — Test succeeded
 - `FAILED` ❌ — Test failed (check the error message)
+
+---
+
+## Reading Error Messages
+
+When a test fails, pytest shows you exactly what went wrong:
+
+**Example buggy code:**
+```python
+# temperature.py
+def celsius_to_fahrenheit(celsius):
+    return celsius * 9/5 + 32  # Correct!
+
+def fahrenheit_to_celsius(fahrenheit):
+    return fahrenheit - 32 * 5/9  # BUG: Missing parentheses!
+```
+
+**Test:**
+```python
+# test_temperature.py
+def test_fahrenheit_to_celsius_freezing():
+    result = fahrenheit_to_celsius(32)
+    assert result == 0, f"Expected 0, got {result}"
+```
+
+**Error message:**
+```
+____________________ test_fahrenheit_to_celsius_freezing _____________________
+
+def test_fahrenheit_to_celsius_freezing():
+    result = fahrenheit_to_celsius(32)
+>   assert result == 0, f"Expected 0, got {result}"
+E   AssertionError: Expected 0, got -17.77777777777778
+E   assert -17.77777777777778 == 0
+
+test_temperature.py:15: AssertionError
+```
+
+**How to read this:**
+1. **Test name:** `test_fahrenheit_to_celsius_freezing` — which test failed
+2. **Line with `>`:** Shows the exact line that failed
+3. **`E AssertionError`:** Shows what you expected vs. what you got
+4. **Bottom line:** Shows the file and line number
+
+**What the error tells you:**
+- Expected: `0`
+- Got: `-17.77777777777778`
+- The formula is wrong! (Missing parentheses around `fahrenheit - 32`)
+
+**Fix:**
+```python
+def fahrenheit_to_celsius(fahrenheit):
+    return (fahrenheit - 32) * 5/9  # FIXED: Added parentheses!
+```
+
+**Re-run tests:**
+```bash
+pytest test_temperature.py -v
+```
+
+**Now it passes!** ✅
 
 ---
 
@@ -168,6 +243,48 @@ def test_multiply_by_zero():
 - Empty strings: `greet("")`
 - Empty lists: `sum_list([])`
 - Very large numbers: `multiply(1000000, 1000000)`
+
+---
+
+## Testing Functions with Default Parameters
+
+Some functions have optional parameters with default values:
+
+```python
+# temperature.py
+def is_freezing(temp, unit="celsius"):
+    if unit == "celsius":
+        return temp <= 0
+    elif unit == "fahrenheit":
+        return temp <= 32
+```
+
+**Test both the default AND explicit values:**
+
+```python
+# test_temperature.py
+def test_is_freezing_default():
+    """Test default parameter (celsius)."""
+    assert is_freezing(0) == True  # Uses default unit="celsius"
+    assert is_freezing(-10) == True
+    assert is_freezing(10) == False
+
+def test_is_freezing_celsius():
+    """Test explicit celsius parameter."""
+    assert is_freezing(0, "celsius") == True
+    assert is_freezing(-10, "celsius") == True
+
+def test_is_freezing_fahrenheit():
+    """Test fahrenheit parameter."""
+    assert is_freezing(32, "fahrenheit") == True
+    assert is_freezing(20, "fahrenheit") == True
+    assert is_freezing(40, "fahrenheit") == False
+```
+
+**Why test both?**
+- Default parameter might have a bug
+- Explicit parameter might have a bug
+- Test both to be thorough!
 
 ---
 
@@ -260,6 +377,59 @@ def test_divide_by_zero():
 **What it does:**
 - Test passes if `ValueError` is raised
 - Test fails if no error is raised
+
+---
+
+## The Testing Workflow: Red → Green → Refactor
+
+Professional developers follow a pattern called **"Red-Green-Refactor"**:
+
+1. **🔴 Red:** Write a test that fails (because the code is buggy)
+2. **🟢 Green:** Fix the code to make the test pass
+3. **🔵 Refactor:** Clean up the code (optional)
+
+**Example:**
+
+**Step 1: Write test (RED - fails):**
+```python
+# test_temperature.py
+def test_fahrenheit_to_celsius_freezing():
+    result = fahrenheit_to_celsius(32)
+    assert result == 0, f"Expected 0, got {result}"
+```
+
+Run it:
+```bash
+pytest test_temperature.py -v
+```
+
+Output:
+```
+FAILED test_temperature.py::test_fahrenheit_to_celsius_freezing
+AssertionError: Expected 0, got -17.77777777777778
+```
+
+**Step 2: Fix code (GREEN - passes):**
+```python
+# temperature.py - FIXED
+def fahrenheit_to_celsius(fahrenheit):
+    return (fahrenheit - 32) * 5/9  # Added parentheses!
+```
+
+Run tests again:
+```bash
+pytest test_temperature.py -v
+```
+
+Output:
+```
+PASSED test_temperature.py::test_fahrenheit_to_celsius_freezing
+```
+
+**Step 3: Refactor (optional):**
+- Clean up variable names
+- Add comments
+- Remove duplication
 
 ---
 
@@ -515,3 +685,133 @@ Ready for more? Continue to **[Lesson 13: Building Your Own API](13-building-you
 ---
 
 **Your turn:** Try the temperature converter exercise! Then experiment with unittest style to see the difference! ✅💛
+
+---
+
+## Common Testing Mistakes
+
+### Mistake 1: Redundant Assertions
+
+**WRONG:**
+```python
+def test_something():
+    result = add(2, 3)
+    assert result == 5
+    if result != 5:  # This never runs!
+        raise AssertionError
+```
+
+**RIGHT:**
+```python
+def test_something():
+    result = add(2, 3)
+    assert result == 5  # assert already raises error if false!
+```
+
+---
+
+### Mistake 2: Testing Multiple Things in One Test
+
+**WRONG:**
+```python
+def test_add_and_multiply():
+    assert add(2, 3) == 5
+    assert multiply(2, 3) == 6  # What if this fails?
+    assert subtract(5, 2) == 3
+```
+
+**RIGHT:**
+```python
+def test_add():
+    assert add(2, 3) == 5
+
+def test_multiply():
+    assert multiply(2, 3) == 6
+
+def test_subtract():
+    assert subtract(5, 2) == 3
+```
+
+**Why?** If one test fails, you know exactly which function is broken!
+
+---
+
+### Mistake 3: Not Testing Edge Cases
+
+**WRONG:**
+```python
+def test_divide():
+    assert divide(10, 2) == 5  # Only tests normal case
+```
+
+**RIGHT:**
+```python
+def test_divide_normal():
+    assert divide(10, 2) == 5
+
+def test_divide_by_zero():
+    with pytest.raises(ZeroDivisionError):
+        divide(10, 0)  # Edge case!
+```
+
+---
+
+### Mistake 4: Ignoring Test Names
+
+**WRONG:**
+```python
+def test1():
+    ...
+def test2():
+    ...
+```
+
+**RIGHT:**
+```python
+def test_add_positive_numbers():
+    ...
+def test_add_negative_numbers():
+    ...
+```
+
+**Why?** When a test fails, the name tells you what broke!
+
+---
+
+### Mistake 5: Not Importing the Module
+
+**ERROR:** `ModuleNotFoundError: No module named 'temperature'`
+
+**FIX:** Make sure both files are in the same folder:
+```
+my_project/
+├── temperature.py
+└── test_temperature.py
+```
+
+And import correctly:
+```python
+from temperature import celsius_to_fahrenheit
+```
+
+---
+
+### Mistake 6: pytest Not Found
+
+**ERROR:** `command not found: pytest`
+
+**FIX 1:** Install pytest:
+```bash
+pip install pytest
+```
+
+**FIX 2:** Run through Python module:
+```bash
+python -m pytest test_file.py -v
+```
+
+**FIX 3:** Check you're in the right environment:
+```bash
+which python
+python -m pip freeze | grep pytest
+```
