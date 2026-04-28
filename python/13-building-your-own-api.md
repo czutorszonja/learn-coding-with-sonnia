@@ -414,9 +414,7 @@ Status code: 200
 
 ## Testing All Methods Together
 
-Now let's look at what it looks like all put together — a complete CRUD API with `users` as the resource.
-
-**Before you scroll past this:** This is a *demonstration* showing the complete working API. Read through it, make sure you follow how each piece fits together. The actual practice exercise comes next — where **you'll build it yourself first** before seeing the solution.
+Here's the complete API with all methods put together using the `users` resource:
 
 ```python
 # users_api.py
