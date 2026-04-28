@@ -567,20 +567,20 @@ user = {"name": "Szonja", "age": 30}
 
 ## Practice Exercise
 
-**Scenario:** You're building a task management API for a todo app!
+**Scenario:** You're building a user management API for an app!
 
 **Your task:**
-1. Create a Flask app called `task_api.py`
-2. Create an in-memory list to store tasks
+1. Create a Flask app called `users_api.py`
+2. Create an in-memory list to store users
 3. Create these endpoints:
-   - `GET /tasks` — Returns all tasks
-   - `GET /tasks/<int:task_id>` — Returns a specific task
-   - `POST /tasks` — Creates a new task (takes `title` and `priority` as JSON)
-   - `PUT /tasks/<int:task_id>` — Marks a task as complete
-   - `DELETE /tasks/<int:task_id>` — Deletes a task
-4. Each task should have: `id`, `title`, `priority`, `completed` (boolean)
+   - `GET /users` — Returns all users
+   - `GET /users/<int:user_id>` — Returns a specific user
+   - `POST /users` — Creates a new user (takes `name` and `email` as JSON)
+   - `PUT /users/<int:user_id>` — Updates a user's details
+   - `DELETE /users/<int:user_id>` — Deletes a user
+4. Each user should have: `id`, `name`, `email`
 5. Test all endpoints using curl, PowerShell, or Postman
-6. Add error handling (return 404 if task not found)
+6. Add error handling (return 404 if user not found)
 
 **Testing tools:**
 - **Postman** (GUI tool, works on all platforms): https://www.postman.com/downloads/
@@ -589,35 +589,38 @@ user = {"name": "Szonja", "age": 30}
 
 **Example curl commands (macOS/Linux):**
 ```bash
-# Create a task
-curl -X POST http://localhost:5000/tasks \
+# Create a user
+curl -X POST http://localhost:5000/users \
   -H "Content-Type: application/json" \
-  -d '{"title": "Learn Python", "priority": "high"}'
+  -d '{"name": "Alice", "email": "alice@example.com"}'
 
-# Get all tasks
-curl http://localhost:5000/tasks
+# Get all users
+curl http://localhost:5000/users
 
-# Mark task as complete
-curl -X PUT http://localhost:5000/tasks/1
+# Update a user's email
+curl -X PUT http://localhost:5000/users/1 \
+  -H "Content-Type: application/json" \
+  -d '{"email": "newalice@example.com"}'
 
-# Delete a task
-curl -X DELETE http://localhost:5000/tasks/1
+# Delete a user
+curl -X DELETE http://localhost:5000/users/1
 ```
 
 **Example PowerShell commands (Windows):**
 ```powershell
-# Create a task
-$body = @{ title = "Learn Python"; priority = "high" } | ConvertTo-Json
-Invoke-RestMethod -Uri http://localhost:5000/tasks -Method POST -Body $body -ContentType "application/json"
+# Create a user
+$body = @{ name = "Alice"; email = "alice@example.com" } | ConvertTo-Json
+Invoke-RestMethod -Uri http://localhost:5000/users -Method POST -Body $body -ContentType "application/json"
 
-# Get all tasks
-Invoke-RestMethod -Uri http://localhost:5000/tasks
+# Get all users
+Invoke-RestMethod -Uri http://localhost:5000/users
 
-# Mark task as complete
-Invoke-RestMethod -Uri http://localhost:5000/tasks/1 -Method PUT
+# Update a user's email
+$body = @{ email = "newalice@example.com" } | ConvertTo-Json
+Invoke-RestMethod -Uri http://localhost:5000/users/1 -Method PUT -Body $body -ContentType "application/json"
 
-# Delete a task
-Invoke-RestMethod -Uri http://localhost:5000/tasks/1 -Method DELETE
+# Delete a user
+Invoke-RestMethod -Uri http://localhost:5000/users/1 -Method DELETE
 ```
 
 **Try it yourself first!** Solution below.
@@ -627,79 +630,80 @@ Invoke-RestMethod -Uri http://localhost:5000/tasks/1 -Method DELETE
 ## Solution
 
 ```python
-# task_api.py
+# users_api.py
 
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# In-memory task storage
-tasks = []
-task_id_counter = 1
+# In-memory user storage
+users = []
+user_id_counter = 1
 
 
-@app.route('/tasks', methods=['GET'])
-def get_tasks():
-    """Return all tasks."""
-    return jsonify(tasks)
+@app.route('/users', methods=['GET'])
+def get_users():
+    """Return all users."""
+    return jsonify(users)
 
 
-@app.route('/tasks/<int:task_id>', methods=['GET'])
-def get_task(task_id):
-    """Return a specific task."""
-    task = next((t for t in tasks if t['id'] == task_id), None)
+@app.route('/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    """Return a specific user."""
+    user = next((u for u in users if u['id'] == user_id), None)
     
-    if task:
-        return jsonify(task)
+    if user:
+        return jsonify(user)
     else:
-        return jsonify({"error": "Task not found"}), 404
+        return jsonify({"error": "User not found"}), 404
 
 
-@app.route('/tasks', methods=['POST'])
-def create_task():
-    """Create a new task."""
-    global task_id_counter
+@app.route('/users', methods=['POST'])
+def create_user():
+    """Create a new user."""
+    global user_id_counter
     data = request.get_json()
     
-    if not data or 'title' not in data:
-        return jsonify({"error": "Title is required"}), 400
+    if not data or 'name' not in data:
+        return jsonify({"error": "Name is required"}), 400
     
-    new_task = {
-        "id": task_id_counter,
-        "title": data['title'],
-        "priority": data.get('priority', 'medium'),
-        "completed": False
+    new_user = {
+        "id": user_id_counter,
+        "name": data['name'],
+        "email": data.get('email', '')
     }
     
-    tasks.append(new_task)
-    task_id_counter += 1
+    users.append(new_user)
+    user_id_counter += 1
     
-    return jsonify(new_task), 201
+    return jsonify(new_user), 201
 
 
-@app.route('/tasks/<int:task_id>', methods=['PUT'])
-def complete_task(task_id):
-    """Mark a task as complete."""
-    task = next((t for t in tasks if t['id'] == task_id), None)
+@app.route('/users/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    """Update a user's details."""
+    user = next((u for u in users if u['id'] == user_id), None)
     
-    if task:
-        task['completed'] = True
-        return jsonify(task)
+    if user:
+        data = request.get_json()
+        if data:
+            user.update(data)
+        return jsonify(user)
     else:
-        return jsonify({"error": "Task not found"}), 404
+        return jsonify({"error": "User not found"}), 404
 
 
-@app.route('/tasks/<int:task_id>', methods=['DELETE'])
-def delete_task(task_id):
-    """Delete a task."""
-    global tasks
-    task = next((t for t in tasks if t['id'] == task_id), None)
+@app.route('/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    """Delete a user."""
+    global users
+    user = next((u for u in users if u['id'] == user_id), None)
     
-    if task:
-        tasks = [t for t in tasks if t['id'] != task_id]
-        return jsonify({"message": "Task deleted"})
+    if user:
+        users = [u for u in users if u['id'] != user_id]
+        return jsonify({"message": "User deleted"})
     else:
-        return jsonify({"error": "Task not found"}), 404
+        return jsonify({"error": "User not found"}), 404
 
 
 if __name__ == '__main__':
@@ -715,28 +719,28 @@ import requests
 
 BASE_URL = "http://localhost:5000"
 
-# Create a task
-print("Creating task...")
-response = requests.post(f"{BASE_URL}/tasks", json={
-    "title": "Learn Python",
-    "priority": "high"
+# Create a user
+print("Creating user...")
+response = requests.post(f"{BASE_URL}/users", json={
+    "name": "Alice",
+    "email": "alice@example.com"
 })
 print(f"Created: {response.json()}")
 print(f"Status: {response.status_code}")
 
-# Get all tasks
-print("\nGetting all tasks...")
-response = requests.get(f"{BASE_URL}/tasks")
-print(f"Tasks: {response.json()}")
+# Get all users
+print("\nGetting all users...")
+response = requests.get(f"{BASE_URL}/users")
+print(f"Users: {response.json()}")
 
-# Mark task as complete
-print("\nMarking task as complete...")
-response = requests.put(f"{BASE_URL}/tasks/1")
+# Update a user's email
+print("\nUpdating user #1 email...")
+response = requests.put(f"{BASE_URL}/users/1", json={"email": "newalice@example.com"})
 print(f"Updated: {response.json()}")
 
-# Delete task
-print("\nDeleting task...")
-response = requests.delete(f"{BASE_URL}/tasks/1")
+# Delete user
+print("\nDeleting user...")
+response = requests.delete(f"{BASE_URL}/users/1")
 print(f"Deleted: {response.json()}")
 ```
 
