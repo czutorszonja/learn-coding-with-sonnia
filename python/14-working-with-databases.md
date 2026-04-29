@@ -30,430 +30,481 @@ users = [{"name": "Szonja", "email": "szonja@example.com"}]
 **With databases:**
 ```python
 # Data saved permanently!
-cursor.execute("INSERT INTO users (name, email) VALUES (?, ?)", 
+cursor.execute("INSERT INTO users (name, email) VALUES (%s, %s)", 
                ("Szonja", "szonja@example.com"))
 # Data persists even after program ends!
 ```
 
 ---
 
-## What is SQLite?
+## MySQL vs SQLite
 
-**SQLite** is a lightweight database that stores data in a single file.
+**MySQL** is a full database server — it runs separately and multiple applications can connect to it at once. This is what most real-world projects use.
 
-**Why SQLite?**
-- No server needed
-- Built into Python
-- Perfect for learning
-- Used in phones, browsers, and apps
+**SQLite** stores everything in a single file on your computer — no server needed. Good for simple apps, but not what professionals use day-to-day.
+
+**In this lesson:** We use **MySQL only** with the `mysql.connector` library. This is what you'll encounter in most real jobs.
 
 ---
 
-## Connecting to MySQL
+## Installing MySQL Connector
 
-**MySQL** is a full database server (more common in real projects than SQLite).
-
-**Install the MySQL connector:**
 ```bash
 pip install mysql-connector-python
 ```
 
-**Connect to MySQL:**
-```python
-import mysql.connector
-
-conn = mysql.connector.connect(
-    host="localhost",
-    user="your_username",
-    password="your_password",
-    database="your_database"
-)
-cursor = conn.cursor()
-
-# Use the same commands as SQLite after this
-cursor.execute("SELECT * FROM users")
-results = cursor.fetchall()
-
-conn.close()
-```
-
-**Note:** Never write your username and password directly in the code! Use a **config file** (see below).
-
 ---
 
-## Using a Config File
+## Your Database Config File
 
-**Why?** Your database credentials are private. If you share your code on GitHub, anyone can steal them.
+**Why?** Never write passwords directly in your code! Use a config file that Git ignores.
 
-**Solution:** Store them in a separate config file that is **not committed** to GitHub.
-
-**`config.json`** (never share this file):
+**`config.json`** (create this in your project folder):
 ```json
 {
     "host": "localhost",
-    "user": "szonja",
-    "password": "secretpassword123",
-    "database": "hairdresser_db"
+    "port": 3306,
+    "user": "your_username",
+    "password": "your_password",
+    "database": "your_database"
 }
+```
+
+**Add to `.gitignore`:**
+```
+config.json
 ```
 
 **Load it in your code:**
 ```python
 import json
-import mysql.connector
 
 def get_config():
     """Load database credentials from config.json."""
     with open("config.json", "r") as f:
         return json.load(f)
-
-def get_connection():
-    """Create a database connection using config.json."""
-    config = get_config()
-    return mysql.connector.connect(
-        host=config["host"],
-        user=config["user"],
-        password=config["password"],
-        database=config["database"]
-    )
-
-# Use it
-conn = get_connection()
-cursor = conn.cursor()
-print("Connected!")
-conn.close()
 ```
 
-**In your `.gitignore` file (add this line):**
-```
-config.json
-```
-
-This means Git will completely ignore the file and never upload it.
+**Why this matters:** If you push code to GitHub with your password written in it, anyone can steal your data. The config file stays on your computer.
 
 ---
 
-## Connecting to a Database
+## Connecting to MySQL
 
 ```python
-import sqlite3
+import mysql.connector
+from mysql.connector import Error
 
-# Connect to database (creates file if it doesn't exist)
-conn = sqlite3.connect('myapp.db')
+def get_connection():
+    """Create and return a database connection using config.json."""
+    config = get_config()
+    return mysql.connector.connect(**config)
+```
+
+**Use it:**
+```python
+conn = get_connection()
+print("Connected to MySQL!")
+
 cursor = conn.cursor()
+cursor.execute("SELECT VERSION()")
+result = cursor.fetchone()
+print(f"MySQL Version: {result[0]}")
 
-# Create a table
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY,
-        name TEXT NOT NULL,
-        email TEXT UNIQUE
-    )
-''')
-
-# Save changes
-conn.commit()
-
-# Close connection
+cursor.close()
 conn.close()
 ```
+
+**Why `cursor.close()` and `conn.close()`?** Connections use server resources. Always close them when you're done — like turning off the lights when you leave a room.
+
+---
+
+## Creating a Database
+
+Before creating tables, you need a database to put them in:
+
+```python
+def create_database(database_name):
+    """Create a new database if it doesn't exist."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {database_name}")
+        print(f"Database '{database_name}' ready!")
+    except Error as err:
+        print(f"Error: {err}")
+    finally:
+        cursor.close()
+        conn.close()
+```
+
+**Why `IF NOT EXISTS`?** Without it, running the code again would give you an error — the database already exists. This way, it creates it if needed and does nothing if it's already there.
+
+---
+
+## Creating a Table
+
+```python
+def create_books_table():
+    """Create the books table if it doesn't exist."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute("USE library_db")  # Switch to our database
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS books (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                title VARCHAR(255) NOT NULL,
+                author VARCHAR(255) NOT NULL,
+                year_published INT,
+                rating DECIMAL(2,1),
+                available BOOLEAN DEFAULT TRUE
+            )
+        """)
+        conn.commit()  # SAVE the table creation
+        print("Books table created!")
+    except Error as err:
+        print(f"Error: {err}")
+    finally:
+        cursor.close()
+        conn.close()
+```
+
+**Key points:**
+- `INT AUTO_INCREMENT PRIMARY KEY` — MySQL auto-generates unique IDs
+- `VARCHAR(255)` — Text field with max 255 characters
+- `DECIMAL(2,1)` — A number like 4.5 (2 digits total, 1 after decimal)
+- `BOOLEAN DEFAULT TRUE` — True/False, defaults to True
+- `conn.commit()` — **NEEDED** here because we're creating a table (writing to the database)
 
 ---
 
 ## Inserting Data
 
 ```python
-import sqlite3
-
-conn = sqlite3.connect('myapp.db')
-cursor = conn.cursor()
-
-# Insert a user
-cursor.execute('''
-    INSERT INTO users (name, email) VALUES (?, ?)
-''', ("Szonja", "szonja@example.com"))
-
-# Save changes
-conn.commit()
-conn.close()
+def add_book(title, author, year_published, rating):
+    """Add a new book to the library."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute("USE library_db")
+        query = """INSERT INTO books (title, author, year_published, rating)
+                   VALUES (%s, %s, %s, %s)"""
+        cursor.execute(query, (title, author, year_published, rating))
+        conn.commit()  # SAVE the insert — THIS IS IMPORTANT!
+        
+        book_id = cursor.lastrowid  # Get the ID MySQL just generated
+        print(f"Added '{title}' with ID: {book_id}")
+        return book_id
+    except Error as err:
+        print(f"Error: {err}")
+        return None
+    finally:
+        cursor.close()
+        conn.close()
 ```
 
-**Key points:**
-- `?` placeholders prevent SQL injection
-- `conn.commit()` saves changes
-- Always close connection when done
+**Why `%s` placeholders?** This prevents SQL injection — a hacking technique where people try to break your database by inserting malicious code through form inputs. Parameterized queries make it impossible.
+
+**Why `conn.commit()`?** INSERT writes data to the database. Without commit(), your insert vanishes when the connection closes — it's like saving a document but never clicking "Save".
 
 ---
 
 ## Querying Data
 
 ```python
-import sqlite3
-
-conn = sqlite3.connect('myapp.db')
-cursor = conn.cursor()
-
-# Get all users
-cursor.execute("SELECT * FROM users")
-users = cursor.fetchall()
-
-for user in users:
-    print(f"ID: {user[0]}, Name: {user[1]}, Email: {user[2]}")
-
-conn.close()
+def get_all_books():
+    """Return all books in the library."""
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)  # Return rows as dictionaries
+    
+    try:
+        cursor.execute("USE library_db")
+        cursor.execute("SELECT * FROM books ORDER BY title")
+        books = cursor.fetchall()
+        return books
+    except Error as err:
+        print(f"Error: {err}")
+        return []
+    finally:
+        cursor.close()
+        conn.close()
 ```
 
-**Query methods:**
-- `fetchone()` — Get one row
-- `fetchall()` — Get all rows
-- `fetchmany(n)` — Get n rows
+**`dictionary=True`:** Without this, rows come back as tuples `("Book Title", "Author", 2020)`. With it, they come back as dictionaries `{"title": "Book Title", "author": "Author", ...}` — much easier to work with.
+
+**No `conn.commit()`?** Correct! SELECT only reads data — it doesn't change anything. Commit is only for INSERT, UPDATE, DELETE, CREATE, DROP.
 
 ---
 
-## Exception Handling for Database Operations
+## Getting One Book
 
-Databases can fail — the server might be down, a table doesn't exist, or a query is wrong. Always handle this!
-
-**Basic pattern with try/except:**
 ```python
-import sqlite3
-
-def get_user(user_id):
-    """Get a user by ID. Returns None if not found or if an error occurs."""
+def get_book_by_id(book_id):
+    """Get a single book by its ID."""
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    
     try:
-        conn = sqlite3.connect('myapp.db')
-        cursor = conn.cursor()
-        
-        cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
-        user = cursor.fetchone()
-        
-        conn.close()
-        
-        return user
-    except Exception as e:
-        print(f"Database error: {e}")
+        cursor.execute("USE library_db")
+        cursor.execute("SELECT * FROM books WHERE id = %s", (book_id,))
+        book = cursor.fetchone()
+        return book if book else None
+    except Error as err:
+        print(f"Error: {err}")
         return None
+    finally:
+        cursor.close()
+        conn.close()
 ```
 
-**Better pattern — return a tuple with status and data:**
+**`fetchone()` vs `fetchall()`:** fetchone() returns the first row (or None if no rows). fetchall() returns a list of all matching rows.
+
+---
+
+## Updating Data
+
 ```python
-def get_user(user_id):
-    """Get a user by ID. Returns (success, data_or_error)."""
+def update_book_rating(book_id, new_rating):
+    """Update a book's rating."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    
     try:
-        conn = sqlite3.connect('myapp.db')
-        cursor = conn.cursor()
+        cursor.execute("USE library_db")
+        cursor.execute("UPDATE books SET rating = %s WHERE id = %s",
+                      (new_rating, book_id))
+        conn.commit()  # SAVE the update
         
-        cursor.execute("SELECT id, name, email FROM users WHERE id = ?", (user_id,))
-        user = cursor.fetchone()
-        
-        conn.close()
-        
-        if user:
-            return (True, {"id": user[0], "name": user[1], "email": user[2]})
+        if cursor.rowcount > 0:
+            print(f"Updated book {book_id} rating to {new_rating}")
+            return True
         else:
-            return (False, "User not found")
-            
-    except Exception as e:
-        return (False, str(e))
-
-
-# Use it
-success, result = get_user(1)
-if success:
-    print(f"Found: {result['name']}")
-else:
-    print(f"Error: {result}")
-```
-
-**Handling write errors (INSERT, UPDATE, DELETE):**
-```python
-def add_user(name, email):
-    """Add a new user. Returns (success, message)."""
-    try:
-        conn = sqlite3.connect('myapp.db')
-        cursor = conn.cursor()
-        
-        cursor.execute(
-            "INSERT INTO users (name, email) VALUES (?, ?)",
-            (name, email)
-        )
-        conn.commit()
-        user_id = cursor.lastrowid
+            print(f"Book {book_id} not found")
+            return False
+    except Error as err:
+        print(f"Error: {err}")
+        return False
+    finally:
+        cursor.close()
         conn.close()
-        
-        return (True, f"User added with ID {user_id}")
-        
-    except Exception as e:
-        return (False, f"Error adding user: {e}")
-
-
-# Use it
-success, message = add_user("Szonja", "szonja@example.com")
-if success:
-    print(message)
-else:
-    print(f"Failed: {message}")
 ```
+
+**`cursor.rowcount`:** Tells you how many rows were changed. Useful for checking if your update actually found something to update.
+
+---
+
+## Deleting Data
+
+```python
+def delete_book(book_id):
+    """Delete a book from the library."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute("USE library_db")
+        cursor.execute("DELETE FROM books WHERE id = %s", (book_id,))
+        conn.commit()  # SAVE the delete
+        
+        if cursor.rowcount > 0:
+            print(f"Deleted book {book_id}")
+            return True
+        else:
+            print(f"Book {book_id} not found")
+            return False
+    except Error as err:
+        print(f"Error: {err}")
+        return False
+    finally:
+        cursor.close()
+        conn.close()
+```
+
+---
+
+## Using TRY/FINALLY — Clean Resource Management
+
+Notice how every function follows this pattern:
+
+```python
+def get_all_books():
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    try:
+        # Do your database work here
+        cursor.execute("USE library_db")
+        cursor.execute("SELECT ...")
+        results = cursor.fetchall()
+        return results
+    except Error as err:
+        print(f"Error: {err}")
+        return []
+    finally:
+        # This ALWAYS runs — even if there's an error
+        cursor.close()
+        conn.close()
+```
+
+**Why this matters:** If your code hits an error mid-function, the connection might never close. The `finally` block guarantees cleanup — error or not.
 
 ---
 
 ## The db_utils Pattern — One File to Rule Them All
 
-A `db_utils.py` file keeps all your database code in one place. Other files import from it instead of talking to the database directly.
+Instead of repeating connection code in every file, put it all in `db_utils.py`:
 
 **`db_utils.py`:**
 ```python
-import sqlite3
+import mysql.connector
+from mysql.connector import Error
+import json
+
+def get_config():
+    """Load credentials from config.json."""
+    with open("config.json", "r") as f:
+        return json.load(f)
 
 def get_connection():
     """Create and return a database connection."""
-    conn = sqlite3.connect('myapp.db')
-    conn.row_factory = sqlite3.Row
-    return conn
+    return mysql.connector.connect(**get_config())
 
-def get_user(user_id):
-    """Get a user by ID. Returns dict or None."""
+def get_all_books():
+    """Return all books."""
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
     try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
-        row = cursor.fetchone()
-        conn.close()
-        return dict(row) if row else None
-    except Exception as e:
-        print(f"Database error: {e}")
-        return None
-
-def get_all_users():
-    """Get all users. Returns list of dicts."""
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM users ORDER BY name")
-        rows = cursor.fetchall()
-        conn.close()
-        return [dict(row) for row in rows]
-    except Exception as e:
-        print(f"Database error: {e}")
+        cursor.execute("USE library_db")
+        cursor.execute("SELECT * FROM books ORDER BY title")
+        return cursor.fetchall()
+    except Error as err:
+        print(f"Error: {err}")
         return []
-
-def add_user(name, email):
-    """Add a user. Returns new user ID or None on error."""
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute(
-            "INSERT INTO users (name, email) VALUES (?, ?)",
-            (name, email)
-        )
-        conn.commit()
-        user_id = cursor.lastrowid
+    finally:
+        cursor.close()
         conn.close()
-        return user_id
-    except Exception as e:
-        print(f"Database error: {e}")
+
+def add_book(title, author, year_published, rating):
+    """Add a book. Returns new book ID or None."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("USE library_db")
+        cursor.execute("""INSERT INTO books (title, author, year_published, rating)
+                          VALUES (%s, %s, %s, %s)""",
+                      (title, author, year_published, rating))
+        conn.commit()
+        return cursor.lastrowid
+    except Error as err:
+        print(f"Error: {err}")
         return None
-
-def update_user(user_id, name=None, email=None):
-    """Update a user's name and/or email. Returns True/False."""
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        
-        # Build the update dynamically
-        updates = []
-        params = []
-        if name is not None:
-            updates.append("name = ?")
-            params.append(name)
-        if email is not None:
-            updates.append("email = ?")
-            params.append(email)
-        
-        if not updates:
-            return False
-        
-        params.append(user_id)
-        query = f"UPDATE users SET {', '.join(updates)} WHERE id = ?"
-        
-        cursor.execute(query, params)
-        conn.commit()
-        rows_affected = cursor.rowcount
+    finally:
+        cursor.close()
         conn.close()
-        
-        return rows_affected > 0
-    except Exception as e:
-        print(f"Database error: {e}")
-        return False
 
-def delete_user(user_id):
-    """Delete a user. Returns True/False."""
+def delete_book(book_id):
+    """Delete a book. Returns True/False."""
+    conn = get_connection()
+    cursor = conn.cursor()
     try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
+        cursor.execute("USE library_db")
+        cursor.execute("DELETE FROM books WHERE id = %s", (book_id,))
         conn.commit()
-        rows_affected = cursor.rowcount
-        conn.close()
-        return rows_affected > 0
-    except Exception as e:
-        print(f"Database error: {e}")
+        return cursor.rowcount > 0
+    except Error as err:
+        print(f"Error: {err}")
         return False
+    finally:
+        cursor.close()
+        conn.close()
 ```
 
-**Use it in `main.py` or any other file:**
+**Use it anywhere in your project:**
 ```python
-from db_utils import get_user, get_all_users, add_user, update_user
+from db_utils import get_all_books, add_book, delete_book
 
-# Get all users
-users = get_all_users()
-for user in users:
-    print(f"{user['id']}: {user['name']} ({user['email']})")
+# Get all books
+books = get_all_books()
+for book in books:
+    print(f"{book['title']} by {book['author']}")
 
-# Add a user
-new_id = add_user("Arthur", "arthur@example.com")
-print(f"Added user with ID: {new_id}")
+# Add a book
+new_id = add_book("Fluent Python", "Luciano Ramalho", 2015, 5.0)
+print(f"Added book with ID: {new_id}")
 
-# Update a user
-updated = update_user(new_id, email="newarthur@example.com")
-print(f"Updated: {updated}")
-
-# Delete a user
-deleted = delete_user(new_id)
+# Delete a book
+deleted = delete_book(new_id)
 print(f"Deleted: {deleted}")
 ```
 
 ---
 
+## Quick Recap
+
+| Action | SQL Command | Needs commit? |
+|--------|-------------|----------------|
+| Create table | `CREATE TABLE...` | ✅ Yes |
+| Insert | `INSERT INTO...` | ✅ Yes |
+| Read | `SELECT...` | ❌ No |
+| Update | `UPDATE... SET...` | ✅ Yes |
+| Delete | `DELETE FROM...` | ✅ Yes |
+
+**Remember:**
+- `%s` placeholders for safe queries
+- `cursor.close()` + `conn.close()` always
+- `try/finally` for guaranteed cleanup
+- `mysql.connector.Error` for error handling
+
+---
+
 ## Practice Exercise
 
-**Scenario:** You're building a book tracking system for a personal library!
+**Scenario:** You're building a book tracking system for a personal library! Your cousin is learning programming and wants to track books they've read.
 
 **Your task:**
-1. Create a database file called `library.db`
-2. Create a `books` table with these columns:
-   - `id` (INTEGER PRIMARY KEY)
-   - `title` (TEXT NOT NULL)
-   - `author` (TEXT NOT NULL)
-   - `year_published` (INTEGER)
-   - `rating` (REAL) — 0.0 to 5.0
-3. Create a function called `add_book` that takes title, author, year, and rating
-4. Create a function called `get_all_books` that returns all books
-5. Create a function called `get_books_by_author` that takes author name and returns matching books
-6. Create a function called `update_rating` that updates a book's rating by ID
-7. Create a function called `delete_book` that removes a book by ID
-8. Test all functions with sample data
+1. Create a `config.json` file with your MySQL credentials
+2. Create a `db_utils.py` file with these functions:
+   - `get_connection()` — connects to MySQL using config
+   - `create_database()` — creates `library_db` database if it doesn't exist
+   - `create_books_table()` — creates a `books` table with: id, title, author, year_published, rating, available
+3. Create these functions in `db_utils.py`:
+   - `add_book(title, author, year_published, rating)` — inserts a book, returns the new ID
+   - `get_all_books()` — returns all books as dictionaries
+   - `get_books_by_author(author)` — returns books matching the author name
+   - `update_book_rating(book_id, new_rating)` — updates rating, returns True/False
+   - `delete_book(book_id)` — deletes a book by ID, returns True/False
+   - `search_books(keyword)` — returns books where title OR author contains the keyword
+4. Create a `main.py` that:
+   - Sets up the database and table
+   - Adds 3 books of your choice
+   - Prints all books
+   - Updates one book's rating
+   - Searches for books by keyword
+   - Deletes one book
+   - Prints all books again to show changes
 
 **Example usage:**
 ```python
+# From main.py
+from db_utils import add_book, get_all_books, update_book_rating, search_books, delete_book
+
 add_book("Python Crash Course", "Eric Matthes", 2019, 4.5)
 add_book("Fluent Python", "Luciano Ramalho", 2015, 5.0)
 
 books = get_all_books()
 for book in books:
-    print(f"{book['title']} by {book['author']} ({book['year_published']}) - Rating: {book['rating']}")
+    print(f"{book['title']} by {book['author']} ({book['year_published']})")
 
-update_rating(1, 5.0)
+update_book_rating(1, 5.0)
+
+results = search_books("Python")
+for book in results:
+    print(f"Found: {book['title']}")
+
 delete_book(2)
 ```
 
@@ -463,131 +514,255 @@ delete_book(2)
 
 ## Solution
 
+**`config.json`:**
+```json
+{
+    "host": "localhost",
+    "port": 3306,
+    "user": "szonja",
+    "password": "your_password",
+    "database": "library_db"
+}
+```
+
+**`db_utils.py`:**
 ```python
-# library.py
+import mysql.connector
+from mysql.connector import Error
+import json
 
-import sqlite3
-
+def get_config():
+    """Load database credentials from config.json."""
+    with open("config.json", "r") as f:
+        return json.load(f)
 
 def get_connection():
     """Create and return a database connection."""
-    conn = sqlite3.connect('library.db')
-    conn.row_factory = sqlite3.Row  # Return rows as dictionaries
-    return conn
+    return mysql.connector.connect(**get_config())
 
+def create_database():
+    """Create the library_db database if it doesn't exist."""
+    # Connect WITHOUT specifying database — we need to create it first
+    conn = mysql.connector.connect(
+        host=get_config()["host"],
+        user=get_config()["user"],
+        password=get_config()["password"]
+    )
+    cursor = conn.cursor()
+    try:
+        cursor.execute("CREATE DATABASE IF NOT EXISTS library_db")
+        print("Database 'library_db' ready!")
+    except Error as err:
+        print(f"Error: {err}")
+    finally:
+        cursor.close()
+        conn.close()
 
-def create_table():
+def create_books_table():
     """Create the books table if it doesn't exist."""
     conn = get_connection()
     cursor = conn.cursor()
-    
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS books (
-            id INTEGER PRIMARY KEY,
-            title TEXT NOT NULL,
-            author TEXT NOT NULL,
-            year_published INTEGER,
-            rating REAL
-        )
-    ''')
-    
-    conn.commit()
-    conn.close()
-
+    try:
+        cursor.execute("USE library_db")
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS books (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                title VARCHAR(255) NOT NULL,
+                author VARCHAR(255) NOT NULL,
+                year_published INT,
+                rating DECIMAL(2,1),
+                available BOOLEAN DEFAULT TRUE
+            )
+        """)
+        conn.commit()
+        print("Books table ready!")
+    except Error as err:
+        print(f"Error: {err}")
+    finally:
+        cursor.close()
+        conn.close()
 
 def add_book(title, author, year_published, rating):
-    """Add a new book to the library."""
+    """Add a book. Returns the new book ID or None."""
     conn = get_connection()
     cursor = conn.cursor()
-    
-    cursor.execute('''
-        INSERT INTO books (title, author, year_published, rating)
-        VALUES (?, ?, ?, ?)
-    ''', (title, author, year_published, rating))
-    
-    book_id = cursor.lastrowid
-    conn.commit()
-    conn.close()
-    
-    return book_id
-
+    try:
+        cursor.execute("USE library_db")
+        cursor.execute("""INSERT INTO books (title, author, year_published, rating)
+                          VALUES (%s, %s, %s, %s)""",
+                      (title, author, year_published, rating))
+        conn.commit()
+        book_id = cursor.lastrowid
+        print(f"Added '{title}' with ID: {book_id}")
+        return book_id
+    except Error as err:
+        print(f"Error: {err}")
+        return None
+    finally:
+        cursor.close()
+        conn.close()
 
 def get_all_books():
-    """Return all books in the library."""
+    """Return all books as a list of dictionaries."""
     conn = get_connection()
-    cursor = conn.cursor()
-    
-    cursor.execute("SELECT * FROM books ORDER BY title")
-    books = cursor.fetchall()
-    
-    conn.close()
-    return [dict(book) for book in books]
-
+    cursor = conn.cursor(dictionary=True)
+    try:
+        cursor.execute("USE library_db")
+        cursor.execute("SELECT * FROM books ORDER BY title")
+        return cursor.fetchall()
+    except Error as err:
+        print(f"Error: {err}")
+        return []
+    finally:
+        cursor.close()
+        conn.close()
 
 def get_books_by_author(author):
-    """Return all books by a specific author."""
+    """Return all books by the given author."""
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    try:
+        cursor.execute("USE library_db")
+        cursor.execute("SELECT * FROM books WHERE author LIKE %s ORDER BY title",
+                      (f"%{author}%",))
+        return cursor.fetchall()
+    except Error as err:
+        print(f"Error: {err}")
+        return []
+    finally:
+        cursor.close()
+        conn.close()
+
+def update_book_rating(book_id, new_rating):
+    """Update a book's rating. Returns True if found, False if not."""
     conn = get_connection()
     cursor = conn.cursor()
-    
-    cursor.execute('''
-        SELECT * FROM books WHERE author = ?
-    ''', (author,))
-    
-    books = cursor.fetchall()
-    conn.close()
-    
-    return [dict(book) for book in books]
-
-
-def update_rating(book_id, new_rating):
-    """Update the rating of a book."""
-    conn = get_connection()
-    cursor = conn.cursor()
-    
-    cursor.execute('''
-        UPDATE books SET rating = ? WHERE id = ?
-    ''', (new_rating, book_id))
-    
-    conn.commit()
-    conn.close()
-
+    try:
+        cursor.execute("USE library_db")
+        cursor.execute("UPDATE books SET rating = %s WHERE id = %s",
+                      (new_rating, book_id))
+        conn.commit()
+        return cursor.rowcount > 0
+    except Error as err:
+        print(f"Error: {err}")
+        return False
+    finally:
+        cursor.close()
+        conn.close()
 
 def delete_book(book_id):
-    """Delete a book from the library."""
+    """Delete a book by ID. Returns True if found, False if not."""
     conn = get_connection()
     cursor = conn.cursor()
-    
-    cursor.execute('''
-        DELETE FROM books WHERE id = ?
-    ''', (book_id,))
-    
-    conn.commit()
-    conn.close()
+    try:
+        cursor.execute("USE library_db")
+        cursor.execute("DELETE FROM books WHERE id = %s", (book_id,))
+        conn.commit()
+        return cursor.rowcount > 0
+    except Error as err:
+        print(f"Error: {err}")
+        return False
+    finally:
+        cursor.close()
+        conn.close()
 
-
-# Test the functions
-if __name__ == '__main__':
-    create_table()
-    add_book("Python Crash Course", "Eric Matthes", 2019, 4.5)
-    books = get_all_books()
-    for book in books:
-        print(f"{book['title']} by {book['author']}")
+def search_books(keyword):
+    """Search books by title or author containing the keyword."""
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    try:
+        cursor.execute("USE library_db")
+        cursor.execute("""SELECT * FROM books 
+                          WHERE title LIKE %s OR author LIKE %s
+                          ORDER BY title""",
+                      (f"%{keyword}%", f"%{keyword}%"))
+        return cursor.fetchall()
+    except Error as err:
+        print(f"Error: {err}")
+        return []
+    finally:
+        cursor.close()
+        conn.close()
 ```
 
----
+**`main.py`:**
+```python
+from db_utils import (
+    create_database, create_books_table,
+    add_book, get_all_books, get_books_by_author,
+    update_book_rating, delete_book, search_books
+)
 
-## Quick Recap
+def main():
+    # Set up database and table
+    print("Setting up database...")
+    create_database()
+    create_books_table()
+    
+    # Add some books
+    print("\nAdding books...")
+    book1_id = add_book("Python Crash Course", "Eric Matthes", 2019, 4.5)
+    book2_id = add_book("Fluent Python", "Luciano Ramalho", 2015, 5.0)
+    book3_id = add_book("Automate the Boring Stuff", "Al Sweigart", 2015, 4.8)
+    
+    # Get all books
+    print("\nAll books:")
+    books = get_all_books()
+    for book in books:
+        print(f"  {book['id']}: {book['title']} by {book['author']}")
+    
+    # Update a rating
+    print(f"\nUpdating book {book1_id} rating to 5.0...")
+    update_book_rating(book1_id, 5.0)
+    
+    # Search for books
+    print("\nSearching for 'Python' books:")
+    results = search_books("Python")
+    for book in results:
+        print(f"  {book['title']} by {book['author']}")
+    
+    # Delete a book
+    print(f"\nDeleting book {book3_id}...")
+    delete_book(book3_id)
+    
+    # Show remaining books
+    print("\nRemaining books:")
+    books = get_all_books()
+    for book in books:
+        print(f"  {book['id']}: {book['title']} by {book['author']}")
 
-- **SQLite** — Lightweight database stored in a file
-- **`sqlite3.connect()`** — Connect to database
-- **`cursor`** — Object to execute SQL commands
-- **`CREATE TABLE`** — Create a new table
-- **`INSERT INTO`** — Add data
-- **`SELECT`** — Query data
-- **`UPDATE`** — Modify data
-- **`DELETE`** — Remove data
-- **`conn.commit()`** — Save changes
-- **Always close connections!**
+if __name__ == '__main__':
+    main()
+```
+
+**Output:**
+```
+Setting up database...
+Database 'library_db' ready!
+Books table ready!
+
+Adding books...
+Added 'Python Crash Course' with ID: 1
+Added 'Fluent Python' with ID: 2
+Added 'Automate the Boring Stuff' with ID: 3
+
+All books:
+  1: Python Crash Course by Eric Matthes
+  2: Fluent Python by Luciano Ramalho
+  3: Automate the Boring Stuff by Al Sweigart
+
+Updating book 1 rating to 5.0...
+
+Searching for 'Python' books:
+  1: Python Crash Course by Eric Matthes
+  2: Fluent Python by Luciano Ramalho
+
+Deleting book 3...
+
+Remaining books:
+  1: Python Crash Course by Eric Matthes
+  2: Fluent Python by Luciano Ramalho
+```
 
 ---
 
@@ -597,4 +772,4 @@ Ready for more? Continue to **[Lesson 15: Advanced Database Operations](15-advan
 
 ---
 
-**Your turn:** Try the library exercise! Add features like searching by year range or calculating average rating! 🗄️💛
+**Your turn:** Try the library exercise! Add features like searching by year range, calculating average ratings, or adding more columns to the books table! 🗄️💛
