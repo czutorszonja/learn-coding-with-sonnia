@@ -213,6 +213,63 @@ def add_book(title, author, year_published, rating):
 
 ---
 
+## Inserting Multiple Books at Once (Bulk Insert)
+
+What if you have 150 books? Calling `add_book()` 150 times works, but it's slow — each call opens a connection, inserts one row, and closes again.
+
+Instead, use `executemany()` to insert many rows in one go:
+
+```python
+def add_books_bulk(books_list):
+    """Add multiple books at once. books_list is a list of tuples."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute("USE library_db")
+        query = """INSERT INTO books (title, author, year_published, rating)
+                   VALUES (%s, %s, %s, %s)"""
+        
+        # executemany does ALL the inserts in one call!
+        cursor.executemany(query, books_list)
+        conn.commit()  # Commit once for ALL inserts
+        
+        count = cursor.rowcount
+        print(f"Added {count} books successfully!")
+        return count
+    except Error as err:
+        print(f"Error: {err}")
+        return 0
+    finally:
+        cursor.close()
+        conn.close()
+```
+
+**How it works:**
+
+```python
+# Make a list of book data as tuples
+books_to_add = [
+    ("Fluent Python", "Luciano Ramalho", 2015, 5.0),
+    ("Python Crash Course", "Eric Matthes", 2019, 4.5),
+    ("Automate the Boring Stuff", "Al Sweigart", 2015, 4.8),
+    ("Clean Code", "Robert Martin", 2008, 4.2),
+    ("The Pragmatic Programmer", "David Thomas", 1999, 4.7),
+]
+
+# Insert all of them at once
+add_books_bulk(books_to_add)
+```
+
+**The magic:** `executemany()` loops through your list and inserts each tuple. One connection, one commit, 150 rows added. Much faster than calling `add_book()` in a loop!
+
+**When to use bulk insert:**
+- Seeding a database with initial data
+- Importing data from a CSV or API
+- Any time you have more than a handful of records to add
+
+---
+
 ## Querying Data
 
 ```python
