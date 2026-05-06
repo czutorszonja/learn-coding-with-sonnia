@@ -1,617 +1,694 @@
-# Exam Challenge Set — LeetCode-Style Problems 🌞
+# Python Exam Challenge Set — LeetCode Style 🌞
 
-**For:** CFG Python Exam  
-**Based on:** Lessons 1–18 (everything you need is in your lesson files)
+**For:** CFG Python Exam | **Open-book** — all lesson files are available to you
 
 ---
 
-> **How to use this file:** Each challenge has three parts:
-> 1. **Problem** — what to solve
-> 2. **Approach** — how to think about it (the algorithmic breakdown)
-> 3. **Solution** — complete working code
+> **How each problem is structured:**
+> - **Description** — what to solve
+> - **Function signature** — exact code to write
+> - **Examples** — test your answer by hand first
+> - **Constraints** — what the input will look like (use these to think about edge cases)
+> - **Follow-up** — optional harder version
+> - **Approach** — how to think about it step by step
+> - **Solution** — complete, working code
 >
-> Try the **Approach** step first without looking at the solution. If you're stuck, the approach shows you the thinking without giving away the full code. Only check the solution when you've had a proper go.
+> Always trace the examples by hand before looking at the solution. That's the habit that wins exams.
 
 ---
 
 ---
 
-# 🔍 Part 1: Algorithmic Thinking — Your Exam Framework
-
-Before any code, internalise this process. **Every problem on the exam follows this shape.**
-
-## The 4-Step Decomposition Method
-
-**Step 1 — Understand the input and output.**  
-Run the example through your head manually. What goes in? What comes out? What does Python see step by step?
-
-**Step 2 — Find the pattern.**  
-What operation turns the input into the output? Look for:  
-- Repetition? (loop + append)
-- Mapping? (dictionary lookup)
-- Pairing? (`zip()`)
-- Filtering? (loop + condition)
-- Arithmetic breakdown? (`//` and `%`)
-
-**Step 3 — Write the steps in plain English.**  
-Before touching Python, write the algorithm as bullet points. This is your proof you've thought it through.
-
-**Step 4 — Translate to Python, one step at a time.**  
-Implement step by step. Test each piece before adding the next.
+# 🔥 Easy — 4 Problems
 
 ---
 
-## Your Problem-Solving Checklist
+## Problem 1: Count Vowels
 
-Copy this into your exam paper or write it before you start each question:
+**Difficulty:** Easy | **Topic:** Strings, Loops, Conditionals
 
-```
-[ ] What is the INPUT?  (string / list / number / dict?)
-[ ] What is the OUTPUT?
-[ ] Can I trace the example by hand?
-[ ] Pattern: repetition / mapping / pairing / filtering / arithmetic?
-[ ] What building blocks do I need?
-[ ] Steps in plain English first?
+### Description
+Given a string `s`, return the **number of vowels** in it. Vowels are: `a`, `e`, `i`, `o`, `u` (both upper and lowercase).
+
+### Function Signature
+```python
+def count_vowels(s: str) -> int:
 ```
 
----
+### Examples
 
-## Worked Example: `"a3b2c1" → "aaabbc"` (Medium)
-
-This is the exam-style problem you shared. Let's break it down properly.
-
-**Step 1 — Trace it:**
-- See `a`, then `3` → output `aaa`
-- See `b`, then `2` → output `bb`
-- See `c`, then `1` → output `c`
-- Combined: `aaabbc`
-
-**Step 2 — Pattern:** The string alternates between letters and digits. Each letter is repeated by the digit that follows it.
-
-**Step 3 — Plain English steps:**
-1. Walk through the string, separate letters into one list, digits into another
-2. Pair each letter with its digit using `zip()`
-3. For each pair, repeat the letter `int(digit)` times
-4. Join all the pieces together
-
-**Step 4 — Code (see Solution to Challenge 5)**
-
----
-
-## Worked Example: `115 → "one hundred fifteen"` (Medium)
-
-**Step 1 — Trace it:** 115 = 100 + 10 + 5 → "one" + "hundred" + "fifteen"
-
-**Step 2 — Pattern:** The number breaks into hundreds, tens, and ones. Each digit maps to a word. But 11–19 are special.
-
-**Step 3 — Plain English steps:**
-1. Check for special teen cases (11–19)
-2. Extract hundreds with `num // 100`, remainder with `num % 100`
-3. Map each digit to its word using a dictionary
-4. Build the result piece by piece and join with spaces
-
-**Step 4 — Code (see Solution to Challenge 10)**
-
----
-
----
-
-# 🔥 Part 2: The Challenges
-
----
-
-## Challenge 1: Count Vowels
-**Difficulty:** Easy | **Topics:** strings, loops, conditionals
-
-### Problem
-Write a function `count_vowels(text)` that returns the number of vowel letters (a, e, i, o, u) in the input string. The search should be **case-insensitive**.
-
+**Example 1:**
 ```
-count_vowels("Hello World")  → 3  (e, o, o)
-count_vowels("rhythm")       →  0
-count_vowels("AEIOU")        →  5
+Input:  s = "Hello World"
+Output: 3
 ```
+
+**Example 2:**
+```
+Input:  s = "rhythm"
+Output: 0
+```
+
+**Example 3:**
+```
+Input:  s = "AEIOU"
+Output: 5
+```
+
+### Constraints
+- `1 <= len(s) <= 1000`
 
 ### Approach
-1. What is input? A string. Output? A number.
-2. Walk through each character. If it's a vowel, count it.
-3. A loop goes through every character. A condition checks if it's in `"aeiouAEIOU"`.
+1. Walk through every character in the string using a `for` loop.
+2. Check if the character is in the vowel set `"aeiouAEIOU"`.
+3. Increment the counter each time you find one.
 
 ### Solution
 ```python
-def count_vowels(text):
+def count_vowels(s: str) -> int:
     count = 0
-    vowels = "aeiouAEIOU"
-    for char in text:
-        if char in vowels:
+    for char in s:
+        if char in "aeiouAEIOU":
             count += 1
     return count
 ```
 
 ---
 
-## Challenge 2: Reverse a String
-**Difficulty:** Easy | **Topics:** strings, loops
+## Problem 2: Reverse String
 
-### Problem
-Write a function `reverse_string(text)` that returns the string reversed.
+**Difficulty:** Easy | **Topic:** Strings, Loops, List Building
 
+### Description
+Given a string `s`, reverse it and return the reversed string. Do not use the built-in `reversed()` or string slicing in your logic — build the result step by step.
+
+### Function Signature
+```python
+def reverse_string(s: str) -> str:
 ```
-reverse_string("hello")   → "olleh"
-reverse_string("Szonja")  → "ajnzoS"
-reverse_string("racecar") → "racecar"
+
+### Examples
+
+**Example 1:**
 ```
+Input:  s = "hello"
+Output: "olleh"
+```
+
+**Example 2:**
+```
+Input:  s = "Szonja"
+Output: "ajnzoS"
+```
+
+**Example 3:**
+```
+Input:  s = "racecar"
+Output: "racecar"
+```
+
+### Constraints
+- `1 <= len(s) <= 1000`
 
 ### Approach
-1. Build a new string by walking through the input from back to front.
-2. Use `range(len(text))` to get index numbers.
-3. Append each character to a list, then `.join()` it at the end.
+1. Start with an empty list.
+2. Loop through the string **from the last character to the first** using `range(len(s)-1, -1, -1)`.
+3. Append each character to the list.
+4. Join the list into a single string with `"".join()`.
 
 ### Solution
 ```python
-def reverse_string(text):
+def reverse_string(s: str) -> str:
     result = []
-    for i in range(len(text)):
-        result.append(text[i])
-    return "".join(reversed(result))
-
-# Or even cleaner:
-def reverse_string(text):
-    return "".join(char for char in reversed(text))
-
-# Or build forward:
-def reverse_string(text):
-    result = []
-    for i in range(len(text) - 1, -1, -1):  # count backwards
-        result.append(text[i])
+    for i in range(len(s) - 1, -1, -1):
+        result.append(s[i])
     return "".join(result)
 ```
 
 ---
 
-## Challenge 3: Is It a Palindrome?
-**Difficulty:** Easy | **Topics:** strings, functions
+## Problem 3: Valid Anagram
 
-### Problem
-Write a function `is_palindrome(text)` that returns `True` if the word reads the same forwards and backwards. Ignore case.
+**Difficulty:** Easy | **Topic:** Strings, Dictionaries, Frequency Counting
 
+### Description
+Given two strings `s` and `t`, return `True` if `t` is an anagram of `s` (i.e. it contains exactly the same characters with the same frequencies, ignoring case).
+
+### Function Signature
+```python
+def is_anagram(s: str, t: str) -> bool:
 ```
-is_palindrome("racecar")  → True
-is_palindrome("hello")    → False
-is_palindrome("Madam")    → True
-is_palindrome("")         → True
+
+### Examples
+
+**Example 1:**
 ```
+Input:  s = "listen", t = "silent"
+Output: True
+```
+
+**Example 2:**
+```
+Input:  s = "hello", t = "world"
+Output: False
+```
+
+**Example 3:**
+```
+Input:  s = "Dormitory", t = "Dirty room"
+Output: True   (after normalising: \"dormitory\" == \"dirtyroom\")
+```
+
+### Constraints
+- `1 <= len(s) <= 1000`
+- `s` and `t` consist only of lowercase letters and spaces
+
+### Follow-up
+Can you solve it without using a dictionary? (Hint: `sorted(string)` sorts a string's characters into a list — two anagrams produce identical sorted lists.)
 
 ### Approach
-1. Reverse the string and compare it to the original.
-2. Use Challenge 2's trick, or slice backwards: `text[::-1]`.
-3. Compare: `text == reversed_text`.
+1. Normalise both strings: lower case and remove spaces.
+2. Build a frequency map for `s`: for each character, count how many times it appears using `freq.get(char, 0) + 1`.
+3. Build the same frequency map for `t`.
+4. Return `True` if the two dictionaries are identical.
 
 ### Solution
 ```python
-def is_palindrome(text):
-    # Slice backwards: start at end, go to start, step -1
-    reversed_text = text[::-1]
-    return text.lower() == reversed_text.lower()
+def is_anagram(s: str, t: str) -> bool:
+    # Normalise: lower case, remove spaces
+    s = s.lower().replace(" ", "")
+    t = t.lower().replace(" ", "")
 
-# Or use the reverse_string function from Challenge 2:
-def is_palindrome(text):
-    return reverse_string(text) == text
+    # Build frequency map for s
+    freq = {}
+    for char in s:
+        freq[char] = freq.get(char, 0) + 1
+
+    # Subtract each character from t
+    for char in t:
+        if char not in freq:
+            return False
+        freq[char] -= 1
+        if freq[char] == 0:
+            del freq[char]
+
+    return len(freq) == 0
 ```
 
 ---
 
-## Challenge 4: Sum and Max in One Pass
-**Difficulty:** Easy | **Topics:** lists, loops
+## Problem 4: Check if String Can Be a Palindrome
 
-### Problem
-Write a function `sum_and_max(numbers)` that returns **both** the sum and the maximum value of a list, without using `sum()` or `max()`.
+**Difficulty:** Easy | **Topic:** Strings, Dictionaries, Frequency Counting
 
+### Description
+Given a string `s`, return `True` if it can be rearranged to form a palindrome. Ignore case and ignore spaces. A palindrome reads the same forwards and backwards (e.g. `"racecar"`, `"ababa"`).
+
+### Function Signature
+```python
+def can_form_palindrome(s: str) -> bool:
 ```
-sum_and_max([1, 2, 3, 4, 5]) → (15, 5)
-sum_and_max([10, 20])         → (30, 20)
-sum_and_max([42])             → (42, 42)
+
+### Examples
+
+**Example 1:**
 ```
+Input:  s = "racecar"
+Output: True
+```
+
+**Example 2:**
+```
+Input:  s = "hello"
+Output: False    (h,l,o — three odds)
+```
+
+**Example 3:**
+```
+Input:  s = "aabbcc"
+Output: True
+```
+
+**Example 4:**
+```
+Input:  s = "ab"
+Output: True    (can be \"ba\" — one odd count is fine)
+```
+
+### Constraints
+- `1 <= len(s) <= 1000`
 
 ### Approach
-1. Start with `total = 0` and `largest = numbers[0]`.
-2. Loop through every number.
-3. For each number, add it to the total and check if it's larger than the current largest.
-4. Return both at the end.
+1. Build a frequency map of all characters (lower case, ignore spaces).
+2. Count how many characters have an **odd** frequency.
+3. A string can form a palindrome if it has **at most one** character with an odd count.
 
 ### Solution
 ```python
-def sum_and_max(numbers):
-    total = 0
-    largest = numbers[0]
-    for num in numbers:
-        total += num
-        if num > largest:
-            largest = num
-    return (total, largest)
+def can_form_palindrome(s: str) -> bool:
+    s = s.lower().replace(" ", "")
+
+    freq = {}
+    for char in s:
+        freq[char] = freq.get(char, 0) + 1
+
+    odd_count = 0
+    for count in freq.values():
+        if count % 2 == 1:
+            odd_count += 1
+
+    return odd_count <= 1
 ```
 
 ---
 
-## Challenge 5: Expand String — `"a3b2c1" → "aaabbc"`
-**Difficulty:** Medium | **Topics:** strings, lists, zip, join
+---
 
-### Problem
-Write a function `expand_string(text)` that takes a string of alternating letters and digits (like `"a3b2c1"`) and expands it so each digit tells you how many times to repeat the preceding letter.
+# ⚡ Medium — 4 Problems
 
+---
+
+## Problem 5: Longest Substring Without Repeating Characters
+
+**Difficulty:** Medium | **Topic:** Strings, Sliding Window
+
+### Description
+Given a string `s`, find the length of the **longest substring** that does not contain any repeating characters.
+
+### Function Signature
+```python
+def longest_unique_substring(s: str) -> int:
 ```
-expand_string("a3b2c1")  → "aaabbc"
-expand_string("x5y2")    → "xxxxxyy"
-expand_string("z1")      → "z"
+
+### Examples
+
+**Example 1:**
 ```
+Input:  s = "abcabcbb"
+Output: 3    (substring "abc" has length 3)
+```
+
+**Example 2:**
+```
+Input:  s = "bbbbb"
+Output: 1    (only "b" on its own)
+```
+
+**Example 3:**
+```
+Input:  s = "pwwkew"
+Output: 3    (substring "wke" has length 3)
+```
+
+### Constraints
+- `0 <= len(s) <= 1000`
+
+### Follow-up
+Can you return the substring itself, not just its length?
 
 ### Approach
-1. Separate letters and digits into two lists using a `for` loop and `isdigit()`.
-2. Pair them up with `zip()`.
-3. For each pair, repeat the letter `int(digit)` times and append to a results list.
-4. Join the results into one string.
+1. Use a **sliding window**: a start index `left` and a current index `right` that defines the window.
+2. As you expand `right`, check if the new character is already inside the window.
+3. If it is, move `left` forward until the duplicate is out.
+4. Track the maximum window size seen.
 
 ### Solution
 ```python
-def expand_string(text):
-    letters = []
-    digits = []
+def longest_unique_substring(s: str) -> int:
+    char_index = {}          # store the most recent index of each character
+    left = 0
+    max_len = 0
 
-    # Step 1: separate
-    for char in text:
-        if char.isdigit():
-            digits.append(char)
-        else:
-            letters.append(char)
+    for right in range(len(s)):
+        char = s[right]
+        # If char is already in window, move left past its previous occurrence
+        if char in char_index and char_index[char] >= left:
+            left = char_index[char] + 1
 
-    # Steps 2 & 3: pair and expand
-    result = []
-    for letter, digit in zip(letters, digits):
-        result.append(letter * int(digit))
+        # Update the character's index
+        char_index[char] = right
 
-    # Step 4: combine into one string
-    return "".join(result)
+        # Calculate window size and track maximum
+        current_len = right - left + 1
+        if current_len > max_len:
+            max_len = current_len
+
+    return max_len
 ```
 
 ---
 
-## Challenge 6: Find the Second Largest
-**Difficulty:** Easy | **Topics:** lists, sorting, sets
+## Problem 6: Group Anagrams Together
 
-### Problem
-Write a function `second_largest(numbers)` that returns the second largest **distinct** number. The list will always have at least 2 distinct numbers.
+**Difficulty:** Medium | **Topic:** Strings, Dictionaries, Sorting
 
+### Description
+Given a list of strings `strs`, group all anagrams together and return them as a list of lists.
+
+### Function Signature
+```python
+def group_anagrams(strs: list[str]) -> list[list[str]]:
 ```
-second_largest([1, 2, 3, 4, 5])      → 4
-second_largest([10, 20, 20, 30])     → 20  (duplicates ignored)
-second_largest([1, 3, 3, 7, 9, 9])  → 7
+
+### Examples
+
+**Example 1:**
 ```
+Input:  strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
+Output: [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]]
+```
+
+**Example 2:**
+```
+Input:  strs = [""]
+Output: [[""]]
+```
+
+**Example 3:**
+```
+Input:  strs = ["a"]
+Output: [["a"]]
+```
+
+### Constraints
+- `1 <= len(strs) <= 1000`
+- Each `strs[i]` consists of lowercase letters
 
 ### Approach
-1. Remove duplicates by converting to a `set()`.
-2. Sort the unique numbers in descending order.
-3. Return the second element.
+1. The key insight: **all anagrams of a word sort to the same string**. `"eat"`, `"tea"`, and `"ate"` all sort to `"aet"`.
+2. For each word, compute its sorted form as a key.
+3. Use a dictionary: key = sorted word, value = list of all words with that key.
+4. Return all the dictionary values.
 
 ### Solution
 ```python
-def second_largest(numbers):
-    unique = set(numbers)       # remove duplicates
-    sorted_nums = sorted(unique, reverse=True)
-    return sorted_nums[1]       # second largest
+def group_anagrams(strs: list[str]) -> list[list[str]]:
+    groups = {}  # maps sorted_key -> list of anagram words
+
+    for word in strs:
+        # Sort the word's letters — this is the anagram key
+        sorted_key = "".join(sorted(word))
+        if sorted_key not in groups:
+            groups[sorted_key] = []
+        groups[sorted_key].append(word)
+
+    return list(groups.values())
 ```
 
 ---
 
-## Challenge 7: Two Sum
-**Difficulty:** Medium | **Topics:** lists, dictionaries, loops
+## Problem 7: Two Sum
 
-### Problem
-Write a function `two_sum(numbers, target)` that takes a list of numbers and a target value. Return `True` if any two numbers in the list add up to the target.
+**Difficulty:** Medium | **Topic:** Arrays, Dictionaries
 
+### Description
+Given a list of integers `nums` and an integer `target`, return `True` if any two numbers in `nums` add up to `target`.
+
+### Function Signature
+```python
+def two_sum(nums: list[int], target: int) -> bool:
 ```
-two_sum([1, 2, 3, 4, 5], 9)   → True   (4 + 5 = 9)
-two_sum([1, 2, 3, 4, 5], 10)  → False
-two_sum([3, 3], 6)             → True   (3 + 3 = 6)
+
+### Examples
+
+**Example 1:**
 ```
+Input:  nums = [2, 7, 11, 15], target = 9
+Output: True   (2 + 7 = 9)
+```
+
+**Example 2:**
+```
+Input:  nums = [3, 7, 2, 15], target = 100
+Output: False
+```
+
+**Example 3:**
+```
+Input:  nums = [3, 3], target = 6
+Output: True   (3 + 3 = 6)
+```
+
+### Constraints
+- `2 <= len(nums) <= 1000`
 
 ### Approach
-1. Walk through the list. For each number, figure out what you need to add to it to reach the target: `needed = target - current`.
-2. Keep a dictionary tracking numbers you've already seen (`{number: index}`).
+1. For each number, figure out what you need to reach the target: `needed = target - num`.
+2. Keep a dictionary of numbers you've already seen: `{number: True}`.
 3. If `needed` is already in the dictionary, you found your pair — return `True`.
-4. If you finish the loop, no pair exists.
+4. If you finish the loop, no pair exists — return `False`.
 
 ### Solution
 ```python
-def two_sum(numbers, target):
-    seen = {}  # maps number → index of where we've seen it
+def two_sum(nums: list[int], target: int) -> bool:
+    seen = {}  # maps number -> True for numbers we've encountered
 
-    for i, num in enumerate(numbers):
+    for num in nums:
         needed = target - num
         if needed in seen:
             return True
-        seen[num] = i
+        seen[num] = True
 
     return False
 ```
 
 ---
 
-## Challenge 8: Count Word Frequency
-**Difficulty:** Medium | **Topics:** strings, dictionaries, loops
+## Problem 8: Find the Missing Positive Integer
 
-### Problem
-Write a function `word_frequency(sentence)` that counts how many times each word appears. Return a dictionary. Ignore punctuation (.,!?) and work case-insensitively.
+**Difficulty:** Medium | **Topic:** Arrays, Sets
 
+### Description
+Given an unsorted list of integers `nums`, find the smallest missing positive integer. (Positive means greater than 0.)
+
+### Function Signature
+```python
+def first_missing_positive(nums: list[int]) -> int:
 ```
-word_frequency("The cat sat on the mat.")
-→ {'the': 2, 'cat': 1, 'sat': 1, 'on': 1, 'mat': 1}
-word_frequency("hello HELLO Hello")
-→ {'hello': 3}
+
+### Examples
+
+**Example 1:**
 ```
+Input:  nums = [1, 2, 0]
+Output: 3
+```
+
+**Example 2:**
+```
+Input:  nums = [3, 4, -1, 1]
+Output: 2
+```
+
+**Example 3:**
+```
+Input:  nums = [7, 8, 9, 11, 12]
+Output: 1    (1 is missing)
+```
+
+### Constraints
+- `1 <= len(nums) <= 1000`
+- The numbers may be negative or zero
 
 ### Approach
-1. Strip punctuation from the sentence.
-2. Split it into words.
-3. For each word (lowercased), count it in a dictionary using `.get()` or by checking `if word in counts`.
-4. Return the dictionary.
+1. Put all positive numbers in a set (a set automatically removes duplicates).
+2. Start from `1` and keep checking `i + 1` — the first number not in the set is the answer.
 
 ### Solution
 ```python
-def word_frequency(sentence):
-    # Remove punctuation
-    for punct in ".,!?":
-        sentence = sentence.replace(punct, "")
+def first_missing_positive(nums: list[int]) -> int:
+    # Collect only positive numbers in a set
+    positives = set(n for n in nums if n > 0)
 
-    words = sentence.lower().split()
-    counts = {}
-
-    for word in words:
-        if word in counts:
-            counts[word] += 1
-        else:
-            counts[word] = 1
-
-    return counts
-
-    # Or using .get() (more compact):
-    # counts = {}
-    # for word in words:
-    #     counts[word] = counts.get(word, 0) + 1
-    # return counts
+    # Starting from 1, find the first missing number
+    i = 1
+    while True:
+        if i not in positives:
+            return i
+        i += 1
 ```
 
 ---
 
-## Challenge 9: Is It an Anagram?
-**Difficulty:** Medium | **Topics:** strings, dictionaries
+---
 
-### Problem
-Write a function `is_anagram(word1, word2)` that returns `True` if the two words are anagrams of each other (same letters, same count, ignore case).
+# 🔥 Hard — 2 Problems
 
+---
+
+## Problem 9: Longest Palindromic Substring
+
+**Difficulty:** Hard | **Topic:** Strings, Two-Pointer (Expand Around Centre)
+
+### Description
+Given a string `s`, find the longest substring that is a palindrome.
+
+### Function Signature
+```python
+def longest_palindrome(s: str) -> str:
 ```
-is_anagram("listen", "silent")   → True
-is_anagram("hello", "world")     → False
-is_anagram("Dormitory", "Dirty room") → True (after cleaning)
+
+### Examples
+
+**Example 1:**
+```
+Input:  s = "babad"
+Output: "bab"    (also valid: "aba")
 ```
 
-### Approach
-1. Normalise both strings: lower case, remove spaces.
-2. Build a frequency dictionary for each word.
-3. Compare the two dictionaries — they're anagrams if the counts match.
-4. Alternative: sort both strings and compare — if they contain the same letters, the sorted versions will be identical.
+**Example 2:**
+```
+Input:  s = "cbbd"
+Output: "bb"
+```
+
+### Constraints
+- `1 <= len(s) <= 1000`
+
+### Follow-up
+Return its length instead of the substring itself. (Then the approach simplifies to just tracking `max_len`.)
+
+### Approach (Two-Pointer: Expand Around Centre)
+
+**The key insight:** Every palindrome has a centre. For odd-length palindromes the centre is a single character ("bab" — centre is `b`). For even-length palindromes the centre is between two characters ("baab" — centre is between the two `a`s).
+
+**Algorithm:**
+1. For each possible centre position in the string, try to expand outward while the characters match.
+2. Keep track of the longest palindrome found.
+3. The trick: for position `i` in the string, check two cases:
+   - Odd palindrome: centre at `i` (check `s[i-left]` vs `s[i+right]`)
+   - Even palindrome: centre between `i` and `i+1` (check `s[i-1-left]` vs `s[i+right]`)
 
 ### Solution
 ```python
-def is_anagram(word1, word2):
-    # Normalise
-    w1 = word1.lower().replace(" ", "")
-    w2 = word2.lower().replace(" ", "")
+def longest_palindrome(s: str) -> str:
+    longest = ""
 
-    # Count letters
-    def count_letters(word):
-        counts = {}
-        for char in word:
-            counts[char] = counts.get(char, 0) + 1
-        return counts
+    for i in range(len(s)):
+        # Case 1: odd-length palindrome (single character centre)
+        left, right = i, i
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            if right - left + 1 > len(longest):
+                longest = s[left:right + 1]
+            left -= 1
+            right += 1
 
-    return count_letters(w1) == count_letters(w2)
+        # Case 2: even-length palindrome (centre between i and i+1)
+        left, right = i, i + 1
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            if right - left + 1 > len(longest):
+                longest = s[left:right + 1]
+            left -= 1
+            right += 1
 
-    # Or the cleaner approach: sort and compare
-    # return sorted(w1) == sorted(w2)
+    return longest
 ```
 
 ---
 
-## Challenge 10: Number to Words — `115 → "one hundred fifteen"`
-**Difficulty:** Medium | **Topics:** dictionaries, arithmetic, conditionals
+## Problem 10: Valid Parentheses
 
-### Problem
-Write a function `number_to_words(num)` that converts an integer into its English word equivalent. Handle hundreds and teens specially. Numbers will be between 0 and 999.
+**Difficulty:** Hard | **Topic:** Strings, Stack
 
-```
-number_to_words(115)  → "one hundred fifteen"
-number_to_words(7)    → "seven"
-number_to_words(23)   → "twenty three"
-number_to_words(99)   → "ninety nine"
-number_to_words(100)  → "one hundred"
-number_to_words(0)    → "zero"
+### Description
+Given a string `s` containing only the characters `(`, `[`, `{`, `)`, `]`, `}`, determine if the brackets are **balanced**. Every opening bracket must have a matching closing bracket of the same type, and no bracket may be closed before its matching opener is closed.
+
+### Function Signature
+```python
+def is_valid_parentheses(s: str) -> bool:
 ```
 
-### Approach
-1. Handle `0` and the teen special cases (11–19) first.
-2. Break the number: `hundreds = num // 100`, `remainder = num % 100`.
-3. Map digits to words using dictionaries.
-4. Build the result piece by piece and join with spaces.
+### Examples
+
+**Example 1:**
+```
+Input:  s = "()"
+Output: True
+```
+
+**Example 2:**
+```
+Input:  s = "()[]{}"
+Output: True
+```
+
+**Example 3:**
+```
+Input:  s = "(]"
+Output: False
+```
+
+**Example 4:**
+```
+Input:  s = "([{}])"
+Output: True
+```
+
+**Example 5:**
+```
+Input:  s = "([)]"
+Output: False
+```
+
+### Constraints
+- `1 <= len(s) <= 1000`
+- The string contains only `(`, `)`, `[`, `]`, `{`, `}`
+
+### Approach (Stack)
+
+**The key insight:** A stack is a **LIFO** structure — last item in is the first item out. This perfectly matches bracket matching:
+- When you see an **opening** bracket, **push** it onto the stack.
+- When you see a **closing** bracket, **pop** from the stack and check the popped value is the matching opener.
+
+**Algorithm:**
+1. Map each closing bracket to its opener: `')': '(', ']': '[', '}': '{'`.
+2. Create an empty stack.
+3. For each character in the string:
+   - If it's an opening bracket (`(`, `[`, `{`): push it onto the stack.
+   - If it's a closing bracket: try to pop from the stack. If the stack is empty or the popped item isn't the matching opener → return `False`.
+4. Return `True` only if the stack is **empty** at the end (no unmatched openers left).
 
 ### Solution
 ```python
-def number_to_words(num):
-    ones = {
-        0: "zero", 1: "one", 2: "two", 3: "three", 4: "four",
-        5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine"
-    }
-    teens = {
-        11: "eleven", 12: "twelve", 13: "thirteen", 14: "fourteen",
-        15: "fifteen", 16: "sixteen", 17: "seventeen", 18: "eighteen",
-        19: "nineteen"
-    }
-    tens = {
-        2: "twenty", 3: "thirty", 4: "forty", 5: "fifty",
-        6: "sixty", 7: "seventy", 8: "eighty", 9: "ninety"
-    }
+def is_valid_parentheses(s: str) -> bool:
+    # Map each closing bracket to its matching opener
+    pairs = {")": "(", "]": "[", "}": "{"}
+    stack = []
 
-    if num == 0:
-        return "zero"
-    if 11 <= num <= 19:
-        return teens[num]
+    for char in s:
+        if char in "([{":          # opening bracket — push
+            stack.append(char)
+        else:                      # closing bracket — must match the top
+            if not stack:          # stack empty = nothing to match
+                return False
+            top = stack.pop()
+            if pairs[char] != top:
+                return False
 
-    hundreds = num // 100
-    remainder = num % 100
-
-    parts = []
-
-    if hundreds > 0:
-        parts.append(ones[hundreds] + " hundred")
-
-    if 11 <= remainder <= 19:
-        parts.append(teens[remainder])
-    elif remainder >= 10:
-        tens_digit = remainder // 10
-        ones_digit = remainder % 10
-        if ones_digit == 0:
-            parts.append(tens[tens_digit])
-        else:
-            parts.append(tens[tens_digit] + " " + ones[ones_digit])
-    elif remainder > 0:
-        parts.append(ones[remainder])
-
-    return " ".join(parts)
-```
-
----
-
-## Challenge 11: Group Items by First Letter
-**Difficulty:** Medium | **Topics:** dictionaries, lists, loops
-
-### Problem
-Write a function `group_by_letter(names)` that takes a list of names and returns a dictionary where each key is a letter (A–Z) and the value is a list of names starting with that letter.
-
-```
-group_by_letter(["Alice", "Bob", "Anna", "Brian", "Claire"])
-→ {'A': ['Alice', 'Anna'], 'B': ['Bob', 'Brian'], 'C': ['Claire']}
-```
-
-### Approach
-1. Start with an empty dictionary.
-2. For each name, take its first letter (`name[0]`).
-3. If that letter is not yet a key in the dictionary, add it with an empty list.
-4. Append the name to the list for that letter.
-
-### Solution
-```python
-def group_by_letter(names):
-    groups = {}
-    for name in names:
-        first_letter = name[0].upper()
-        if first_letter not in groups:
-            groups[first_letter] = []
-        groups[first_letter].append(name)
-    return groups
-```
-
----
-
-## Challenge 12: Student Grade Statistics (From a File)
-**Difficulty:** Medium | **Topics:** files, strings, dictionaries, lists
-
-### Problem
-Write two functions — one to **save** student grades to a file, and one to **read** them back and produce a summary dictionary showing: the class average, the highest grade, who got it, the lowest grade, and who got it.
-
-```python
-# Usage:
-save_student_grades("students.csv", [
-    {"name": "Alice", "grade": 85},
-    {"name": "Bob", "grade": 92},
-    {"name": "Charlie", "grade": 78},
-])
-
-stats = read_grade_stats("students.csv")
-print(stats)
-# {
-#   'average': 85.0,
-#   'highest': 92, 'top_student': 'Bob',
-#   'lowest': 78, 'low_student': 'Charlie'
-# }
-```
-
-### Approach for `save_student_grades`:
-1. Open the file in write mode.
-2. Write each student as a comma-separated line: `name,grade\n`.
-
-### Approach for `read_grade_stats`:
-1. Open the file in read mode.
-2. Loop through each line, split by comma, parse the grade.
-3. Track running totals, highest, and lowest.
-4. Return the summary dictionary.
-
-### Solution
-```python
-def save_student_grades(filepath, students):
-    with open(filepath, "w") as f:
-        for student in students:
-            line = f"{student['name']},{student['grade']}\n"
-            f.write(line)
-
-def read_grade_stats(filepath):
-    total = 0
-    count = 0
-    highest = None
-    lowest = None
-    top_student = ""
-    low_student = ""
-
-    with open(filepath, "r") as f:
-        for line in f:
-            name, grade_str = line.strip().split(",")
-            grade = int(grade_str)
-            total += grade
-            count += 1
-            if highest is None or grade > highest:
-                highest = grade
-                top_student = name
-            if lowest is None or grade < lowest:
-                lowest = grade
-                low_student = name
-
-    return {
-        "average": round(total / count, 1),
-        "highest": highest,
-        "top_student": top_student,
-        "lowest": lowest,
-        "low_student": low_student
-    }
+    # Valid only if all openers were matched
+    return len(stack) == 0
 ```
 
 ---
 
 ---
 
-# 📊 Quick Reference — What to Look Up
+# 📊 Quick Reference — Lesson Lookup
 
-| Challenge | Key Technique | Lesson |
-|-----------|--------------|--------|
+| Problem | Key Technique | Lesson |
+|---------|--------------|--------|
 | 1. Count Vowels | `for` loop + `in` condition | L2, L4 |
-| 2. Reverse String | `range(len())` + list building | L2, L3, L4 |
-| 3. Is Palindrome | string slicing `[::-1]` or reverse | L2 |
-| 4. Sum & Max | single loop, track two values | L3, L4 |
-| 5. Expand String | `isdigit()`, `zip()`, repeat | L2, L3 |
-| 6. Second Largest | `set()` + `sorted()` | L3 |
-| 7. Two Sum | dictionary tracking seen values | L3, L8 |
-| 8. Word Frequency | `dict.get()` pattern | L4, L8 |
-| 9. Is Anagram | dict frequency or `sorted()` comparison | L2, L8 |
-| 10. Number to Words | `//`, `%`, dict mapping, special cases | L5, L8 |
-| 11. Group by Letter | dict of lists, `append` to each key | L8 |
-| 12. Grade Stats | file `open()`, `split()`, dict | L9 |
+| 2. Reverse String | `range(len())` + list building + `"".join()` | L2, L3, L4 |
+| 3. Valid Anagram | frequency map with `dict.get()` | L8 |
+| 4. Palindrome Form | frequency map — count of odd chars ≤ 1 | L8 |
+| 5. Longest Unique Substring | sliding window + dictionary | L8 |
+| 6. Group Anagrams | `sorted(strings, key=...)` as dict key | L3, L8 |
+| 7. Two Sum | dictionary of seen numbers | L8 |
+| 8. Missing Positive | `set()` for positive numbers | L3 |
+| 9. Longest Palindrome | two-pointer expand-around-centre | L7 (algorithmic thinking) |
+| 10. Valid Parentheses | **stack** — push openers, pop and match | L5, L8 |
+
+---
 
 ---
 
@@ -621,131 +698,111 @@ def read_grade_stats(filepath):
 <summary>Click to reveal all solutions (try the problems first!)</summary>
 
 ```python
-# Challenge 1
-def count_vowels(text):
-    count = 0
-    for char in text:
-        if char in "aeiouAEIOU":
-            count += 1
-    return count
+# Problem 1
+def count_vowels(s: str) -> int:
+    return sum(1 for char in s if char in "aeiouAEIOU")
 
-# Challenge 2
-def reverse_string(text):
-    result = []
-    for i in range(len(text)):
-        result.append(text[i])
-    return "".join(reversed(result))
+# Problem 2
+def reverse_string(s: str) -> str:
+    return "".join(s[i] for i in range(len(s) - 1, -1, -1))
 
-# Challenge 3
-def is_palindrome(text):
-    return text[::-1].lower() == text.lower()
+# Problem 3
+def is_anagram(s: str, t: str) -> bool:
+    s = s.lower().replace(" ", "")
+    t = t.lower().replace(" ", "")
+    freq = {}
+    for c in s:
+        freq[c] = freq.get(c, 0) + 1
+    for c in t:
+        if c not in freq:
+            return False
+        freq[c] -= 1
+        if freq[c] == 0:
+            del freq[c]
+    return len(freq) == 0
 
-# Challenge 4
-def sum_and_max(numbers):
-    total = 0
-    largest = numbers[0]
-    for num in numbers:
-        total += num
-        if num > largest:
-            largest = num
-    return (total, largest)
+# Problem 4
+def can_form_palindrome(s: str) -> bool:
+    s = s.lower().replace(" ", "")
+    freq = {}
+    for c in s:
+        freq[c] = freq.get(c, 0) + 1
+    odd = sum(1 for count in freq.values() if count % 2 == 1)
+    return odd <= 1
 
-# Challenge 5
-def expand_string(text):
-    letters, digits = [], []
-    for char in text:
-        if char.isdigit():
-            digits.append(char)
-        else:
-            letters.append(char)
-    result = []
-    for letter, digit in zip(letters, digits):
-        result.append(letter * int(digit))
-    return "".join(result)
+# Problem 5
+def longest_unique_substring(s: str) -> int:
+    char_index = {}
+    left = max_len = 0
+    for right in range(len(s)):
+        char = s[right]
+        if char in char_index and char_index[char] >= left:
+            left = char_index[char] + 1
+        char_index[char] = right
+        max_len = max(max_len, right - left + 1)
+    return max_len
 
-# Challenge 6
-def second_largest(numbers):
-    unique = set(numbers)
-    return sorted(unique, reverse=True)[1]
+# Problem 6
+def group_anagrams(strs: list[str]) -> list[list[str]]:
+    groups = {}
+    for word in strs:
+        key = "".join(sorted(word))
+        groups.setdefault(key, []).append(word)
+    return list(groups.values())
 
-# Challenge 7
-def two_sum(numbers, target):
+# Problem 7
+def two_sum(nums: list[int], target: int) -> bool:
     seen = {}
-    for i, num in enumerate(numbers):
-        needed = target - num
-        if needed in seen:
+    for num in nums:
+        if target - num in seen:
             return True
-        seen[num] = i
+        seen[num] = True
     return False
 
-# Challenge 8
-def word_frequency(sentence):
-    for punct in ".,!?":
-        sentence = sentence.replace(punct, "")
-    words = sentence.lower().split()
-    counts = {}
-    for word in words:
-        counts[word] = counts.get(word, 0) + 1
-    return counts
+# Problem 8
+def first_missing_positive(nums: list[int]) -> int:
+    positives = set(n for n in nums if n > 0)
+    i = 1
+    while True:
+        if i not in positives:
+            return i
+        i += 1
 
-# Challenge 9
-def is_anagram(word1, word2):
-    w1 = word1.lower().replace(" ", "")
-    w2 = word2.lower().replace(" ", "")
-    return sorted(w1) == sorted(w2)
+# Problem 9
+def longest_palindrome(s: str) -> str:
+    longest = ""
+    for i in range(len(s)):
+        # odd length
+        l, r = i, i
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            if r - l + 1 > len(longest):
+                longest = s[l:r + 1]
+            l -= 1
+            r += 1
+        # even length
+        l, r = i, i + 1
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            if r - l + 1 > len(longest):
+                longest = s[l:r + 1]
+            l -= 1
+            r += 1
+    return longest
 
-# Challenge 10
-def number_to_words(num):
-    ones = {0:"zero",1:"one",2:"two",3:"three",4:"four",5:"five",6:"six",7:"seven",8:"eight",9:"nine"}
-    teens = {11:"eleven",12:"twelve",13:"thirteen",14:"fourteen",15:"fifteen",16:"sixteen",17:"seventeen",18:"eighteen",19:"nineteen"}
-    tens = {2:"twenty",3:"thirty",4:"forty",5:"fifty",6:"sixty",7:"seventy",8:"eighty",9:"ninety"}
-    if num == 0: return "zero"
-    if 11 <= num <= 19: return teens[num]
-    hundreds = num // 100
-    remainder = num % 100
-    parts = []
-    if hundreds > 0: parts.append(ones[hundreds] + " hundred")
-    if 11 <= remainder <= 19: parts.append(teens[remainder])
-    elif remainder >= 10:
-        td, od = remainder // 10, remainder % 10
-        parts.append(tens[td] + ("" if od == 0 else " " + ones[od]))
-    elif remainder > 0: parts.append(ones[remainder])
-    return " ".join(parts)
-
-# Challenge 11
-def group_by_letter(names):
-    groups = {}
-    for name in names:
-        letter = name[0].upper()
-        if letter not in groups: groups[letter] = []
-        groups[letter].append(name)
-    return groups
-
-# Challenge 12
-def save_student_grades(filepath, students):
-    with open(filepath, "w") as f:
-        for s in students:
-            f.write(f"{s['name']},{s['grade']}\n")
-
-def read_grade_stats(filepath):
-    total = count = highest = lowest = None
-    top_student = low_student = ""
-    with open(filepath) as f:
-        for line in f:
-            name, g = line.strip().split(",")
-            grade = int(g)
-            total = (total or 0) + grade
-            count += 1
-            if highest is None or grade > highest:
-                highest, top_student = grade, name
-            if lowest is None or grade < lowest:
-                lowest, low_student = grade, name
-    return {"average": round(total / count, 1), "highest": highest,
-            "top_student": top_student, "lowest": lowest, "low_student": low_student}
+# Problem 10
+def is_valid_parentheses(s: str) -> bool:
+    pairs = {")": "(", "]": "[", "}": "{"}
+    stack = []
+    for char in s:
+        if char in "([{":
+            stack.append(char)
+        else:
+            if not stack or pairs[char] != stack.pop():
+                return False
+    return len(stack) == 0
 ```
 
 </details>
 
 ---
 
-Good luck, Szonja! Every tool you need is in your lesson files — go find them when you need them. 💛
+Good luck, Szonja! Every technique is in your lesson files — go find it before you start each problem. 💛

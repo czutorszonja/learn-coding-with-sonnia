@@ -211,6 +211,100 @@ print("city" in person)  # Output: False
 
 ---
 
+## Counting Things: Frequency Maps
+
+A very common pattern: **how many times does each thing appear?** Use a dictionary to count:
+
+```python
+# Count how many times each letter appears
+text = "hello world"
+freq = {}
+
+for char in text:
+    if char in freq:
+        freq[char] += 1
+    else:
+        freq[char] = 1
+
+print(freq)  # {'h': 1, 'e': 1, 'l': 3, 'o': 2, ' ': 1, 'w': 1, 'r': 1, 'd': 1}
+```
+
+### The `.get()` Shortcut
+
+The `if/else` pattern above can be written more cleanly with `.get()`:
+
+```python
+text = "hello world"
+freq = {}
+
+for char in text:
+    freq[char] = freq.get(char, 0) + 1
+    # If char is not in dict yet, .get() returns 0. Then +1 sets it to 1.
+    # If char is already there, it adds 1 to the current count.
+
+print(freq)  # {'h': 1, 'e': 1, 'l': 3, 'o': 2, ' ': 1, 'w': 1, 'r': 1, 'd': 1}
+```
+
+### Using This to Compare Two Strings (Anagrams)
+
+If two strings are anagrams, they have the same letters with the same counts:
+
+```python
+def is_anagram(word1, word2):
+    # Build a frequency map for word1
+    freq1 = {}
+    for char in word1.lower():
+        freq1[char] = freq1.get(char, 0) + 1
+
+    # Build a frequency map for word2
+    freq2 = {}
+    for char in word2.lower():
+        freq2[char] = freq2.get(char, 0) + 1
+
+    return freq1 == freq2
+
+print(is_anagram("listen", "silent"))  # True
+print(is_anagram("hello", "world"))    # False
+```
+
+### Can a String Be Rearranged Into a Palindrome?
+
+A string can form a palindrome if at most **one** character has an odd count (for odd-length strings) or **no** odd counts (for even-length strings):
+
+```python
+def can_be_palindrome(text):
+    freq = {}
+    for char in text.lower():
+        freq[char] = freq.get(char, 0) + 1
+
+    odd_count = sum(1 for count in freq.values() if count % 2 == 1)
+    return odd_count <= 1
+
+print(can_be_palindrome("racecar"))  # True
+print(can_be_palindrome("hello"))    # False (l and o both odd)
+```
+
+---
+
+## Merging Two Dictionaries
+
+What if you want to combine two dictionaries? Use `.update() or the `|` operator:
+
+```python
+a = {"x": 1, "y": 2}
+b = {"y": 3, "z": 4}
+
+# .update() — b's values overwrite a's on conflict
+merged = a.copy()
+merged.update(b)
+print(merged)  # {'x': 1, 'y': 3, 'z': 4}
+
+# | operator (Python 3.9+) — newer, cleaner
+# merged = a | b
+```
+
+---
+
 ## Practice Exercise
 
 **Scenario:** You're building a simple contact book!
@@ -276,6 +370,10 @@ address: 123 Main Street, London
 - **`.values()`** — get all values
 - **`.items()`** — get both keys and values
 - **`in`** — check if key exists
+- **`dict.get(key, default)`** — get a value, return default if key is missing (also a building block for frequency counting)
+- **Frequency map** — `freq[char] = freq.get(char, 0) + 1` counts how many times each item appears
+- **`sorted(strings, key=len)`** — sort strings by length (Lesson 3)
+- **`sorted(string)`** — sort characters in a string: `sorted("cab")` → `['a','b','c']`
 
 ---
 

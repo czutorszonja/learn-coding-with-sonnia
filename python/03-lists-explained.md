@@ -315,6 +315,39 @@ for song in playlist:
 
 ---
 
+## Sorting With a Custom Key: `sorted(key=...)`
+
+What if you want to sort a list by something other than the default alphabetical order? Use `key`:
+
+```python
+# Sort strings by length (shortest first)
+words = ["elephant", "cat", "giraffe", "dog"]
+by_length = sorted(words, key=len)
+print(by_length)  # ['cat', 'dog', 'giraffe', 'elephant']
+
+# Sort strings by length (longest first)
+by_length_desc = sorted(words, key=len, reverse=True)
+print(by_length_desc)  # ['elephant', 'giraffe', 'cat', 'dog']
+```
+
+`key=len` tells Python: "Don't sort by the string itself — sort by how long each string is."
+
+### Sort a String's Characters
+
+You can also sort the characters inside a string:
+
+```python
+# Sort letters into alphabetical order
+word = "cab"
+letters = sorted(word)
+print(letters)   # ['a', 'b', 'c']
+print("".join(letters))  # 'abc'
+```
+
+This is useful for anagram problems — two strings are anagrams if their sorted characters are identical.
+
+---
+
 ## Practice Exercise
 
 **Scenario:** You're making a playlist for a road trip!
@@ -385,6 +418,8 @@ Final playlist: Bohemian Rhapsody, Hotel California, Imagine, Hey Jude, Like a R
 - **`.reverse()`** reverses the list
 - **`string * n`** — repeat a string (or list) n times
 - **`int(string)`** — convert a digit string to a number, so you can use it as a count
+- **`sorted(list, key=len)`** — sort a list using a function as the sort key (len = sort by length)
+- **`sorted(string)`** — sort a string's characters into order: `sorted("cab")` → `['a', 'b', 'c']`
 
 ---
 
