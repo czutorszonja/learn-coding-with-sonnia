@@ -149,9 +149,14 @@ def swap_case(text):
 `swap_case("Python 3.0")` → `"pYTHON 3.0"`
 `swap_case("Sz")` → `"sZ"`
 
-**🔖 Reference:** Lesson 2 — string methods, `str.lower()`, `str.upper()`
+**🔖 Reference:** Lesson 2 — string `+` and `*`, f-strings
 
-**💡 Hint:** You can check `char.islower()` and `char.isupper()` to determine the case of a character.
+**💡 Hint:** Compare each character to its lowercase and uppercase version to tell which case it is:
+```python
+if char == char.lower() and char != char.upper():
+    # it's lowercase — make it uppercase
+    result += char.upper()
+```
 
 ---
 

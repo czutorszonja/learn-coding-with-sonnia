@@ -166,6 +166,109 @@ print(max(numbers))  # Output: 9
 
 ---
 
+## Pairing Lists Together: `zip()`
+
+What if you have two lists and want to go through them **at the same time**? Use `zip()`:
+
+```python
+names = ["Alice", "Bob", "Charlie"]
+scores = [95, 87, 92]
+
+for name, score in zip(names, scores):
+    print(f"{name}: {score}")
+
+# Output:
+# Alice: 95
+# Bob: 87
+# Charlie: 92
+```
+
+`zip()` takes one item from each list and gives them to you together. It stops when the **shortest** list runs out.
+
+### Turning Two Lists Into a Dictionary
+
+A very common use of `zip()` — combine a `keys` list and a `values` list into a dictionary:
+
+```python
+keys = ["name", "age", "city"]
+values = ["Szonja", 30, "London"]
+
+info = dict(zip(keys, values))
+print(info)
+# {'name': 'Szonja', 'age': 30, 'city': 'London'}
+```
+
+### Zipping More Than Two Lists
+
+`zip()` works with any number of lists:
+
+```python
+a = [1, 2, 3]
+b = [4, 5, 6]
+c = [7, 8, 9]
+
+for x, y, z in zip(a, b, c):
+    print(x + y + z)
+
+# Output:
+# 12
+# 15
+# 18
+```
+
+---
+
+## Repeating List Items
+
+You can multiply a string (or list) to repeat it:
+
+```python
+print("ha" * 3)      # Output: hahaha (string repeated 3 times)
+print([1, 2] * 3)   # Output: [1, 2, 1, 2, 1, 2]
+```
+
+This becomes very useful when combined with `zip()` for problems like `"a3b2c1" → "aaabbc"`:
+
+```python
+# Given: a3b2c1, produce: aaabbc
+# Separate the letters and digits first
+text = "a3b2c1"
+letters = []
+digits = []
+
+for char in text:
+    if char.isdigit():
+        digits.append(char)
+    else:
+        letters.append(char)
+
+# Now pair each letter with its digit, repeat the letter
+result = []
+for letter, digit in zip(letters, digits):
+    repeated = letter * int(digit)  # letter "a" * int("3") = "aaa"
+    result.append(repeated)
+
+final = "".join(result)
+print(final)  # Output: aaabbc
+```
+
+### Building a New List With a For Loop
+
+Start with an empty list, build it up inside the loop (you'll see this pattern everywhere!):
+
+```python
+# Double every number in the list
+numbers = [3, 7, 2, 9]
+doubled = []
+
+for n in numbers:
+    doubled.append(n * 2)
+
+print(doubled)  # [6, 14, 4, 18]
+```
+
+---
+
 ## Printing Lists Nicely
 
 When you print a list directly, Python shows it with brackets and quotes:
@@ -224,6 +327,8 @@ for song in playlist:
 6. Print the final playlist in two ways:
    - First, print it directly (to see the brackets and quotes)
    - Then, print it nicely as a comma-separated list using `.join()` inside an f-string
+7. **Challenge:** Create two lists `first_names` and `last_names` with 3 names each. Use `zip()` to print each person's full name.
+8. **Challenge 2 (exam style!):** Write a function that takes `"a3b2c1"` and returns `"aaabbc"`. Separate letters and digits, pair them with `zip()`, repeat with `*`, then `.join()` the result.
 
 **Try it yourself first!** Scroll down when ready.
 
@@ -274,8 +379,12 @@ Final playlist: Bohemian Rhapsody, Hotel California, Imagine, Hey Jude, Like a R
 - **`.insert()`** adds at a specific position
 - **`.remove()`** removes by value
 - **`.pop()`** removes and returns an item
+- **`zip(list1, list2)`** — loop through two lists at the same time
+- **`dict(zip(keys, values))`** — combine two lists into a dictionary
 - **`.sort()`** sorts the list
 - **`.reverse()`** reverses the list
+- **`string * n`** — repeat a string (or list) n times
+- **`int(string)`** — convert a digit string to a number, so you can use it as a count
 
 ---
 

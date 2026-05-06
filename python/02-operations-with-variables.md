@@ -71,8 +71,64 @@ You can also multiply a string by a number to repeat it:
 ```python
 cheer = "Yay "
 excited = cheer * 3
-print(excited)  # Output: Yay Yay Yay 
+print(excited)  # Output: Yay Yay Yay
 ```
+
+### Combining a List Into One String: `.join()`
+
+When you have a list of strings and want to merge them into one string, use `.join()`:
+
+```python
+words = ["hello", "world", "from", "Sonnia"]
+sentence = " ".join(words)     # join with spaces → "hello world from Sonnia"
+sentence_comma = ", ".join(words)  # join with commas → "hello, world, from, Sonnia"
+no_spaces = "".join(words)         # join with nothing → "helloworldfromSonnia"
+
+print(sentence)
+# Output: hello world from Sonnia
+```
+
+**Common mistake:** `.join()` goes on the *separator*, not the list:
+```python
+# Wrong:
+" ".join("hello", "world")    # Error!
+
+# Right:
+" ".join(["hello", "world"])  # ✓
+```
+
+---
+
+### Turning a List of Characters Into a String
+
+A very common pattern: build a list of characters or strings piece by piece, then combine them into one final string:
+
+```python
+# Example: take every letter and make it doubled
+text = "abc"
+result = []
+
+for char in text:
+    result.append(char * 2)  # char * 2 repeats it (just like "A" * 3 → "AAA")
+
+final = "".join(result)       # combine the list into a single string
+print(final)  # Output: aabbcc
+```
+
+**The pattern works like this:**
+```python
+# Step 1: start with an empty list
+output = []
+
+# Step 2: loop through something
+for item in data:
+    output.append(something_built_from(item))
+
+# Step 3: join everything into one string
+final = "".join(output)
+```
+
+This is the same pattern as building a list with `append` from Lesson 4 — then adding `.join()` at the end to turn the list into a clean string.
 
 ---
 
@@ -181,11 +237,70 @@ print(f"Total: £{total_revenue}")
 
 ---
 
+## Checking What Kind of Character It Is
+
+When you need to examine a string character by character, Python gives you useful tests:
+
+```python
+"7".isdigit()     # True  — is it a digit (0–9)?
+"a".isdigit()     # False
+
+"x".isalpha()     # True  — is it a letter (a–z or A–Z)?
+"!".isalpha()     # False
+
+"x".isalnum()     # True  — is it alphanumeric (letter OR digit)?
+"7".isalnum()     # True
+"!".isalnum()     # False
+```
+
+These are especially useful inside a loop over a string:
+
+```python
+def separate_letters_and_numbers(text):
+    letters = []
+    digits = []
+
+    for char in text:
+        if char.isdigit():
+            digits.append(char)
+        elif char.isalpha():
+            letters.append(char)
+
+    print(f"Letters: {letters}")
+    print(f"Digits: {digits}")
+
+separate_letters_and_numbers("Hello3World")
+# Output:
+# Letters: ['H', 'e', 'l', 'l', 'o', 'W', 'o', 'r', 'l', 'd']
+# Digits: ['3']
+```
+
+Or to filter or transform:
+
+```python
+# Example: remove all non-letters from a string
+text = "H3llo! W0rld!"
+clean = []
+
+for char in text:
+    if char.isalpha():
+        clean.append(char)
+
+result = "".join(clean)
+print(result)  # Output: HllWrld
+```
+
+---
+
 ## Quick Recap
 
 - **Math operations:** `+`, `-`, `*`, `/`, `**` (exponent)
 - **String concatenation:** Combine strings with `+`
 - **String repetition:** Multiply string by number: `"Hi" * 3`
+- **`.join(separator)`** — combine a list of strings into one string with a separator in between
+- **`str.isdigit()`** — `True` if the character is a digit (0–9)
+- **`str.isalpha()`** — `True` if the character is a letter
+- **`str.isalnum()`** — `True` if the character is a letter or digit
 - **f-strings:** Clean way to insert variables: `f"Hello {name}"`
 - **Order of operations:** Parentheses first, then multiply/divide, then add/subtract
 

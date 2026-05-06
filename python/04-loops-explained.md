@@ -49,6 +49,43 @@ for fruit in fruits:
 
 ---
 
+## Looping With Index Numbers: `range(len())`
+
+Sometimes you need **both** the index (position) **and** the item itself. `range(len())` gives you index numbers you can use:
+
+```python
+fruits = ["apple", "banana", "cherry"]
+
+for i in range(len(fruits)):
+    print(f"Index {i}: {fruits[i]}")
+
+# Output:
+# Index 0: apple
+# Index 1: banana
+# Index 2: cherry
+```
+
+**When is this useful?** When you need to look at the previous or next item, or when you need the index number for some other purpose:
+
+```python
+# Find where a target value is
+names = ["Alice", "Bob", "Charlie", "Dave"]
+target = "Charlie"
+
+for i in range(len(names)):
+    if names[i] == target:
+        print(f"Found at index {i}")
+        break
+
+# Output: Found at index 2
+```
+
+**Tip — When to use `enumerate()` vs `range(len())`:**
+- Use `enumerate()` when you want both index and value neatly together: `for i, item in enumerate(list):`
+- Use `range(len())` when you only need the index, or when you need to also modify items in the list by index
+
+---
+
 ## Loop Variables
 
 You can name the loop variable anything you want:
@@ -432,7 +469,9 @@ Total bill: £21.47
 - **`range()`** creates a sequence of numbers to loop through
 - **`range(start, end)`** lets you specify start and end
 - **`range(start, end, step)`** lets you skip numbers
+- **`range(len())`** gives you index numbers to use with list access
 - **`enumerate()`** gives you both index and value
+- **Loop + append** — build a new list by adding items inside a loop
 
 ---
 

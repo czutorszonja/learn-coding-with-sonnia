@@ -287,6 +287,172 @@ Letter Grade: B
 
 ---
 
+## Algorithmic Thinking — How to Break Down Any Hard Problem
+
+**This is the skill that bridges "I can follow examples" and "I can solve anything".**
+
+When you get a question you've never seen before, don't panic. Use this step-by-step approach:
+
+**Step 1 — Trace it by hand.** Pretend you are Python and work out what the answer should be for the given example.
+
+**Step 2 — Identify the pattern.** What are you working with? Strings? Numbers? Lists? What operation turns the input into the output?
+
+**Step 3 — Break it into plain English steps.** Write the logic in sentences before you write any code.
+
+**Step 4 — Write one step at a time.** Implement and test each piece before moving to the next.
+
+---
+
+### Worked Example 1: `"a3b2c1" → "aaabbc"`
+
+**Step 1 — Trace it manually:**
+- See `a`, then `3` → output `aaa`
+- See `b`, then `2` → output `bb`
+- See `c`, then `1` → output `c`
+- Combined: `aaabbc`
+
+**Step 2 — Pattern:** The string alternates letter-digit-letter-digit. Each letter is repeated by the digit that follows it.
+
+**Step 3 — Plain steps:**
+1. Separate all letters into one list, all digits into another list
+2. Pair each letter with its digit using `zip()`
+3. For each pair, repeat the letter by the digit amount
+4. Combine all results into one string with `.join()`
+
+**Step 4 — Write it:**
+
+```python
+def expand_string(text):
+    # Step 1: separate letters and digits into two lists
+    letters = []
+    digits = []
+
+    for char in text:
+        if char.isdigit():       # is this character a number?
+            digits.append(char)  # put it in the digits list
+        else:
+            letters.append(char) # otherwise it's a letter
+
+    # Steps 2 & 3: pair each letter with a digit, repeat the letter
+    result = []
+    for letter, digit in zip(letters, digits):
+        repeated = letter * int(digit)  # "a" * int("3") = "aaa"
+        result.append(repeated)
+
+    # Step 4: combine everything into one string
+    return "".join(result)
+
+print(expand_string("a3b2c1"))  # aaabbc
+print(expand_string("x5y2"))    # xxxxxyy
+```
+
+**Key techniques used:**
+- `char.isdigit()` to categorise each character (Lesson 2)
+- Two accumulator lists inside a loop (Lesson 4)
+- `zip()` to pair two lists together (Lesson 3)
+- `letter * int(digit)` to repeat a string (Lesson 3)
+- `"".join(result)` to merge the list into one string (Lessons 2 and 3)
+
+---
+
+### Worked Example 2: `115 → "one hundred fifteen"`
+
+**Step 1 — Trace it manually:**
+- 115 = 100 + 10 + 5
+- 100 = "one hundred", 10 = "ten", 5 = "five"
+- Combined: "one hundred fifteen"
+
+**Step 2 — Pattern:** The number breaks into hundreds, tens, and ones. Each digit maps to a word, but 11–19 have their own special names.
+
+**Step 3 — Plain steps:**
+1. Map each digit to its word using a dictionary
+2. Handle the 11–19 special case first
+3. Split into hundreds and remainder using `//` and `%`
+4. Build the result by adding each part in order
+
+**Step 4 — Write it:**
+
+```python
+def number_to_words(num):
+    # Special teen words (they don't follow the normal pattern)
+    teens = {
+        11: "eleven", 12: "twelve", 13: "thirteen", 14: "fourteen",
+        15: "fifteen", 16: "sixteen", 17: "seventeen", 18: "eighteen",
+        19: "nineteen"
+    }
+
+    # Normal digit names
+    ones = {
+        0: "zero", 1: "one", 2: "two", 3: "three", 4: "four",
+        5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine"
+    }
+
+    tens_map = {
+        2: "twenty", 3: "thirty", 4: "forty", 5: "fifty",
+        6: "sixty", 7: "seventy", 8: "eighty", 9: "ninety"
+    }
+
+    if num == 0:
+        return "zero"
+
+    # Handle teens first (they have special names)
+    if 11 <= num <= 19:
+        return teens[num]
+
+    # Break into hundreds and remainder
+    hundreds = num // 100
+    remainder = num % 100
+
+    parts = []
+
+    # Add "X hundred" if there is a hundreds component
+    if hundreds > 0:
+        parts.append(ones[hundreds] + " hundred")
+
+    # Handle the remainder
+    if remainder >= 11 and remainder <= 19:
+        parts.append(teens[remainder])
+    elif remainder >= 10:
+        tens_digit = remainder // 10
+        ones_digit = remainder % 10
+        if ones_digit == 0:
+            parts.append(tens_map[tens_digit])
+        else:
+            parts.append(tens_map[tens_digit] + " " + ones[ones_digit])
+    elif remainder > 0:
+        parts.append(ones[remainder])
+
+    return " ".join(parts)
+
+print(number_to_words(115))  # one hundred fifteen
+print(number_to_words(7))    # seven
+print(number_to_words(23))   # twenty three
+print(number_to_words(99))   # ninety nine
+print(number_to_words(100))  # one hundred
+```
+
+**Key techniques used:**
+- Dictionary mapping to connect numbers to words (Lesson 8)
+- Integer division `//` and modulo `%` to split a number into place values
+- `if / elif / else` chains to handle special cases (Lessons 5 and 7)
+- Building a result and `.join()`ing it into a string
+
+---
+
+### Your Exam Problem-Solving Checklist
+
+When you see a new problem:
+
+- [ ] What is the **input**? (string, list, number?)
+- [ ] What is the **expected output**?
+- [ ] Can I **trace the example by hand**?
+- [ ] What **pattern** do I see? (repetition, pairing, mapping, filtering?)
+- [ ] What **building blocks** do I need? (lists, dicts, loops, conditions?)
+- [ ] What are the **steps** in plain English?
+- [ ] Write it **one step at a time**
+
+---
+
 ## Quick Recap
 
 You've now practiced combining:
@@ -295,6 +461,7 @@ You've now practiced combining:
 - **Functions + Conditionals** = Make decisions in functions
 - **Functions + Return** = Send back results
 - **While loops + Input** = Interactive programs
+- **Algorithmic thinking** = Break down any unseen problem step by step
 
 ---
 
