@@ -192,51 +192,6 @@ print(result)  # Output: 20
 
 ---
 
-## Practice Exercise
-
-**Scenario:** You're running a small bakery. Create variables for:
-- Price per cupcake: £3.50
-- Number of cupcakes sold: 12
-- Price per cookie: £2.00
-- Number of cookies sold: 8
-
-Then calculate:
-1. Total revenue from cupcakes
-2. Total revenue from cookies
-3. Grand total (cupcakes + cookies)
-4. Print a nice summary message using an f-string
-
-**Try it yourself first!** Scroll down when ready.
-
----
-
-## Solution
-
-```python
-# Create variables
-price_cupcake = 3.50
-cupcakes_sold = 12
-price_cookie = 2.00
-cookies_sold = 8
-
-# Calculate revenues
-cupcake_revenue = price_cupcake * cupcakes_sold
-cookie_revenue = price_cookie * cookies_sold
-total_revenue = cupcake_revenue + cookie_revenue
-
-# Print summary with f-string
-print(f"Cupcakes: £{cupcake_revenue}")
-print(f"Cookies: £{cookie_revenue}")
-print(f"Total: £{total_revenue}")
-
-# Output:
-# Cupcakes: £42.0
-# Cookies: £16.0
-# Total: £58.0
-```
-
----
-
 ## Checking What Kind of Character It Is
 
 When you need to examine a string character by character, Python gives you useful tests:
@@ -288,6 +243,51 @@ for char in text:
 
 result = "".join(clean)
 print(result)  # Output: HllWrld
+```
+
+---
+
+## Practice Exercise
+
+**Scenario:** You're running a small bakery. Create variables for:
+- Price per cupcake: £3.50
+- Number of cupcakes sold: 12
+- Price per cookie: £2.00
+- Number of cookies sold: 8
+
+Then calculate:
+1. Total revenue from cupcakes
+2. Total revenue from cookies
+3. Grand total (cupcakes + cookies)
+4. Print a nice summary message using an f-string
+
+**Try it yourself first!** Scroll down when ready.
+
+---
+
+## Solution
+
+```python
+# Create variables
+price_cupcake = 3.50
+cupcakes_sold = 12
+price_cookie = 2.00
+cookies_sold = 8
+
+# Calculate revenues
+cupcake_revenue = price_cupcake * cupcakes_sold
+cookie_revenue = price_cookie * cookies_sold
+total_revenue = cupcake_revenue + cookie_revenue
+
+# Print summary with f-string
+print(f"Cupcakes: £{cupcake_revenue}")
+print(f"Cookies: £{cookie_revenue}")
+print(f"Total: £{total_revenue}")
+
+# Output:
+# Cupcakes: £42.0
+# Cookies: £16.0
+# Total: £58.0
 ```
 
 ---
