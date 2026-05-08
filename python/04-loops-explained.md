@@ -253,6 +253,95 @@ for index, song in enumerate(playlist):
 
 ---
 
+
+## Building a New List Inside a Loop
+
+This is one of the most useful patterns you'll use — and it comes up all the time in exams.
+
+**The idea:** You start with an empty list, then loop through some data and add items to it as you go.
+
+### Basic Pattern
+
+```python
+# Start with an empty list
+doubled = []
+
+numbers = [1, 2, 3, 4, 5]
+
+for n in numbers:
+    doubled.append(n * 2)  # append adds to the end of the list
+
+print(doubled)  # [2, 4, 6, 8, 10]
+```
+
+**Why not just use a list comprehension?** You can! But a `for` loop with `append` is easier to read when the logic inside the loop is more complicated:
+
+```python
+# List comprehension — clean when the logic is simple
+squares = [x**2 for x in range(1, 6)]
+
+# For loop — easier when you have conditions
+squares = []
+for x in range(1, 6):
+    if x % 2 == 0:  # only even numbers
+        squares.append(x ** 2)
+# Result: [4, 16]
+```
+
+### Example: Filter a List
+
+```python
+# Keep only the passing grades (40 or above)
+all_grades = [25, 45, 10, 60, 35, 80]
+passing = []
+
+for grade in all_grades:
+    if grade >= 40:
+        passing.append(grade)
+
+print(passing)  # [45, 60, 80]
+```
+
+### Example: Build a List of Strings
+
+```python
+# Turn a list of names into greetings
+names = ["Arthur", "Szonja", "Mafla"]
+greetings = []
+
+for name in names:
+    greetings.append(f"Hello, {name}!")
+
+print(greetings)
+# ['Hello, Arthur!', 'Hello, Szonja!', 'Hello, Mafla!']
+```
+
+### Example: Collect Matching Items
+
+```python
+# Find all words that start with a vowel
+words = ["apple", "hello", "umbrella", "world", "elephant"]
+vowel_words = []
+
+vowels = "aeiouAEIOU"
+for word in words:
+    if word[0] in vowels:  # check the first letter
+        vowel_words.append(word)
+
+print(vowel_words)  # ['apple', 'umbrella', 'elephant']
+```
+
+### The Key Takeaway
+
+Whenever you need to **create a new list based on an existing list**, a `for` loop with `append` is your friend. The pattern is always:
+
+```python
+new_list = []
+for item in old_list:
+    new_list.append(do_something_with(item))
+```
+
+
 ## Practice Exercise
 
 **Scenario:** You're organizing your bookshelf and want to do several things with it!
@@ -326,96 +415,6 @@ Counting:
 9
 10
 ```
-
----
-
-## Building a New List Inside a Loop
-
-This is one of the most useful patterns you'll use — and it comes up all the time in exams.
-
-**The idea:** You start with an empty list, then loop through some data and add items to it as you go.
-
-### Basic Pattern
-
-```python
-# Start with an empty list
-doubled = []
-
-numbers = [1, 2, 3, 4, 5]
-
-for n in numbers:
-    doubled.append(n * 2)  # append adds to the end of the list
-
-print(doubled)  # [2, 4, 6, 8, 10]
-```
-
-**Why not just use a list comprehension?** You can! But a `for` loop with `append` is easier to read when the logic inside the loop is more complicated:
-
-```python
-# List comprehension — clean when the logic is simple
-squares = [x**2 for x in range(1, 6)]
-
-# For loop — easier when you have conditions
-squares = []
-for x in range(1, 6):
-    if x % 2 == 0:  # only even numbers
-        squares.append(x ** 2)
-# Result: [4, 16]
-```
-
-### Example: Filter a List
-
-```python
-# Keep only the passing grades (40 or above)
-all_grades = [25, 45, 10, 60, 35, 80]
-passing = []
-
-for grade in all_grades:
-    if grade >= 40:
-        passing.append(grade)
-
-print(passing)  # [45, 60, 80]
-```
-
-### Example: Build a List of Strings
-
-```python
-# Turn a list of names into greetings
-names = ["Arthur", "Szonja", "Alex"]
-greetings = []
-
-for name in names:
-    greetings.append(f"Hello, {name}!")
-
-print(greetings)
-# ['Hello, Arthur!', 'Hello, Szonja!', 'Hello, Alex!']
-```
-
-### Example: Collect Matching Items
-
-```python
-# Find all words that start with a vowel
-words = ["apple", "hello", "umbrella", "world", "elephant"]
-vowel_words = []
-
-vowels = "aeiouAEIOU"
-for word in words:
-    if word[0] in vowels:  # check the first letter
-        vowel_words.append(word)
-
-print(vowel_words)  # ['apple', 'umbrella', 'elephant']
-```
-
-### The Key Takeaway
-
-Whenever you need to **create a new list based on an existing list**, a `for` loop with `append` is your friend. The pattern is always:
-
-```python
-new_list = []
-for item in old_list:
-    new_list.append(do_something_with(item))
-```
-
 ---
 
 ## Extra Practice Exercise
