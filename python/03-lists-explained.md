@@ -425,7 +425,9 @@ Final playlist: Bohemian Rhapsody, Hotel California, Imagine, Hey Jude, Like a R
 
 ## What's Next?
 
-Lists are great, but what about when you don't want duplicates? **[Lesson 3a: Sets Explained](03a-sets-explained.md)** — same ideas, smarter storage! Or jump ahead to **[Lesson 4: Loops Explained](04-loops-explained.md)** if you're ready.
+Lists are great, but what if you need **unique values** without duplicates and want faster lookups? **[Lesson 3b: Sets Explained](03b-sets-explained.md)** — same ideas as lists, smarter storage! Otherwise, jump ahead to **[Lesson 4: Loops Explained](04-loops-explained.md)**.
+
+---
 
 ---
 

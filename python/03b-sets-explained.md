@@ -1,4 +1,4 @@
-# Python Lesson 3a: Sets — When Order Doesn't Matter
+# Python Lesson 3b: Sets — When Order Doesn't Matter
 
 **← Back to [Lesson 3: Lists](03-lists-explained.md)**
 
@@ -113,7 +113,7 @@ print(javascript_only)  # {'Fiona', 'George'}
 # Students in exactly one class (not both)
 one_class = python_class ^ javascript_class
 # OR: python_class.symmetric_difference(javascript_class)
-print(one_class))  # {'Szonja', 'David', 'Fiona', 'George'}
+print(one_class)  # {'Szonja', 'David', 'Fiona', 'George'}
 ```
 
 ---
@@ -296,6 +296,6 @@ print(has_unique_letters("hello", "oliver")) # False — 'o', 'l' overlap
 
 ## What's Next?
 
-Sets are the perfect data structure when you need to compare groups or find unique items. Now let's look at something equally powerful — **[Lesson 4: Loops Explained](04-loops-explained.md)** where we'll learn how to repeat actions automatically! 🚀
+Sets are the perfect data structure when you need to compare groups or find unique items. Now let's learn how to repeat actions automatically — **[Lesson 4: Loops Explained](04-loops-explained.md)**! 🚀
 
 ---
