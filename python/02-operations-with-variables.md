@@ -308,7 +308,9 @@ print(f"Total: £{total_revenue}")
 
 ## What's Next?
 
-Ready for more? Continue to **[Lesson 3: Lists Explained](03-lists-explained.md)**! 🚀
+Regex patterns too useful to skip — **[Lesson 2b: Regex Explained](02b-regex-explained.md)** goes next! Or jump straight to **[Lesson 3: Lists Explained](03-lists-explained.md)** if you're ready to move on.
+
+---
 
 ---
 
