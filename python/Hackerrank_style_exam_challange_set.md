@@ -605,18 +605,21 @@ print(filter_by_priority(todos, "high"))  # [{"title": "Revise loops", ...}]
 
 ---
 
-# ✅ Solutions
+# ✅ Solutions with Explanations
 
 <details>
-<summary>Click to reveal solutions — try the problems first!</summary>
+<summary>Click to reveal solutions (try the problems first!)</summary>
 
 ## Challenge 1: Leap Year
 ```python
 def is_leap_year(year):
+    # Rule: divisible by 400 = leap year
     if year % 400 == 0:
         return True
+    # Rule: divisible by 4 AND NOT by 100 = leap year
     elif year % 4 == 0 and year % 100 != 0:
         return True
+    # Everything else is not a leap year
     else:
         return False
 ```
@@ -624,15 +627,15 @@ def is_leap_year(year):
 ## Challenge 2: FizzBuzz
 ```python
 def fizzbuzz(n):
-    result = []
-    for i in range(1, n + 1):
-        if i % 3 == 0 and i % 5 == 0:
+    result = []                              # Build the output list
+    for i in range(1, n + 1):                # 1 to n inclusive
+        if i % 3 == 0 and i % 5 == 0:        # Divisible by both?
             result.append("FizzBuzz")
-        elif i % 3 == 0:
+        elif i % 3 == 0:                      # Only by 3?
             result.append("Fizz")
-        elif i % 5 == 0:
+        elif i % 5 == 0:                      # Only by 5?
             result.append("Buzz")
-        else:
+        else:                                 # Neither — just the number as a string
             result.append(str(i))
     return result
 ```
@@ -640,13 +643,11 @@ def fizzbuzz(n):
 ## Challenge 3: Sum of Even Numbers
 ```python
 def sum_even(numbers):
-    return sum(n for n in numbers if n % 2 == 0)
-    # Or verbose:
-    # total = 0
-    # for n in numbers:
-    #     if n % 2 == 0:
-    #         total += n
-    # return total
+    total = 0
+    for n in numbers:            # Walk through each number
+        if n % 2 == 0:           # Check if it's even (divisible by 2)
+            total += n           # Add it to the running total
+    return total
 ```
 
 ## Challenge 4: Swap Case
@@ -654,136 +655,162 @@ def sum_even(numbers):
 def swap_case(text):
     result = ""
     for char in text:
-        if char.islower():
+        if char.islower():           # Lowercase? Make it uppercase
             result += char.upper()
-        elif char.isupper():
+        elif char.isupper():         # Uppercase? Make it lowercase
             result += char.lower()
-        else:
+        else:                        # Not a letter (space, digit, etc.) — keep as is
             result += char
     return result
-    # Or one-liner: return text.swapcase()
 ```
 
 ## Challenge 5: Count Word Occurrences
 ```python
 def count_word(text, word):
-    return text.lower().count(word.lower())
-    # Or manual:
-    # text_lower = text.lower()
-    # word_lower = word.lower()
-    # words = text_lower.split()
-    # return words.count(word_lower)
+    # Lowercase both sides so "The" and "the" count as the same word
+    text_lower = text.lower()
+    word_lower = word.lower()
+    # Split the text into individual words and count matches
+    words = text_lower.split()
+    return words.count(word_lower)
 ```
 
 ## Challenge 6: Valid Username
 ```python
 def valid_username(username):
+    # Check length first — must be between 3 and 16 characters
     if not (3 <= len(username) <= 16):
         return False
+    # Check content — only letters and numbers allowed
     if not username.isalnum():
         return False
+    # Passed all checks!
     return True
 ```
 
 ## Challenge 7: Second Largest
 ```python
 def second_largest(numbers):
+    # Remove duplicates with a set
     unique = set(numbers)
+    # Sort from largest to smallest
     sorted_nums = sorted(unique, reverse=True)
+    # Pick the second one (index 1, since index 0 is the largest)
     return sorted_nums[1]
 ```
 
 ## Challenge 8: Filter Passing Grades
 ```python
 def passing_grades(grades):
-    return sorted([g for g in grades if g >= 40])
+    # Filter to only grades >= 40, then sort ascending
+    passing = [g for g in grades if g >= 40]
+    return sorted(passing)
 ```
 
 ## Challenge 9: Merge to Dictionary
 ```python
 def merge_to_dict(keys, values):
-    return dict(zip(keys, values))
-    # Or manual:
-    # result = {}
-    # for key, value in zip(keys, values):
-    #     result[key] = value
-    # return result
+    # zip() pairs up items from both lists by position
+    # dict() turns those pairs into a dictionary
+    result = {}
+    for i in range(len(keys)):
+        result[keys[i]] = values[i]
+    return result
 ```
 
 ## Challenge 10: Safe Division
 ```python
 def safe_divide(a, b):
     try:
-        return a / b
-    except ZeroDivisionError:
-        return "Cannot divide by zero"
+        return a / b                       # Attempt the division
+    except ZeroDivisionError:              # If b is 0, division fails
+        return "Cannot divide by zero"      # Return a friendly message instead of crashing
 ```
 
 ## Challenge 11: Validate and Parse Age
 ```python
 def parse_age(age_input):
     try:
-        age = int(age_input)
-    except (ValueError, TypeError):
+        age = int(age_input)               # Try to convert to integer
+    except (ValueError, TypeError):        # Not a valid number!
         return "Invalid input"
-    if 0 <= age <= 150:
+
+    if 0 <= age <= 150:                    # Reasonable age range
         return age
     else:
-        return "Invalid age"
+        return "Invalid age"               # Number but outside valid range
 ```
 
 ## Challenge 12: Count Lines in File
 ```python
 def count_lines(filepath):
     try:
-        with open(filepath, "r") as f:
-            lines = f.readlines()
-        return len(lines)
-    except FileNotFoundError:
-        return -1
+        with open(filepath, "r") as f:     # Open the file for reading
+            lines = f.readlines()          # Read all lines into a list
+        return len(lines)                   # Return the line count
+    except FileNotFoundError:               # File doesn't exist
+        return -1                           # Signal "file not found" with -1
 ```
 
 ## Challenge 13: Student Grades File
 ```python
 def save_student_grades(filepath, data):
-    with open(filepath, "w") as f:
+    # Save each student's name and grade on its own line
+    with open(filepath, "w") as f:         # Open for writing (overwrites!)
         for student in data:
+            # Format: "name,grade\n" (comma-separated, one per line)
             line = f"{student['name']},{student['grade']}\n"
             f.write(line)
 
 def load_student_grades(filepath):
-    todos = []
-    with open(filepath, "r") as f:
+    students = []
+    with open(filepath, "r") as f:         # Open for reading
         for line in f:
+            # Each line is "name,grade" — split on the comma
             name, grade = line.strip().split(",")
-            todos.append({"name": name, "grade": int(grade)})
-    return todos
+            students.append({
+                "name": name,
+                "grade": int(grade)        # Convert back to integer
+            })
+    return students
 ```
 
 ## Challenge 14: Word Frequency
 ```python
 def word_frequency(sentence):
-    # Remove punctuation
+    # Remove punctuation characters
     for punct in ".,!?":
         sentence = sentence.replace(punct, "")
+
+    # Split into words and normalise to lowercase
     words = sentence.lower().split()
+
+    # Count each word using a dictionary
     counts = {}
     for word in words:
+        # get(word, 0) returns the current count, or 0 if not seen yet
         counts[word] = counts.get(word, 0) + 1
+
     return counts
 ```
 
 ## Challenge 15: Phone Formatter
 ```python
 def format_phone(raw_number):
+    # Strip everything except digits
     digits = "".join(c for c in raw_number if c.isdigit())
-    if len(digits) < 10:
+
+    if len(digits) < 10:                   # Not enough digits for a phone number
         return "Invalid phone number"
-    if len(digits) == 10:
-        digits = "1" + digits  # add country code
-    area = digits[-10:-7]
-    first = digits[-7:-4]
-    last = digits[-4:]
+
+    if len(digits) == 10:                   # No country code — assume +1 (US/UK)
+        digits = "1" + digits
+
+    # Slice out the parts: last 10 digits split as (XXX) XXX-XXXX
+    area = digits[-10:-7]                   # First 3 of the last 10 digits
+    first = digits[-7:-4]                    # Next 3
+    last = digits[-4:]                       # Last 4
+
     return f"+{digits[0]} ({area}) {first}-{last}"
 ```
 
@@ -791,27 +818,29 @@ def format_phone(raw_number):
 ```python
 def grade_stats(grades):
     return {
-        "passing": sum(1 for g in grades if g >= 40),
-        "failing": sum(1 for g in grades if g < 40),
-        "highest": max(grades),
-        "lowest": min(grades),
-        "average": round(sum(grades) / len(grades), 1)
+        "passing": sum(1 for g in grades if g >= 40),    # Count passing grades
+        "failing": sum(1 for g in grades if g < 40),     # Count failing grades
+        "highest": max(grades),                            # Highest grade
+        "lowest": min(grades),                             # Lowest grade
+        "average": round(sum(grades) / len(grades), 1)    # Average (rounded to 1 decimal)
     }
 ```
 
 ## Challenge 17: Password Strength
 ```python
 def password_strength(password):
-    score = 0
-    if len(password) >= 8:
+    score = 0                               # Start at 0, add 1 for each rule met
+
+    if len(password) >= 8:                   # Rule 1: at least 8 characters
         score += 1
-    if any(c.isdigit() for c in password):
+    if any(c.isdigit() for c in password):   # Rule 2: contains a digit
         score += 1
-    if any(c.isupper() for c in password):
+    if any(c.isupper() for c in password):   # Rule 3: contains an uppercase letter
         score += 1
-    if any(c.islower() for c in password):
+    if any(c.islower() for c in password):   # Rule 4: contains a lowercase letter
         score += 1
-    return score
+
+    return score                             # Score from 0 (weak) to 4 (strong)
 ```
 
 ## Challenge 18: Tiny Todo App
@@ -819,24 +848,28 @@ def password_strength(password):
 from datetime import datetime
 
 def create_todo(title, priority="medium"):
+    # Build a dictionary representing one todo item
     return {
         "title": title,
-        "priority": priority,
-        "completed": False,
-        "created_at": datetime.now().isoformat()
+        "priority": priority,               # "low", "medium", or "high"
+        "completed": False,                  # Starts as not done
+        "created_at": datetime.now().isoformat()  # Timestamp when created
     }
 
 def mark_complete(todos, title):
+    # Find the todo by its title and mark it as completed
     for todo in todos:
         if todo["title"] == title:
             todo["completed"] = True
-            break
+            break                            # Found it — stop searching
     return todos
 
 def filter_by_priority(todos, priority):
+    # Return only todos matching the given priority level
     return [t for t in todos if t["priority"] == priority]
 
 def summary(todos):
+    # Produce a human-readable summary
     total = len(todos)
     completed = sum(1 for t in todos if t["completed"])
     pending = total - completed

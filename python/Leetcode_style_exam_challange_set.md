@@ -516,112 +516,181 @@ Output: False
 
 ---
 
-# ✅ All Solutions in One Place
+# ✅ Solutions with Explanations
 
 <details>
-<summary>Click to reveal all solutions (try the problems first!)</summary>
+<summary>Click to reveal solutions (try the problems first!)</summary>
 
 ```python
-# Problem 1
+# Problem 1: Count Vowels
 def count_vowels(s: str) -> int:
-    return sum(1 for char in s if char in "aeiouAEIOU")
+    count = 0                        # Start at zero
+    for char in s:                   # Walk through each character
+        if char in "aeiouAEIOU":     # Check if it's a vowel (both cases)
+            count += 1               # Increment when we find one
+    return count                     # Return the total
 
-# Problem 2
+
+# Problem 2: Reverse String
 def reverse_string(s: str) -> str:
-    return "".join(s[i] for i in range(len(s) - 1, -1, -1))
+    result = []                      # Build the answer in a list
+    # Loop backwards: from last index down to 0, stepping -1
+    for i in range(len(s) - 1, -1, -1):
+        result.append(s[i])          # Add each character in reverse order
+    return "".join(result)           # Join list into a single string
 
-# Problem 3
+
+# Problem 3: Valid Anagram
 def is_anagram(s: str, t: str) -> bool:
+    # Normalise both strings: lowercase, remove spaces
     s = s.lower().replace(" ", "")
     t = t.lower().replace(" ", "")
+
+    # Build a frequency map for s
     freq = {}
     for c in s:
-        freq[c] = freq.get(c, 0) + 1
+        freq[c] = freq.get(c, 0) + 1  # Count each character
+
+    # Subtract characters of t from the frequency map
     for c in t:
-        if c not in freq:
+        if c not in freq:              # Character wasn't in s at all
             return False
-        freq[c] -= 1
+        freq[c] -= 1                   # Use up one occurrence
         if freq[c] == 0:
-            del freq[c]
+            del freq[c]                # Clean up empty entries
+
+    # If the map is empty, both strings had the same characters
     return len(freq) == 0
 
-# Problem 4
+
+# Problem 4: Can Form a Palindrome
 def can_form_palindrome(s: str) -> bool:
-    s = s.lower().replace(" ", "")
+    s = s.lower().replace(" ", "")    # Normalise
+
+    # Count how many times each character appears
     freq = {}
     for c in s:
         freq[c] = freq.get(c, 0) + 1
-    odd = sum(1 for count in freq.values() if count % 2 == 1)
-    return odd <= 1
 
-# Problem 5
+    # Count how many characters appear an odd number of times
+    odd_count = 0
+    for count in freq.values():
+        if count % 2 == 1:
+            odd_count += 1
+
+    # A palindrome can have at most one character with odd frequency
+    return odd_count <= 1
+
+
+# Problem 5: Longest Substring Without Repeating Characters
 def longest_unique_substring(s: str) -> int:
-    char_index = {}
-    left = max_len = 0
-    for right in range(len(s)):
+    char_index = {}                    # Store the most recent index of each char
+    left = 0                           # Left edge of our sliding window
+    max_len = 0                        # Track the longest valid window seen
+
+    for right in range(len(s)):        # Right edge expands one step at a time
         char = s[right]
+        # If this char was already inside our window, move left edge past it
         if char in char_index and char_index[char] >= left:
             left = char_index[char] + 1
-        char_index[char] = right
-        max_len = max(max_len, right - left + 1)
+
+        char_index[char] = right       # Update char's most recent position
+
+        # Check if current window is the longest we've seen
+        current_len = right - left + 1
+        if current_len > max_len:
+            max_len = current_len
+
     return max_len
 
-# Problem 6
+
+# Problem 6: Group Anagrams Together
 def group_anagrams(strs: list[str]) -> list[list[str]]:
-    groups = {}
+    groups = {}                        # sorted word -> list of anagram words
+
     for word in strs:
-        key = "".join(sorted(word))
-        groups.setdefault(key, []).append(word)
+        # All anagrams of a word sort to the same string!
+        # "eat", "tea", "ate" all become "aet" when sorted
+        sorted_key = "".join(sorted(word))
+
+        # Add this word to its anagram group
+        if sorted_key not in groups:
+            groups[sorted_key] = []
+        groups[sorted_key].append(word)
+
+    # Return just the groups (the keys themselves are just helpers)
     return list(groups.values())
 
-# Problem 7
-def two_sum(nums: list[int], target: int) -> bool:
-    seen = {}
-    for num in nums:
-        if target - num in seen:
-            return True
-        seen[num] = True
-    return False
 
-# Problem 8
+# Problem 7: Two Sum (check if any pair adds to target)
+def two_sum(nums: list[int], target: int) -> bool:
+    seen = {}                          # Numbers we've already visited
+
+    for num in nums:
+        needed = target - num          # What would complete this pair?
+        if needed in seen:             # We already saw the complement!
+            return True
+        seen[num] = True               # Remember this number for future checks
+
+    return False                       # No pair found
+
+
+# Problem 8: First Missing Positive Integer
 def first_missing_positive(nums: list[int]) -> int:
+    # Keep only positive numbers — negatives and zeros don't matter
     positives = set(n for n in nums if n > 0)
+
+    # Start from 1 and find the first missing one
     i = 1
     while True:
         if i not in positives:
-            return i
-        i += 1
+            return i                   # This positive integer is missing!
+        i += 1                         # Check the next one
 
-# Problem 9
+
+# Problem 9: Longest Palindromic Substring
 def longest_palindrome(s: str) -> str:
-    longest = ""
-    for i in range(len(s)):
-        # odd length
-        l, r = i, i
-        while l >= 0 and r < len(s) and s[l] == s[r]:
-            if r - l + 1 > len(longest):
-                longest = s[l:r + 1]
-            l -= 1
-            r += 1
-        # even length
-        l, r = i, i + 1
-        while l >= 0 and r < len(s) and s[l] == s[r]:
-            if r - l + 1 > len(longest):
-                longest = s[l:r + 1]
-            l -= 1
-            r += 1
+    longest = ""                        # Store the longest palindrome found
+
+    for i in range(len(s)):            # Try every position as potential centre
+        # --- ODD-length palindrome (centre is a single character) ---
+        left, right = i, i
+        # Expand outward while characters match
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            # Check if this palindrome beats our current record
+            if right - left + 1 > len(longest):
+                longest = s[left:right + 1]
+            left -= 1                  # Expand leftwards
+            right += 1                 # Expand rightwards
+
+        # --- EVEN-length palindrome (centre is between two characters) ---
+        left, right = i, i + 1
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            if right - left + 1 > len(longest):
+                longest = s[left:right + 1]
+            left -= 1
+            right += 1
+
     return longest
 
-# Problem 10
+
+# Problem 10: Valid Parentheses
 def is_valid_parentheses(s: str) -> bool:
+    # Map each closing bracket to its matching opening bracket
     pairs = {")": "(", "]": "[", "}": "{"}
-    stack = []
+    stack = []                         # LIFO stack for open brackets
+
     for char in s:
-        if char in "([{":
+        if char in "([{":             # Opening bracket — push onto stack
             stack.append(char)
-        else:
-            if not stack or pairs[char] != stack.pop():
+        else:                          # Closing bracket — must match top of stack
+            if not stack:              # Nothing to match — invalid
                 return False
+            top = stack.pop()          # Get the most recent opener
+            if pairs[char] != top:      # Wrong type of bracket
+                return False
+
+    # All brackets matched only if the stack is empty at the end
     return len(stack) == 0
 ```
 
