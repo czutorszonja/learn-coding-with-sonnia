@@ -24,27 +24,23 @@ The reference pattern tells you which lesson has the relevant technique. Go find
 
 ## Format of Each Challenge
 
-```
-## Challenge N: [Name]
-**Topic:** [Category] | **Difficulty:** Easy / Medium
+    ## Challenge N: [Name]
+    **Topic:** [Category] | **Difficulty:** Easy / Medium
 
-**Problem:**
-[What the code should do]
+    **Problem:**
+    [What the code should do]
 
-**Starter code:**
-```python
-def solve():
-    pass
-```
+    **Starter code:**
+    ```python
+    def solve():
+        pass
+    ```
 
-**Examples:**
-Input:  `3` → Output:  `3`
-Input:  `hello` → Output:  `HELLO`
+    **Examples:**
+    Input:  `3` → Output:  `3`
+    Input:  `hello` → Output:  `HELLO`
 
-**🔖 Reference:** Lesson 3 (Lists) / Lesson 6 (Functions)
-```
-
----
+    **🔖 Reference:** Lesson 3 (Lists) / Lesson 6 (Functions)
 
 ---
 
@@ -127,8 +123,6 @@ def sum_even(numbers):
 `sum_even([10, 10, 10])` → `30`
 
 **🔖 Reference:** Lesson 4 — `for` loops over lists
-
----
 
 ---
 
@@ -217,8 +211,6 @@ def valid_username(username):
 
 ---
 
----
-
 # 📋 LIST ROUND
 
 ---
@@ -303,8 +295,6 @@ for key, value in zip(keys, values):
 
 ---
 
----
-
 # ⚠️ ERROR HANDLING ROUND
 
 ---
@@ -367,8 +357,6 @@ def parse_age(age_input):
 
 ---
 
----
-
 # 📁 FILE ROUND
 
 ---
@@ -410,8 +398,6 @@ def load_student_grades(filepath):
 ```
 
 **🔖 Reference:** Lesson 9 — file `open()` with `w` and `r` modes, string `.split(",")`
-
----
 
 ---
 
@@ -575,8 +561,6 @@ print(filter_by_priority(todos, "high"))  # [{"title": "Revise loops", ...}]
 ```
 
 **🔖 Reference:** Lessons 3, 6 (functions), 8 (dicts), 16 (validation), 10 (error handling)
-
----
 
 ---
 
