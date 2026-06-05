@@ -1,6 +1,6 @@
-# Advanced Python Lesson 6: Sorting Algorithms 📊
+# Advanced Python Lesson 12: Sorting Algorithms 📊
 
-**← Back to [Lesson 5: Hash Maps Deep Dive](05-hash-maps-deep-dive.md)**
+**← Back to [Lesson 11: Hash Maps Deep Dive](11-hash-maps-deep-dive.md)**
 
 ---
 
@@ -499,7 +499,7 @@ if __name__ == "__main__":
 
 ## What's Next?
 
-You've covered linked lists, recursion, trees, heaps, hash maps, and sorting — the core building blocks of algorithms. Ready for graphs? Continue to **[Lesson 7: Graphs & Traversal](07-graphs-traversal.md)** 🕸️
+You've covered linked lists, recursion, trees, heaps, hash maps, and sorting — the core building blocks of algorithms. Ready for graphs? Continue to **future lessons on graphs and dynamic programming** 🕸️
 
 ---
 

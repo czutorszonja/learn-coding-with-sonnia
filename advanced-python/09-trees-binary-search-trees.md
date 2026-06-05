@@ -1,6 +1,6 @@
-# Advanced Python Lesson 3: Trees & Binary Search Trees 🌳
+# Advanced Python Lesson 9: Trees & Binary Search Trees 🌳
 
-**← Back to [Lesson 2: Recursion Deep Dive](02-recursion-deep-dive.md)**
+**← Back to [Lesson 8: Recursion Deep Dive](08-recursion-deep-dive.md)**
 
 ---
 
@@ -473,7 +473,7 @@ if __name__ == "__main__":
 
 ## What's Next?
 
-Trees are great for ordered data — but what if you need the _smallest_ or _largest_ item instantly? That's where heaps come in. Continue to **[Lesson 4: Heaps & Priority Queues](04-heaps-priority-queues.md)** ⛰️
+Trees are great for ordered data — but what if you need the _smallest_ or _largest_ item instantly? That's where heaps come in. Continue to **[Lesson 10: Heaps & Priority Queues](10-heaps-priority-queues.md)** ⛰️
 
 ---
 
