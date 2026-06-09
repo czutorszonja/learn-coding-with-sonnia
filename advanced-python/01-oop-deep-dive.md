@@ -43,38 +43,72 @@ class BankAccount:
         self.__transaction_log.append(f"WITHDRAW: -{amount}")
         return self._balance
 
-    # @property turns a method into an attribute-like accessor.
-    # You call it WITHOUT parentheses: account.balance (not account.balance())
-    # It looks like a simple attribute but runs code under the hood.
-    # Use @property when:
-    #   - You want read-only access (no setter defined = can't assign)
-    #   - You want computed values that look like attributes
-    #   - You need to protect internal state behind a clean interface
+    # ─── GETTERS & SETTERS ───────────────────────────────────────────
+    #
+    # In OOP, we often want to CONTROL how attributes are accessed:
+    #
+    #   GETTER — a method that RETURNS the value of a private attribute.
+    #            It lets you read the value without exposing the internals.
+    #            Example: def get_balance(self): return self._balance
+    #
+    #   SETTER — a method that SETS the value of a private attribute.
+    #            It lets you validate or transform data before storing it.
+    #            Example: def set_balance(self, amount):
+    #                         if amount < 0: raise ValueError
+    #                         self._balance = amount
+    #
+    # In languages like Java, you'd write getBalance() and setBalance().
+    # Python does it more elegantly with @property:
+    #
+    #   @property      → creates a GETTER (read access)
+    #   @name.setter   → creates a SETTER (write access)
+    #
+    # The result: you write account.balance (clean!) instead of
+    # account.get_balance() (clunky!). It feels like a plain attribute,
+    # but your code runs every time it's accessed or modified.
+    #
+    # (Note: @property is a DECORATOR — a function that wraps another
+    #  function. Decorators get a full lesson later — Lesson 6! — but
+    #  for now, just know that @property is Python's built-in way to
+    #  create getters and setters without the Java-style boilerplate.)
+    #
+    # In this example, we only define GETTERS (no setters) — making
+    # balance and last_transaction READ-ONLY. The only way to change
+    # the balance is through deposit() and withdraw().
+
     @property
     def balance(self):
-        """Read-only access to balance."""
+        """Getter — read-only access to balance. No setter = can't assign."""
         return self._balance
 
     @property
     def last_transaction(self):
-        """Read-only access to the most recent transaction."""
+        """Getter — read-only access to the most recent transaction."""
         # self.__transaction_log[-1] if self.__transaction_log else None
-        # 
-        # This is a conditional expression (ternary):
+        #
+        # This is a CONDITIONAL EXPRESSION (also called a ternary):
         #   <value_if_true> if <condition> else <value_if_false>
         #
-        # It reads as: "the last log entry IF the log is not empty, ELSE None"
+        # It reads as: "give me the last log entry IF the log is
+        # not empty, OTHERWISE give me None"
         #
-        # Breakdown:
-        #   self.__transaction_log           — the condition (truthiness check)
-        #   self.__transaction_log[-1]       — value if True (last element)
-        #   None                             — value if False (empty list)
+        # Breakdown of the two parts:
         #
-        # Why? An empty list [] is "falsy" — it evaluates to False.
-        # A non-empty list is "truthy" — it evaluates to True.
+        #   self.__transaction_log         ← the CONDITION
+        #     An empty list [] is "falsy" (evaluates to False).
+        #     A non-empty list is "truthy" (evaluates to True).
+        #     So this checks: "does the log have any entries?"
         #
-        # Without the check: self.__transaction_log[-1] on an empty list
-        # would raise IndexError. This guards against that.
+        #   self.__transaction_log[-1]     ← value if True
+        #     Negative indexing: [-1] means "the last element".
+        #     [-2] would be second-to-last, etc.
+        #
+        #   None                           ← value if False
+        #     Returned when the log is empty — no transaction yet!
+        #
+        # Why the guard? Without it, self.__transaction_log[-1]
+        # on an empty list would raise IndexError. This is a clean
+        # way to say "give me the last one, or nothing if there isn't one."
         return self.__transaction_log[-1] if self.__transaction_log else None
 
 
@@ -82,8 +116,19 @@ class BankAccount:
 account = BankAccount("Szonja", 100)
 account.deposit(50)
 account.withdraw(30)
-print(account.balance)   # 120 — no () needed! @property made it an attribute
-# account.balance = 5000  # ❌ AttributeError — no setter, so it's read-only!
+
+# balance is a @property getter — access it like an attribute, no ()
+print(account.balance)   # 120
+
+# account.balance = 5000  # ❌ AttributeError — can't set!
+#                           There's no @balance.setter, so this is
+#                           a READ-ONLY property. The only way to
+#                           modify _balance is through deposit()
+#                           and withdraw() — which validate inputs.
+#
+# This is encapsulation in action: the outside world sees a clean
+# .balance attribute, but internally we control exactly how it changes.
+
 # account._balance = 1000000  # ⚠️ Works but you're breaking the contract
 # account.__transaction_log  # ❌ AttributeError — truly private
 ```
@@ -446,44 +491,82 @@ print(Pizza.is_valid_size("extra large"))  # False
 
 ## Property Decorators — Controlled Attribute Access
 
+Now that you've seen read-only getters in the BankAccount example, let's look at the full picture: **getters AND setters**.
+
+### Quick Recap: What Are Getters and Setters?
+
+| Term | What it does | Without @property | With @property |
+|------|-------------|-------------------|----------------|
+| **Getter** | Returns a value (read) | `get_balance()` | `balance` (no `()`) |
+| **Setter** | Sets a value (write) | `set_balance(x)` | `balance = x` |
+
+`@property` is a **decorator** that turns methods into attribute-like accessors. (Decorators get their own deep-dive in Lesson 6 — for now, think of `@property` as Python's built-in tool for clean getters and setters.)
+
 ```python
 class Temperature:
     def __init__(self, celsius=0):
-        self._celsius = celsius
+        self._celsius = celsius    # Internal storage — don't touch directly
+
+    # ─── celsius: getter + setter ─────────────────────────────
 
     @property
     def celsius(self):
-        """Getter — read as temp.celsius"""
+        """GETTER — read as temp.celsius (no parentheses!)"""
         return self._celsius
 
     @celsius.setter
     def celsius(self, value):
-        """Setter — temp.celsius = 25"""
-        if value < -273.15:
+        """SETTER — write as temp.celsius = 25"""
+        if value < -273.15:         # Validation!
             raise ValueError("Temperature below absolute zero!")
         self._celsius = value
 
+    # ─── fahrenheit: computed getter + setter ─────────────────
+
     @property
     def fahrenheit(self):
-        """Computed property — no setter needed."""
+        """GETTER — computed on-the-fly, no separate storage."""
         return self._celsius * 9/5 + 32
 
     @fahrenheit.setter
     def fahrenheit(self, value):
-        self.celsius = (value - 32) * 5/9  # Reuses celsius setter validation!
+        """SETTER — converts to Celsius and reuses that setter's validation!"""
+        self.celsius = (value - 32) * 5/9
+        #             ^^^^^^^^^^^^^^^^^^^^^
+        #             Notice: assigns to self.celsius (the property),
+        #             which triggers the @celsius.setter above.
+        #             This means the "below absolute zero" check
+        #             still applies — no duplicated validation code!
+
+    # ─── kelvin: read-only getter ─────────────────────────────
 
     @property
     def kelvin(self):
+        """GETTER only — no setter, so kelvin is read-only."""
         return self._celsius + 273.15
+    # No @kelvin.setter → you can read temp.kelvin but can't set it
 
 
 temp = Temperature(25)
 print(f"{temp.celsius}°C = {temp.fahrenheit}°F = {temp.kelvin}K")
 # 25°C = 77.0°F = 298.15K
 
-temp.fahrenheit = 32  # Uses the setter
+temp.fahrenheit = 32    # Uses @fahrenheit.setter → converts to Celsius
 print(f"{temp.celsius}°C")  # 0.0°C
+
+# temp.kelvin = 300     # ❌ AttributeError — no setter defined!
+# temp.celsius = -300   # ❌ ValueError — below absolute zero!
 ```
+
+### Why This Pattern Is Powerful
+
+1. **Validation lives in one place.** The absolute-zero check is only in `@celsius.setter`. The Fahrenheit setter reuses it by going through `self.celsius`.
+
+2. **Clean public interface, messy internals hidden.** Outside code sees `temp.celsius = 25` — simple! Inside, validation runs automatically.
+
+3. **Computed properties need no storage.** `fahrenheit` and `kelvin` aren't stored at all — they're calculated from `_celsius`. No risk of them getting out of sync.
+
+4. **You can add validation later without breaking anything.** If you start with a plain attribute and later need validation, swap it for a property — all existing code that accesses it still works.
 
 ---
 
@@ -666,13 +749,13 @@ if __name__ == "__main__":
 
 ## Quick Recap
 
-- **Encapsulation** — hide internals (`_protected`, `__private`, `@property`)
+- **Encapsulation** — hide internals (`_protected`, `__private`) behind getters and setters (`@property`)
 - **Inheritance** — "is-a" relationship, `super()`, override methods
 - **Polymorphism** — same interface, different behaviour (duck typing + ABCs)
 - **Abstraction** — ABCs define contracts, subclasses implement details
 - **Magic methods** — `__str__`, `__add__`, `__eq__`, `__iter__` make your objects Pythonic
 - **Composition** — "has-a" is often better than "is-a"
-- **@classmethod** — factory methods; **@staticmethod** — utility functions; **@property** — controlled attribute access
+- **@classmethod** — factory methods; **@staticmethod** — utility functions; **@property** — clean getters and setters (write `obj.attr` instead of `obj.get_attr()`)
 
 ---
 
