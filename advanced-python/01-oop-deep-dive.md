@@ -85,6 +85,16 @@ print(account.balance)   # 120 — property getter, no () needed
 
 ### 2. Inheritance — "Is-a" Relationships
 
+"Is-a" is a quick test for when inheritance makes sense. If you can say "X IS a Y" naturally, use inheritance:
+
+  - An **ElectricCar** *is-a* **Vehicle** → inheritance ✅
+  - A **Dog** *is-an* **Animal** → inheritance ✅
+
+The companion concept is **"Has-a"** — when something *contains* another thing (composition):
+
+  - A **Car** *has-an* **Engine** → composition, not inheritance
+  - A **BankAccount** *has-a* **transaction log** → composition
+
 A child class _inherits_ everything from its parent and can extend or override.
 
 ```python
