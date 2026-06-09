@@ -6,7 +6,7 @@
 
 # Python Exam Challenge Set — LeetCode Style 🌞
 
-**For:** CFG Python Exam | **Open-book** — all lesson files are available to you
+**For:** Python Exam | **Open-book** — all lesson files are available to you
 
 ---
 

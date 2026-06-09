@@ -43,6 +43,13 @@ class BankAccount:
         self.__transaction_log.append(f"WITHDRAW: -{amount}")
         return self._balance
 
+    # @property turns a method into an attribute-like accessor.
+    # You call it WITHOUT parentheses: account.balance (not account.balance())
+    # It looks like a simple attribute but runs code under the hood.
+    # Use @property when:
+    #   - You want read-only access (no setter defined = can't assign)
+    #   - You want computed values that look like attributes
+    #   - You need to protect internal state behind a clean interface
     @property
     def balance(self):
         """Read-only access to balance."""
@@ -51,6 +58,23 @@ class BankAccount:
     @property
     def last_transaction(self):
         """Read-only access to the most recent transaction."""
+        # self.__transaction_log[-1] if self.__transaction_log else None
+        # 
+        # This is a conditional expression (ternary):
+        #   <value_if_true> if <condition> else <value_if_false>
+        #
+        # It reads as: "the last log entry IF the log is not empty, ELSE None"
+        #
+        # Breakdown:
+        #   self.__transaction_log           — the condition (truthiness check)
+        #   self.__transaction_log[-1]       — value if True (last element)
+        #   None                             — value if False (empty list)
+        #
+        # Why? An empty list [] is "falsy" — it evaluates to False.
+        # A non-empty list is "truthy" — it evaluates to True.
+        #
+        # Without the check: self.__transaction_log[-1] on an empty list
+        # would raise IndexError. This guards against that.
         return self.__transaction_log[-1] if self.__transaction_log else None
 
 
@@ -58,7 +82,8 @@ class BankAccount:
 account = BankAccount("Szonja", 100)
 account.deposit(50)
 account.withdraw(30)
-print(account.balance)  # 120
+print(account.balance)   # 120 — no () needed! @property made it an attribute
+# account.balance = 5000  # ❌ AttributeError — no setter, so it's read-only!
 # account._balance = 1000000  # ⚠️ Works but you're breaking the contract
 # account.__transaction_log  # ❌ AttributeError — truly private
 ```
