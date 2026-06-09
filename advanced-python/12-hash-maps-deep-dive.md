@@ -1,6 +1,6 @@
-# Advanced Python Lesson 11: Hash Maps Deep Dive 🔑
+# Advanced Python Lesson 12: Hash Maps Deep Dive 🔑
 
-**← Back to [Lesson 10: Heaps & Priority Queues](10-heaps-priority-queues.md)**
+**← Back to [Lesson 11: Heaps & Priority Queues](11-heaps-priority-queues.md)**
 
 ---
 
@@ -432,7 +432,7 @@ if __name__ == "__main__":
 
 ## What's Next?
 
-You can find things instantly with hash maps. Now let's learn how to _organise_ them efficiently. Continue to **[Lesson 12: Sorting Algorithms](12-sorting-algorithms.md)** 📊
+You can find things instantly with hash maps. Now let's learn how to _organise_ them efficiently. Continue to **[Lesson 13: Sorting Algorithms](13-sorting-algorithms.md)** 📊
 
 ---
 

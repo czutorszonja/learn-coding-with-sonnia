@@ -1,6 +1,6 @@
-# Advanced Python Lesson 12: Sorting Algorithms 📊
+# Advanced Python Lesson 13: Sorting Algorithms 📊
 
-**← Back to [Lesson 11: Hash Maps Deep Dive](11-hash-maps-deep-dive.md)**
+**← Back to [Lesson 12: Hash Maps Deep Dive](12-hash-maps-deep-dive.md)**
 
 ---
 

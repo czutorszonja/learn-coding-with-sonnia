@@ -12,16 +12,23 @@ Building on the fundamentals — data structures, algorithms, and the patterns t
 | 4 | [Deque](04-deque.md) | Clipboard history with back/forward cycling |
 | 5 | [Iterables & Iterators](05-iterables-iterators.md) | A lazy event processing pipeline |
 
-## Part 2: Advanced Algorithms & More Data Structures
+## Part 2: Python Power Tools
 
 | # | Topic | What You'll Build |
 |---|-------|-------------------|
-| 7 | [Linked Lists](07-linked-lists.md) | A music playlist with skip/shuffle |
-| 8 | [Recursion Deep Dive](08-recursion-deep-dive.md) | A recursive file system explorer |
-| 9 | [Trees & Binary Search Trees](09-trees-binary-search-trees.md) | A sorted contact book |
-| 10 | [Heaps & Priority Queues](10-heaps-priority-queues.md) | An issue tracker with urgency scores |
-| 11 | [Hash Maps Deep Dive](11-hash-maps-deep-dive.md) | A URL shortener (like bit.ly) |
-| 12 | [Sorting Algorithms](12-sorting-algorithms.md) | A music library with multi-criteria sorting |
+| 6 | [Decorators & Collections](06-decorators-collections.md) | A logged API with call analytics |
+| 7 | [Hashing & Recursion](07-hashing-recursion.md) | A memoized spell checker |
+
+## Part 3: Advanced Algorithms & More Data Structures
+
+| # | Topic | What You'll Build |
+|---|-------|-------------------|
+| 8 | [Linked Lists](08-linked-lists.md) | A music playlist with skip/shuffle |
+| 9 | [Recursion Deep Dive](09-recursion-deep-dive.md) | A recursive file system explorer |
+| 10 | [Trees & Binary Search Trees](10-trees-binary-search-trees.md) | A sorted contact book |
+| 11 | [Heaps & Priority Queues](11-heaps-priority-queues.md) | An issue tracker with urgency scores |
+| 12 | [Hash Maps Deep Dive](12-hash-maps-deep-dive.md) | A URL shortener (like bit.ly) |
+| 13 | [Sorting Algorithms](13-sorting-algorithms.md) | A music library with multi-criteria sorting |
 
 ## How to Use
 

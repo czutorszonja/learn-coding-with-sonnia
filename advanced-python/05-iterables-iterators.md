@@ -635,7 +635,7 @@ if __name__ == "__main__":
 
 ## What's Next?
 
-You've now covered OOP, stacks, queues, deques, and iterables — the foundations of Python data structures. When you're ready, the next batch starts with **[Lesson 7: Linked Lists](07-linked-lists.md)**. 🌳
+You've now covered OOP, stacks, queues, deques, and iterables — the foundations of Python data structures. When you're ready, continue to **[Lesson 6: Decorators & Collections](06-decorators-collections.md)**. 🎀
 
 ---
 

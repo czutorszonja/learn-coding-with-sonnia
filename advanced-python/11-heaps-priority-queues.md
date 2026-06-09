@@ -1,6 +1,6 @@
-# Advanced Python Lesson 10: Heaps & Priority Queues ⛰️
+# Advanced Python Lesson 11: Heaps & Priority Queues ⛰️
 
-**← Back to [Lesson 9: Trees & Binary Search Trees](09-trees-binary-search-trees.md)**
+**← Back to [Lesson 10: Trees & Binary Search Trees](10-trees-binary-search-trees.md)**
 
 ---
 
@@ -468,7 +468,7 @@ if __name__ == "__main__":
 
 ## What's Next?
 
-Heaps give us the smallest instantly. Hash maps give us _anything_ instantly. Continue to **[Lesson 11: Hash Maps Deep Dive](11-hash-maps-deep-dive.md)** 🔑
+Heaps give us the smallest instantly. Hash maps give us _anything_ instantly. Continue to **[Lesson 12: Hash Maps Deep Dive](12-hash-maps-deep-dive.md)** 🔑
 
 ---
 

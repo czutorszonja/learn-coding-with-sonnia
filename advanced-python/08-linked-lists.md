@@ -1,4 +1,6 @@
-# Advanced Python Lesson 7: Linked Lists — Chains of Data 🔗
+# Advanced Python Lesson 8: Linked Lists — Chains of Data 🔗
+
+**← Back to [Lesson 7: Hashing & Recursion](07-hashing-recursion.md)**
 
 ---
 
@@ -468,7 +470,7 @@ if __name__ == "__main__":
 
 ## What's Next?
 
-Now that you can build chains of nodes, let's master the art of functions that call themselves! Continue to **[Lesson 8: Recursion Deep Dive](08-recursion-deep-dive.md)** 🔄
+Now that you can build chains of nodes, let's master the art of functions that call themselves! Continue to **[Lesson 9: Recursion Deep Dive](09-recursion-deep-dive.md)** 🔄
 
 ---
 

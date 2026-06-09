@@ -1,6 +1,6 @@
-# Advanced Python Lesson 8: Recursion Deep Dive — Functions That Call Themselves 🔄
+# Advanced Python Lesson 9: Recursion Deep Dive — Functions That Call Themselves 🔄
 
-**← Back to [Lesson 7: Linked Lists](07-linked-lists.md)**
+**← Back to [Lesson 8: Linked Lists](08-linked-lists.md)**
 
 ---
 
@@ -420,7 +420,7 @@ if __name__ == "__main__":
 
 ## What's Next?
 
-Recursion + linked lists = the perfect setup for trees! Continue to **[Lesson 9: Trees & Binary Search Trees](09-trees-binary-search-trees.md)** 🌳
+Recursion + linked lists = the perfect setup for trees! Continue to **[Lesson 10: Trees & Binary Search Trees](10-trees-binary-search-trees.md)** 🌳
 
 ---
 
