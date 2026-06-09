@@ -43,72 +43,32 @@ class BankAccount:
         self.__transaction_log.append(f"WITHDRAW: -{amount}")
         return self._balance
 
-    # ─── GETTERS & SETTERS ───────────────────────────────────────────
+    # @property turns a method into a GETTER — you call it without ():
+    #   account.balance   (instead of account.get_balance())
+    # @name.setter turns a method into a SETTER — you assign without ():
+    #   account.balance = 100   (instead of account.set_balance(100))
     #
-    # In OOP, we often want to CONTROL how attributes are accessed:
+    # (Note: @property is a decorator — Lesson 6 covers how they work.
+    #  For now, just know: @property = getter, @name.setter = setter.)
     #
-    #   GETTER — a method that RETURNS the value of a private attribute.
-    #            It lets you read the value without exposing the internals.
-    #            Example: def get_balance(self): return self._balance
-    #
-    #   SETTER — a method that SETS the value of a private attribute.
-    #            It lets you validate or transform data before storing it.
-    #            Example: def set_balance(self, amount):
-    #                         if amount < 0: raise ValueError
-    #                         self._balance = amount
-    #
-    # In languages like Java, you'd write getBalance() and setBalance().
-    # Python does it more elegantly with @property:
-    #
-    #   @property      → creates a GETTER (read access)
-    #   @name.setter   → creates a SETTER (write access)
-    #
-    # The result: you write account.balance (clean!) instead of
-    # account.get_balance() (clunky!). It feels like a plain attribute,
-    # but your code runs every time it's accessed or modified.
-    #
-    # (Note: @property is a DECORATOR — a function that wraps another
-    #  function. Decorators get a full lesson later — Lesson 6! — but
-    #  for now, just know that @property is Python's built-in way to
-    #  create getters and setters without the Java-style boilerplate.)
-    #
-    # In this example, we only define GETTERS (no setters) — making
-    # balance and last_transaction READ-ONLY. The only way to change
-    # the balance is through deposit() and withdraw().
+    # Here we only define GETTERS — no setters — so these are READ-ONLY.
+    # The only way to change the balance is through deposit()/withdraw().
 
     @property
     def balance(self):
-        """Getter — read-only access to balance. No setter = can't assign."""
+        """Getter — read access. No setter → can't do account.balance = X."""
         return self._balance
 
     @property
     def last_transaction(self):
-        """Getter — read-only access to the most recent transaction."""
-        # self.__transaction_log[-1] if self.__transaction_log else None
+        """Getter — returns the most recent transaction, or None."""
+        # Ternary: <value_if_true> if <condition> else <value_if_false>
         #
-        # This is a CONDITIONAL EXPRESSION (also called a ternary):
-        #   <value_if_true> if <condition> else <value_if_false>
+        # "the last element if the log has entries, otherwise None"
         #
-        # It reads as: "give me the last log entry IF the log is
-        # not empty, OTHERWISE give me None"
-        #
-        # Breakdown of the two parts:
-        #
-        #   self.__transaction_log         ← the CONDITION
-        #     An empty list [] is "falsy" (evaluates to False).
-        #     A non-empty list is "truthy" (evaluates to True).
-        #     So this checks: "does the log have any entries?"
-        #
-        #   self.__transaction_log[-1]     ← value if True
-        #     Negative indexing: [-1] means "the last element".
-        #     [-2] would be second-to-last, etc.
-        #
-        #   None                           ← value if False
-        #     Returned when the log is empty — no transaction yet!
-        #
-        # Why the guard? Without it, self.__transaction_log[-1]
-        # on an empty list would raise IndexError. This is a clean
-        # way to say "give me the last one, or nothing if there isn't one."
+        # Empty list [] is "falsy" → evaluates to False → returns None.
+        # Non-empty list is "truthy" → evaluates to True → returns [-1].
+        # Without this guard, indexing an empty list raises IndexError.
         return self.__transaction_log[-1] if self.__transaction_log else None
 
 
@@ -116,20 +76,10 @@ class BankAccount:
 account = BankAccount("Szonja", 100)
 account.deposit(50)
 account.withdraw(30)
+print(account.balance)   # 120 — property getter, no () needed
 
-# balance is a @property getter — access it like an attribute, no ()
-print(account.balance)   # 120
-
-# account.balance = 5000  # ❌ AttributeError — can't set!
-#                           There's no @balance.setter, so this is
-#                           a READ-ONLY property. The only way to
-#                           modify _balance is through deposit()
-#                           and withdraw() — which validate inputs.
-#
-# This is encapsulation in action: the outside world sees a clean
-# .balance attribute, but internally we control exactly how it changes.
-
-# account._balance = 1000000  # ⚠️ Works but you're breaking the contract
+# account.balance = 5000  # ❌ AttributeError — no setter, read-only!
+# account._balance = 1000000  # ⚠️ Possible but breaks encapsulation
 # account.__transaction_log  # ❌ AttributeError — truly private
 ```
 
@@ -491,82 +441,70 @@ print(Pizza.is_valid_size("extra large"))  # False
 
 ## Property Decorators — Controlled Attribute Access
 
-Now that you've seen read-only getters in the BankAccount example, let's look at the full picture: **getters AND setters**.
+Now that you've seen read-only getters, here's the full pattern: **getters AND setters**.
 
-### Quick Recap: What Are Getters and Setters?
-
-| Term | What it does | Without @property | With @property |
+| Role | What it does | Without @property | With @property |
 |------|-------------|-------------------|----------------|
-| **Getter** | Returns a value (read) | `get_balance()` | `balance` (no `()`) |
-| **Setter** | Sets a value (write) | `set_balance(x)` | `balance = x` |
+| **Getter** | Read a value | `get_balance()` | `balance` (no `()`) |
+| **Setter** | Write a value | `set_balance(x)` | `balance = x` |
 
-`@property` is a **decorator** that turns methods into attribute-like accessors. (Decorators get their own deep-dive in Lesson 6 — for now, think of `@property` as Python's built-in tool for clean getters and setters.)
+(`@property` is a decorator — more on those in Lesson 6.)
 
 ```python
 class Temperature:
     def __init__(self, celsius=0):
-        self._celsius = celsius    # Internal storage — don't touch directly
+        self._celsius = celsius  # Internal storage — use the properties instead
 
     # ─── celsius: getter + setter ─────────────────────────────
 
     @property
     def celsius(self):
-        """GETTER — read as temp.celsius (no parentheses!)"""
+        """Getter — temp.celsius (no parentheses)"""
         return self._celsius
 
     @celsius.setter
     def celsius(self, value):
-        """SETTER — write as temp.celsius = 25"""
-        if value < -273.15:         # Validation!
+        """Setter — temp.celsius = 25"""
+        if value < -273.15:
             raise ValueError("Temperature below absolute zero!")
         self._celsius = value
 
-    # ─── fahrenheit: computed getter + setter ─────────────────
+    # ─── fahrenheit: computed from celsius ────────────────────
 
     @property
     def fahrenheit(self):
-        """GETTER — computed on-the-fly, no separate storage."""
+        """Getter — calculated on the fly, no separate variable."""
         return self._celsius * 9/5 + 32
 
     @fahrenheit.setter
     def fahrenheit(self, value):
-        """SETTER — converts to Celsius and reuses that setter's validation!"""
+        """Setter — converts to celsius, reuses the celsius setter's validation."""
         self.celsius = (value - 32) * 5/9
-        #             ^^^^^^^^^^^^^^^^^^^^^
-        #             Notice: assigns to self.celsius (the property),
-        #             which triggers the @celsius.setter above.
-        #             This means the "below absolute zero" check
-        #             still applies — no duplicated validation code!
 
-    # ─── kelvin: read-only getter ─────────────────────────────
+    # ─── kelvin: getter only (read-only) ──────────────────────
 
     @property
     def kelvin(self):
-        """GETTER only — no setter, so kelvin is read-only."""
+        """Getter only — no setter, so kelvin is read-only."""
         return self._celsius + 273.15
-    # No @kelvin.setter → you can read temp.kelvin but can't set it
 
 
 temp = Temperature(25)
 print(f"{temp.celsius}°C = {temp.fahrenheit}°F = {temp.kelvin}K")
 # 25°C = 77.0°F = 298.15K
 
-temp.fahrenheit = 32    # Uses @fahrenheit.setter → converts to Celsius
+temp.fahrenheit = 32    # Triggers the setter → converts and validates
 print(f"{temp.celsius}°C")  # 0.0°C
 
-# temp.kelvin = 300     # ❌ AttributeError — no setter defined!
-# temp.celsius = -300   # ❌ ValueError — below absolute zero!
+# temp.kelvin = 300     # ❌ AttributeError — read-only, no setter
+# temp.celsius = -300   # ❌ ValueError — blocked by validation
 ```
 
-### Why This Pattern Is Powerful
+### Why @property Is Useful
 
-1. **Validation lives in one place.** The absolute-zero check is only in `@celsius.setter`. The Fahrenheit setter reuses it by going through `self.celsius`.
-
-2. **Clean public interface, messy internals hidden.** Outside code sees `temp.celsius = 25` — simple! Inside, validation runs automatically.
-
-3. **Computed properties need no storage.** `fahrenheit` and `kelvin` aren't stored at all — they're calculated from `_celsius`. No risk of them getting out of sync.
-
-4. **You can add validation later without breaking anything.** If you start with a plain attribute and later need validation, swap it for a property — all existing code that accesses it still works.
+1. **Validation at the gate.** The absolute-zero check runs no matter how you set the temperature — directly via `celsius` or indirectly via `fahrenheit`.
+2. **Clean outside, smart inside.** Users write `temp.celsius = 25` — simple. Underneath, your validation runs automatically.
+3. **No stored duplicates.** `fahrenheit` and `kelvin` aren't separate variables — they're calculated from `_celsius`. They can never get out of sync.
 
 ---
 
