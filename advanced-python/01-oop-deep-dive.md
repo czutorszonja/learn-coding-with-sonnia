@@ -254,6 +254,27 @@ print(pp.pay(6000))  # Payment validation failed (for CC — limit exceeded)
 
 ## Magic Methods — Making Your Objects Pythonic
 
+Python already knows what `+` means for numbers, what `print()` means, what `==` means.
+**Dunder methods (double underscore methods like `__add__`) are how you teach Python what those things mean for YOUR class.**
+
+You're not inventing anything new. You're just filling in the blank:
+
+| When someone writes… | Python calls… |
+|---|---|
+| `v1 + v2` | `__add__` |
+| `v1 - v2` | `__sub__` |
+| `v1 * 3` | `__mul__` |
+| `3 * v1` | `__rmul__` (reversed) |
+| `v1 == v2` | `__eq__` |
+| `abs(v1)` | `__abs__` |
+| `if v1:` | `__bool__` |
+| `len(v1)` | `__len__` |
+| `print(v1)` | `__str__` |
+| `v1[0]` | `__getitem__` |
+| `for coord in v1:` | `__iter__` |
+
+If you never define `__add__` and try `v1 + v2`, Python crashes with `TypeError: unsupported operand type(s) for +`. You're just telling Python what to do when it sees those operators on your objects.
+
 ```python
 class Vector:
     def __init__(self, x, y):
