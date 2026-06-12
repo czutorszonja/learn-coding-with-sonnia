@@ -584,10 +584,6 @@ class Item:
         self.slot = slot
         self.stats = stats  # dict like {"attack": 5, "defence": 3}
 
-    def __repr__(self):
-        bonuses = ", ".join(f"{k}: +{v}" for k, v in self.stats.items())
-        return f"[{self.name}] ({bonuses})"
-
 
 class Character(ABC):
     """Abstract base for all characters."""
@@ -637,7 +633,7 @@ class Character(ABC):
     def __str__(self):
         stats = self.effective_stats()
         stats_str = " | ".join(f"{k.upper()}: {v}" for k, v in stats.items())
-        equipment = ", ".join(str(item) for item in self.inventory.values()) or "none"
+        equipment = ", ".join(item.name for item in self.inventory.values()) or "none"
         return (
             f"{self.name} — Lv.{self.level} {self.character_class}\n"
             f"  Stats: {stats_str}\n"
