@@ -580,6 +580,8 @@ class Item:
     def __init__(self, name, slot, stats):
         if slot not in self.VALID_SLOTS:
             raise ValueError(f"Invalid slot: {slot}")
+        if not isinstance(stats, dict):
+            raise TypeError(f"stats must be a dict, got {type(stats).__name__}")
         self.name = name
         self.slot = slot
         self.stats = stats  # dict like {"attack": 5, "defence": 3}
