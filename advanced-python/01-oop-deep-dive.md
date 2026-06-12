@@ -595,11 +595,11 @@ class Character(ABC):
     def __init__(self, name, level=1):
         self.name = name
         self.level = level
-        self._equipment = {}   # slot → Item
-        self._base_stats = self._init_stats()
+        self.inventory = {}   # slot → Item
+        self.stats = self._init_stats()
 
     def _init_stats(self):
-        """Override in subclasses."""
+        """Return starting stats for this character class."""
         return {"attack": 5, "defence": 5, "speed": 5, "health": 100}
 
     @property
@@ -614,22 +614,22 @@ class Character(ABC):
 
     def equip(self, item):
         """Equip an item, replacing any existing item in that slot."""
-        old = self._equipment.get(item.slot)
-        self._equipment[item.slot] = item
+        old = self.inventory.get(item.slot)
+        self.inventory[item.slot] = item
         action = "replaced" if old else "equipped"
         return f"{self.name} {action} {item.name} in {item.slot} slot"
 
     def unequip(self, slot):
         """Remove an item from a slot."""
-        if slot in self._equipment:
-            item = self._equipment.pop(slot)
+        if slot in self.inventory:
+            item = self.inventory.pop(slot)
             return f"{self.name} unequipped {item.name}"
         return f"No item in {slot} slot"
 
     def effective_stats(self):
-        """Base stats + equipment bonuses."""
-        stats = dict(self._base_stats)
-        for item in self._equipment.values():
+        """Stats from self.stats + equipment bonuses."""
+        stats = dict(self.stats)
+        for item in self.inventory.values():
             for stat, bonus in item.stats.items():
                 stats[stat] = stats.get(stat, 0) + bonus
         return stats
@@ -637,7 +637,7 @@ class Character(ABC):
     def __str__(self):
         stats = self.effective_stats()
         stats_str = " | ".join(f"{k.upper()}: {v}" for k, v in stats.items())
-        equipment = ", ".join(str(item) for item in self._equipment.values()) or "none"
+        equipment = ", ".join(str(item) for item in self.inventory.values()) or "none"
         return (
             f"{self.name} — Lv.{self.level} {self.character_class}\n"
             f"  Stats: {stats_str}\n"
