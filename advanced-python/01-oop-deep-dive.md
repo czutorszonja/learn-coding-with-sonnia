@@ -572,20 +572,55 @@ print(f"{temp.celsius}°C")  # 0.0°C
 from abc import ABC, abstractmethod
 
 
+# ═══════════════════════════════════════════════════════════════════
+#  ITEM CLASS
+#  Items have a name, which slot they go in, and a dict of stats.
+#  The stats dict is REQUIRED as a parameter — every item is different
+#  (a sword might boost attack by 8, a shield boosts defence by 6).
+# ═══════════════════════════════════════════════════════════════════
+
 class Item:
     """Something a character can equip."""
 
+    # Class-level constant — shared by all Items.
+    # A set {} so "slot in VALID_SLOTS" is a fast O(1) lookup.
     VALID_SLOTS = {"weapon", "armour", "accessory"}
 
     def __init__(self, name, slot, stats):
+        # ── Guard 1: reject invalid slot names ──
         if slot not in self.VALID_SLOTS:
             raise ValueError(f"Invalid slot: {slot}")
+
+        # ── Guard 2: enforce that stats IS a dict ──
+        # Without this, someone could pass a string or a number —
+        # Python won't stop them, and the bug only surfaces later
+        # when something tries stats["attack"] and gets TypeError.
+        # isinstance() checks the actual type at runtime.
         if not isinstance(stats, dict):
             raise TypeError(f"stats must be a dict, got {type(stats).__name__}")
-        self.name = name
-        self.slot = slot
-        self.stats = stats  # dict like {"attack": 5, "defence": 3}
 
+        self.name = name   # e.g. "Dragon Slayer"
+        self.slot = slot   # e.g. "weapon"
+        self.stats = stats # e.g. {"attack": 8}  ← now guaranteed to be a dict
+
+    def __str__(self):
+        """Nice display: 'Dragon Slayer [weapon] +8 attack'"""
+        bonuses = ", ".join(f"+{v} {k}" for k, v in self.stats.items())
+        return f"{self.name} [{self.slot}] {bonuses}"
+
+
+# ═══════════════════════════════════════════════════════════════════
+#  CHARACTER (Abstract Base Class)
+#
+#  Unlike Items (where every item has different stats passed in),
+#  every Warrior starts with the SAME base stats. So instead of
+#  making you pass {"attack": 12, "defence": 10, ...} every time,
+#  the subclass overrides _init_stats() to return its defaults.
+#
+#  This is the key difference:
+#    Item.stats    ← comes from a parameter (varies per item)
+#    Character.stats ← comes from _init_stats() (fixed per class)
+# ═══════════════════════════════════════════════════════════════════
 
 class Character(ABC):
     """Abstract base for all characters."""
@@ -593,48 +628,85 @@ class Character(ABC):
     def __init__(self, name, level=1):
         self.name = name
         self.level = level
-        self.inventory = {}   # slot → Item
+        # inventory maps slot → Item, e.g. {"weapon": sword, "armour": shield}
+        self.inventory = {}
+        # Base stats come from the subclass — Warrior/Mage/Archer each
+        # override _init_stats() with their own numbers.
         self.stats = self._init_stats()
 
     def _init_stats(self):
-        """Return starting stats for this character class."""
+        """Return starting stats for this character class.
+
+        Override in subclasses. The base version exists as a fallback
+        and also so the method reference in __init__ never crashes.
+        """
         return {"attack": 5, "defence": 5, "speed": 5, "health": 100}
+
+    # ── ABSTRACT PROPERTY: character_class ──────────────────────
+    # @property     → accessed without ():  character.character_class
+    # @abstractmethod → every subclass MUST provide this (Python won't
+    #                    let you create a plain Character() instance)
+    # The property is just a name like "Warrior", "Mage", "Archer".
+    # Subclasses set it as a class attribute (see Warrior below).
 
     @property
     @abstractmethod
     def character_class(self):
-        pass
+        pass  # placeholder — subclasses provide the actual string
+
+    # ── ABSTRACT METHOD: special_ability ─────────────────────────
+    # Each subclass defines its own unique attack.
 
     @abstractmethod
     def special_ability(self):
         """Describe and use the character's special move."""
         pass
 
+    # ── EQUIP / UNEQUIP ──────────────────────────────────────────
+
     def equip(self, item):
-        """Equip an item, replacing any existing item in that slot."""
-        old = self.inventory.get(item.slot)
+        """Place an item into its slot, replacing any existing item."""
+        old = self.inventory.get(item.slot)  # None if the slot is empty
         self.inventory[item.slot] = item
         action = "replaced" if old else "equipped"
         return f"{self.name} {action} {item.name} in {item.slot} slot"
 
     def unequip(self, slot):
-        """Remove an item from a slot."""
+        """Remove and return the item from a slot."""
         if slot in self.inventory:
-            item = self.inventory.pop(slot)
+            item = self.inventory.pop(slot)  # pop removes AND returns
             return f"{self.name} unequipped {item.name}"
         return f"No item in {slot} slot"
 
+    # ── EFFECTIVE STATS ──────────────────────────────────────────
+
     def effective_stats(self):
-        """Stats from self.stats + equipment bonuses."""
-        stats = dict(self.stats)
+        """Combine base stats with all equipped item bonuses.
+
+        This is where Character.stats and Item.stats FINALLY interact:
+          - Start with the character's base stats (e.g. attack: 12)
+          - Loop over every equipped item's stats dict
+          - Add each bonus (e.g. sword gives +8 attack → total: 20)
+
+        The copy is important — we don't want to mutate self.stats.
+        """
+        stats = dict(self.stats)  # shallow copy of base stats
         for item in self.inventory.values():
+            # item.stats is the dict we validated in Item.__init__
             for stat, bonus in item.stats.items():
+                # If the base character doesn't have this stat yet,
+                # default it to 0 before adding the bonus.
                 stats[stat] = stats.get(stat, 0) + bonus
         return stats
 
+    # ── MAGIC METHOD: __str__ ────────────────────────────────────
+    # Called when you do print(character) or str(character).
+
     def __str__(self):
         stats = self.effective_stats()
+        # Join stats into a readable line: "ATTACK: 20 | DEFENCE: 15 | ..."
         stats_str = " | ".join(f"{k.upper()}: {v}" for k, v in stats.items())
+        # List equipped items, or "none" if inventory is empty
         equipment = ", ".join(item.name for item in self.inventory.values()) or "none"
         return (
             f"{self.name} — Lv.{self.level} {self.character_class}\n"
@@ -643,67 +715,95 @@ class Character(ABC):
         )
 
 
+# ═══════════════════════════════════════════════════════════════════
+#  WARRIOR — high attack, high defence, slow, lots of health
+# ═══════════════════════════════════════════════════════════════════
+
 class Warrior(Character):
+    # This satisfies the @property @abstractmethod from Character.
+    # It's a class attribute, but thanks to @property, it acts like
+    # a read-only instance attribute — warrior.character_class → "Warrior"
     character_class = "Warrior"
 
     def _init_stats(self):
+        """Warrior base stats — tanky melee fighter."""
         return {"attack": 12, "defence": 10, "speed": 4, "health": 120}
 
     def special_ability(self):
-        atk = self.effective_stats()["attack"]
+        """Power Strike: doubles attack for one hit."""
+        atk = self.effective_stats()["attack"]  # gets the TOTAL attack (base+items)
         return f"⚔️ POWER STRIKE! Deals {atk * 2} damage!"
 
+
+# ═══════════════════════════════════════════════════════════════════
+#  MAGE — highest attack, fragile, moderate speed
+# ═══════════════════════════════════════════════════════════════════
 
 class Mage(Character):
     character_class = "Mage"
 
     def _init_stats(self):
+        """Mage base stats — glass cannon."""
         return {"attack": 15, "defence": 3, "speed": 6, "health": 80}
 
     def special_ability(self):
+        """Fireball: full attack damage, ignores enemy defence."""
         atk = self.effective_stats()["attack"]
         return f"🔥 FIREBALL! Deals {atk} damage (ignores defence)!"
 
+
+# ═══════════════════════════════════════════════════════════════════
+#  ARCHER — balanced attack, fastest, moderate health
+# ═══════════════════════════════════════════════════════════════════
 
 class Archer(Character):
     character_class = "Archer"
 
     def _init_stats(self):
+        """Archer base stats — speed-focused ranged fighter."""
         return {"attack": 10, "defence": 5, "speed": 10, "health": 90}
 
     def special_ability(self):
+        """Multi Shot: 3 arrows at 50% attack each."""
         atk = self.effective_stats()["attack"]
         total = int(atk * 0.5 * 3)
         return f"🏹 MULTI SHOT! 3 arrows × {int(atk * 0.5)} = {total} total damage!"
 
 
-# --- Test ---
+# ═══════════════════════════════════════════════════════════════════
+#  TEST — only runs when you execute the file directly:
+#         python game_characters.py
+#  Won't run if you import this file from somewhere else.
+# ═══════════════════════════════════════════════════════════════════
+
 if __name__ == "__main__":
-    # Create characters
+    # Create characters (no stats parameter — _init_stats handles it)
     warrior = Warrior("Thorin", level=5)
     mage = Mage("Gandalf", level=5)
     archer = Archer("Legolas", level=5)
 
-    # Create items
+    # Create items (stats IS a parameter — every item is unique)
     sword = Item("Dragon Slayer", "weapon", {"attack": 8})
     shield = Item("Iron Shield", "armour", {"defence": 6})
     ring = Item("Ring of Speed", "accessory", {"speed": 3})
     staff = Item("Crystal Staff", "weapon", {"attack": 10, "speed": 2})
     bow = Item("Elven Bow", "weapon", {"attack": 6, "speed": 4})
 
-    # Equip items
-    print(warrior.equip(sword))
-    print(warrior.equip(shield))
-    print(warrior.equip(ring))
+    # Try to create an item with invalid stats — this WILL crash (by design!)
+    # broken = Item("Oops", "weapon", "not a dict")  # raises TypeError
+
+    # Equip items — notice how equipping another weapon REPLACES the first
+    print(warrior.equip(sword))    # Thorin equipped Dragon Slayer
+    print(warrior.equip(shield))   # Thorin equipped Iron Shield
+    print(warrior.equip(ring))     # Thorin equipped Ring of Speed
 
     print(mage.equip(staff))
-
     print(archer.equip(bow))
 
-    # Show characters
+    # Display character sheets — __str__ is called by print()
     print("\n--- Characters ---")
     print(warrior)
-    print(f"  Ability: {warrior.special_ability()}")
+    print(f"  Ability: {warrior.special_ability()}")  # shows total attack × 2
     print()
     print(mage)
     print(f"  Ability: {mage.special_ability()}")
