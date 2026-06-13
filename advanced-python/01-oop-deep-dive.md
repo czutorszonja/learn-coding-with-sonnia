@@ -604,7 +604,33 @@ class Item:
         self.stats = stats # e.g. {"attack": 8}  ← now guaranteed to be a dict
 
     def __str__(self):
-        """Nice display: 'Dragon Slayer [weapon] +8 attack'"""
+        """Magic method — called by print() and str().
+
+        Without this, print(sword) would show something ugly like:
+            <Item object at 0x7f8a...>
+        With it, we get a clean readout:
+            Dragon Slayer [weapon] +8 attack
+
+        How it works, step by step with an example:
+          sword = Item("Dragon Slayer", "weapon", {"attack": 8, "speed": 2})
+
+          Step 1 — self.stats.items() yields the pairs:
+            [("attack", 8), ("speed", 2)]
+
+          Step 2 — the generator builds a string for each pair:
+            "+8 attack"   (v=8,  k="attack")
+            "+2 speed"    (v=2,  k="speed")
+
+          Step 3 — ", ".join(...) glues them into one string:
+            "+8 attack, +2 speed"
+
+          Step 4 — f-string wraps it all together:
+            "Dragon Slayer [weapon] +8 attack, +2 speed"
+
+        'bonuses' is just a local variable name — it's created here,
+        built entirely from self.stats, and disappears after the return.
+        It's not a parameter and not in the exercise description.
+        """
         bonuses = ", ".join(f"+{v} {k}" for k, v in self.stats.items())
         return f"{self.name} [{self.slot}] {bonuses}"
 
