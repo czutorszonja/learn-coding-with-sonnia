@@ -95,7 +95,35 @@ class Stack:
 
 ### 1. Undo/Redo (Every Editor Ever)
 
+> 💡 **This example uses the `Stack` class.** Copy the Stack class from the [Building a Stack Class](#building-a-stack-class) section above first, or here's a compact version:
+
 ```python
+# === Include this Stack class (from "Building a Stack Class" above) ===
+class Stack:
+    def __init__(self):
+        self._items = []
+
+    def push(self, item):
+        self._items.append(item)
+
+    def pop(self):
+        if self.is_empty():
+            raise IndexError("Pop from empty stack")
+        return self._items.pop()
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self._items[-1]
+
+    def is_empty(self):
+        return len(self._items) == 0
+
+    def __len__(self):
+        return len(self._items)
+
+# ================================================================
+
 class TextEditor:
     def __init__(self):
         self._text = ""
@@ -148,6 +176,31 @@ print(editor.redo()) # "Hello " — forward again
 ### 2. Balanced Parentheses
 
 ```python
+# === Include this Stack class (from "Building a Stack Class" above) ===
+class Stack:
+    def __init__(self):
+        self._items = []
+
+    def push(self, item):
+        self._items.append(item)
+
+    def pop(self):
+        if self.is_empty():
+            raise IndexError("Pop from empty stack")
+        return self._items.pop()
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self._items[-1]
+
+    def is_empty(self):
+        return len(self._items) == 0
+
+    def __len__(self):
+        return len(self._items)
+# ================================================================
+
 def is_balanced(expression):
     """Check if brackets/parens/braces are balanced."""
     matching = {')': '(', ']': '[', '}': '{'}
@@ -175,6 +228,35 @@ print(is_balanced("{[(])}"))              # False — crossing brackets
 ### 3. Call Stack Simulation
 
 ```python
+# === Include this Stack class (from "Building a Stack Class" above) ===
+class Stack:
+    def __init__(self):
+        self._items = []
+
+    def push(self, item):
+        self._items.append(item)
+
+    def pop(self):
+        if self.is_empty():
+            raise IndexError("Pop from empty stack")
+        return self._items.pop()
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self._items[-1]
+
+    def is_empty(self):
+        return len(self._items) == 0
+
+    def __len__(self):
+        return len(self._items)
+
+    def __iter__(self):
+        """Iterate from top to bottom."""
+        return reversed(self._items)
+# ================================================================
+
 class CallStack:
     def __init__(self):
         self._frames = Stack()
@@ -216,6 +298,31 @@ cs.return_from()
 ### 4. Expression Evaluation (Postfix Notation)
 
 ```python
+# === Include this Stack class (from "Building a Stack Class" above) ===
+class Stack:
+    def __init__(self):
+        self._items = []
+
+    def push(self, item):
+        self._items.append(item)
+
+    def pop(self):
+        if self.is_empty():
+            raise IndexError("Pop from empty stack")
+        return self._items.pop()
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self._items[-1]
+
+    def is_empty(self):
+        return len(self._items) == 0
+
+    def __len__(self):
+        return len(self._items)
+# ================================================================
+
 def evaluate_postfix(expression):
     """Evaluate postfix (Reverse Polish Notation) expression.
     Example: "3 4 + 2 *" → (3 + 4) * 2 = 14
@@ -268,6 +375,31 @@ print(evaluate_postfix("2 3 ^"))         # 8
 ### Pattern 1: Monotonic Stack (Next Greater Element)
 
 ```python
+# === Include this Stack class (from "Building a Stack Class" above) ===
+class Stack:
+    def __init__(self):
+        self._items = []
+
+    def push(self, item):
+        self._items.append(item)
+
+    def pop(self):
+        if self.is_empty():
+            raise IndexError("Pop from empty stack")
+        return self._items.pop()
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self._items[-1]
+
+    def is_empty(self):
+        return len(self._items) == 0
+
+    def __len__(self):
+        return len(self._items)
+# ================================================================
+
 def next_greater_element(arr):
     """For each element, find the next element that's larger."""
     result = [-1] * len(arr)
@@ -296,6 +428,31 @@ print(next_greater_element([4, 5, 2, 10, 8]))
 ### Pattern 2: Two Stacks for a Queue
 
 ```python
+# === Include this Stack class (from "Building a Stack Class" above) ===
+class Stack:
+    def __init__(self):
+        self._items = []
+
+    def push(self, item):
+        self._items.append(item)
+
+    def pop(self):
+        if self.is_empty():
+            raise IndexError("Pop from empty stack")
+        return self._items.pop()
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self._items[-1]
+
+    def is_empty(self):
+        return len(self._items) == 0
+
+    def __len__(self):
+        return len(self._items)
+# ================================================================
+
 class QueueFromStacks:
     """A queue implemented using two stacks."""
 
