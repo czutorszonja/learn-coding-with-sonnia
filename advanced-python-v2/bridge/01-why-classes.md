@@ -218,7 +218,7 @@ Now that you can create a basic class, the next question is: **how do you protec
 
 Right now, anyone can do `book.pages = "banana"` and break everything. Next lesson: **encapsulation** — how to keep your objects' data safe.
 
-Continue to **[Bridge Lesson 2: Protecting Your Data](bridge/02-protecting-data.md)** 🛡️
+Continue to **[Bridge Lesson 2: Protecting Your Data](02-protecting-data.md)** 🛡️
 
 ---
 
