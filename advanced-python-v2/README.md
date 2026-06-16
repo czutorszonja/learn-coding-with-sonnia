@@ -29,8 +29,23 @@ A gentler path from beginner to confident.
 | DS3 | [Deque](data-structures/03-deque.md) | Clipboard history |
 | DS4 | [Iterables & Iterators](data-structures/04-iterables-iterators.md) | A Fibonacci generator |
 
-### Coming Next
-Decorators, recursion, linked lists, trees, and sorting — each in its own time.
+### Advanced (1 lesson)
+| # | Topic | You'll Build |
+|---|-------|-------------|
+| A1 | [Decorators](advanced/01-decorators.md) | A bot with `@on_message` |
+
+### Algorithms (2 lessons)
+| # | Topic | You'll Build |
+|---|-------|-------------|
+| R1 | [Recursion](algorithms/01-recursion.md) | Sum a nested list |
+| S1 | [Sorting](algorithms/02-sorting.md) | Custom-key merge sort |
+
+### Extra Data Structures (3 lessons)
+| # | Topic | You'll Build |
+|---|-------|-------------|
+| DS5 | [Linked Lists](data-structures/05-linked-lists.md) | Find the middle element |
+| DS6 | [Trees](data-structures/06-trees.md) | Check if a tree is balanced |
+| DS7 | [Hashing](data-structures/07-hashing.md) | A frequency counter |
 
 ## How to Use
 
