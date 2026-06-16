@@ -34,11 +34,12 @@ A gentler path from beginner to confident.
 |---|-------|-------------|
 | A1 | [Decorators](advanced/01-decorators.md) | A bot with `@on_message` |
 
-### Algorithms (2 lessons)
+### Algorithms (3 lessons)
 | # | Topic | You'll Build |
 |---|-------|-------------|
 | R1 | [Recursion](algorithms/01-recursion.md) | Sum a nested list |
 | S1 | [Sorting](algorithms/02-sorting.md) | Custom-key merge sort |
+| C1 | [Complexity](algorithms/03-complexity.md) | Spot O(n) vs O(n²) vs O(2ⁿ) |
 
 ### Extra Data Structures (3 lessons)
 | # | Topic | You'll Build |
