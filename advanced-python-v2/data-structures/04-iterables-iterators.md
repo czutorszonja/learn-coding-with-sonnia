@@ -4,23 +4,34 @@
 
 ---
 
-## The Question Behind Every For-Loop
+## The Problem: What Happens Inside the Loop?
 
-You've written `for item in collection:` hundreds of times. It works on lists, strings, dicts, files, queues, stacks, everything.
+You've written `for item in collection:` hundreds of times. It works on lists, strings, dicts, files, your Stack and Queue classes... everything.
 
-But HOW? How does `for` know how to get the next item? How does it know when to stop?
+```python
+for char in "hello":
+    print(char)       # h e l l o
 
-The answer: **iterators**.
+for num in [1, 2, 3]:
+    print(num)        # 1 2 3
+
+for line in open("file.txt"):
+    print(line)       # Line by line, one at a time — doesn't load the whole file!
+```
+
+But how does `for` actually work? How does it know how to get the next item? How does it know when to stop?
+
+The answer involves two concepts: **iterables** and **iterators**. They're not the same thing, and understanding the difference is genuinely useful.
 
 ---
 
-## Iterable vs Iterator — The Crucial Distinction
+## The Idea: The Book and the Bookmark
 
 - An **iterable** is something you CAN loop over (a list, a string, a file)
 - An **iterator** is the thing that DOES the looping — it keeps track of where you are
 
 Think of a book:
-- The **book** is the iterable — you can read it
+- The **book** is the iterable — you can read it, start over, lend it to someone else
 - A **bookmark** is the iterator — it remembers which page you're on
 
 You can have multiple bookmarks in the same book. Each one tracks a different position. When you finish the book, the bookmark is done — it can't go further.
@@ -51,7 +62,10 @@ while True:
         break  # Iterator is exhausted — stop the loop
 ```
 
-`iter()` creates the iterator. `next()` advances it. `StopIteration` signals "no more items."
+Three things happen:
+1. `iter()` creates the iterator from your collection
+2. `next()` advances the iterator and returns the next item
+3. `StopIteration` signals "no more items" — the loop catches it and stops
 
 ---
 
@@ -60,10 +74,10 @@ while True:
 ```python
 numbers = [1, 2, 3]
 
-# A list is ITERABLE but NOT an iterator
+# A list is ITERABLE but NOT an iterator itself
 # next(numbers)  # ❌ TypeError — 'list' object is not an iterator
 
-# iter() CREATES an iterator
+# iter() CREATES an iterator from the list
 it = iter(numbers)
 
 print(next(it))  # 1
@@ -80,18 +94,71 @@ print(next(it2))  # 1 — brand new start!
 
 ---
 
+## Making Your Own Class Iterable
+
+Remember your Stack class? It has a `__len__` and `__str__`, but can you `for item in my_stack:`?
+
+```python
+class Stack:
+    def __init__(self):
+        self._items = []
+
+    def push(self, item):
+        self._items.append(item)
+
+    # ... other methods ...
+
+# stack = Stack()
+# for item in stack:  # ❌ TypeError: 'Stack' object is not iterable
+```
+
+Add `__iter__` and it works:
+
+```python
+class Stack:
+    def __init__(self):
+        self._items = []
+
+    def push(self, item):
+        self._items.append(item)
+
+    def __iter__(self):
+        """Return an iterator over the items (top to bottom)."""
+        return iter(reversed(self._items))
+
+    # ... or iterate bottom to top:
+    # def __iter__(self):
+    #     return iter(self._items)
+
+
+stack = Stack()
+stack.push("bottom")
+stack.push("middle")
+stack.push("top")
+
+for item in stack:
+    print(item)
+# top  (or bottom, depending on your __iter__)
+# middle
+# bottom
+```
+
+That's all you need. `__iter__` returns an iterator — and once you have one, `for` handles the rest.
+
+---
+
 ## Generators: Iterators Made Easy
 
-Writing a full iterator class is tedious. Python has a shortcut: **generators**.
+Writing a full iterator class with `__iter__` and `__next__` is doable, but there's a much easier way: **generators**.
 
 A generator is a function that uses `yield` instead of `return`:
 
 ```python
-# A regular function — returns once
+# A regular function — computes everything, returns once
 def get_numbers():
-    return [1, 2, 3]  # Creates the whole list at once, returns it
+    return [1, 2, 3]  # Creates the whole list in memory
 
-# A generator — yields values one at a time
+# A generator — yields values one at a time, pauses between
 def count_up_to(limit):
     n = 1
     while n <= limit:
@@ -113,7 +180,7 @@ for num in count_up_to(5):
     print(num, end=" ")  # 1 2 3 4 5
 ```
 
-**`yield` is like `return`, but it PAUSES the function instead of ending it.** When `next()` is called again, it resumes right where it left off.
+**`yield` is like `return`, but it PAUSES the function instead of ending it.** When `next()` is called again, it resumes right where it left off. The function's local variables are preserved between calls.
 
 ---
 
@@ -159,10 +226,12 @@ for error in find_errors("server.log"):
 
 ## Practice: A Fibonacci Generator
 
-**Your task:** Write a generator that produces Fibonacci numbers — forever or up to a limit.
+**Your task:** Write a generator that produces Fibonacci numbers — the classic sequence where each number is the sum of the two before it.
 
-1. `fibonacci()` — yields Fibonacci numbers endlessly: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34...
+1. `fibonacci()` — yields Fibonacci numbers endlessly: 0, 1, 1, 2, 3, 5, 8, 13...
 2. `first_n_fib(n)` — returns the first n Fibonacci numbers using your generator
+
+**Think about it:** The Fibonacci pattern is `a, b = b, a + b`. Start with `a = 0, b = 1`. Each step: `yield a`, then `a, b = b, a + b`. It never stops — which is perfect for a generator. Consumer decides when they've had enough.
 
 **Test it:**
 
@@ -209,7 +278,7 @@ fib = fibonacci()
 for _ in range(100):
     value = next(fib)
 print(f"\n100th Fibonacci: {value}")
-# 218922995834555169026 — computed in microseconds, not stored in memory
+# 218922995834555169026 — computed in microseconds, not stored anywhere
 ```
 
 ---
@@ -220,7 +289,7 @@ print(f"\n100th Fibonacci: {value}")
 - **Iterator** = the thing doing the looping (has `__next__`)
 - **`iter()`** creates an iterator, **`next()`** advances it
 - **`StopIteration`** signals "done"
-- **Generators** = functions with `yield` — easy iterators
+- **Generators** = functions with `yield` — the easy way to make iterators
 - **Generator expressions** = `(x for x in ...)` — lazy, memory-efficient
 
 ---
@@ -236,9 +305,11 @@ This wraps up the data structures intro. You now have:
 
 ## What's Next?
 
-These are the building blocks. From here, the curriculum continues with decorators, recursion, linked lists, trees, and sorting — but take your time. These four data structure lessons and the OOP lessons are already a solid foundation.
+From here, the curriculum continues with decorators, recursion, linked lists, trees, and sorting — but take your time. These four data structure lessons and the OOP lessons are already a solid foundation.
 
-When you're ready: **decorators** — functions that wrap other functions to add behaviour. It's the last "big idea" before we dive into algorithms.
+When you're ready: **linked lists** — where you stop thinking about memory as numbered slots and start thinking about it as connected nodes.
+
+Next up: **[Lesson 5: Linked Lists](05-linked-lists.md)** ⛓️
 
 ---
 

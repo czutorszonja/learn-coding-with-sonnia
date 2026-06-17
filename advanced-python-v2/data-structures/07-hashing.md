@@ -1,21 +1,23 @@
-# Data Structures Lesson 7: Hashing ✨
+# Data Structures Lesson 7: Hashing — Instant Lookups ✨
 
-**← Back to [Sorting](../algorithms/02-sorting.md)**
+**← Back to [Lesson 6: Trees](06-trees.md)**
 
 ---
 
 ## The Problem: "Where Did I Put That?"
 
-You know how finding something in a sorted list is fast if you know where to look? But what if you don't want to sort at all? What if you want **instant access** by any key?
-
-That's what Python dictionaries do:
+You know how finding something in a sorted list is fast if you binary search? But what if you don't want to sort at all? What if you want **instant access** by any key?
 
 ```python
-phonebook = {"Szonja": "0744...", "Arthur": "0759..."}
+phonebook = {
+    "Szonja": "0744...",
+    "Arthur": "0759...",
+    "Sonnia": "sonnia@sonnia.ai",
+}
 print(phonebook["Szonja"])  # Instant — even with 10,000 entries
 ```
 
-How does Python find `"Szonja"` instantly without scanning every entry? The answer is **hashing**.
+How does Python find `"Szonja"` instantly without scanning every entry? It's not searching, it's not binary comparing — it's **hashing**. Python computes a number from the key and jumps directly to that memory location.
 
 ---
 
@@ -23,7 +25,7 @@ How does Python find `"Szonja"` instantly without scanning every entry? The answ
 
 Imagine you have a filing cabinet with 26 drawers, labelled A to Z. You file "Szonja" — you put it in drawer S. Later, someone asks for Szonja — you go straight to drawer S.
 
-You didn't scan every letter. You computed the drawer from the name. That's hashing.
+You didn't scan every letter. You **computed the drawer from the name**. That's hashing.
 
 A **hash function** takes any piece of data and returns a fixed-size number (called a **hash**):
 
@@ -42,7 +44,7 @@ Python then uses that number to decide where in memory to store the value. When 
 1. **Deterministic** — the same input ALWAYS produces the same hash
 2. **Fast** — computing a hash takes almost no time
 
-If either of these were false, dictionaries wouldn't work.
+If either of these were false, dictionaries wouldn't work. The first hash of `"Szonja"` maps to bucket 7, and every subsequent lookup for `"Szonja"` goes to the same bucket.
 
 ---
 
@@ -66,31 +68,15 @@ Lists are **mutable** — their contents can change, so their hash would change 
 
 ---
 
-## What Are You Actually Building?
-
-When you write `my_dict["Szonja"]`, Python:
-
-1. Computes `hash("Szonja")` → a big number
-2. Takes that number modulo the table size → the bucket index
-3. Goes directly to that bucket
-4. If it's empty → `KeyError`. If it has entries → checks each one (usually just one)
-
-This gives **O(1) average time** — it doesn't matter if the dictionary has 10 items or 10 million.
-
----
-
 ## Collisions: When Two Keys Share a Bucket
 
 What happens if `"Szonja"` and `"Strawberry"` both hash to the same bucket? That's a **collision**.
 
 Python handles this with **chaining**: each bucket holds a list of (key, value) pairs. When you look up a key, Python checks all entries in the bucket.
 
-```python
-# Conceptual view of memory:
-
-# Bucket 27: [("Szonja", "0744..."), ("Strawberry", "red")]
-# Bucket 28: [("Arthur", "0759...")]
-# Bucket 29: []
+```
+Bucket 7: [("Szonja", "0744..."), ("Strawberry", "red")]
+            ↑ Look up "Szonja" → scan these two → found!
 ```
 
 With a good hash function, collisions are rare, and each bucket has at most 1-2 entries. Even with collisions, lookups are still essentially O(1) — you're just checking 1 or 2 items instead of 1.
@@ -101,7 +87,7 @@ If a bucket gets too full, Python **resizes** the table (doubles the size and re
 
 ## Building Your Own Hash Table
 
-Let's build a simple one to see how it works:
+Let's build one to see how it works from scratch:
 
 ```python
 class HashTable:
@@ -176,9 +162,7 @@ print(hash("abc"))  # 97 + 98 + 99 = 294
 print(hash("cba"))  # 99 + 98 + 97 = 294 — SAME!
 ```
 
-Anagrams collide! Python's actual hash function is much more sophisticated, mixing up the bits to spread things evenly.
-
-Real hash functions also use **bit shifting and prime numbers** to avoid patterns. For our purposes, the simple version teaches the concept — just don't use it in production code.
+Anagrams collide! Python's actual hash function is much more sophisticated, mixing up bits to spread things evenly. Real hash functions use **bit shifting and prime numbers** to avoid patterns. For our purposes, the simple version teaches the concept — just don't use it in production.
 
 ---
 
@@ -188,7 +172,9 @@ Real hash functions also use **bit shifting and prime numbers** to avoid pattern
 
 ```python
 def char_frequency(text):
-    # Your code here — use HashTable!
+    # Your code here — iterate over characters,
+    # get the current count, increment it, set it back
+    pass
 
 
 result = char_frequency("hello world")
@@ -197,7 +183,7 @@ print(result.get("l"))  # 3
 print(result.get("z"))  # Should raise KeyError
 ```
 
-Save as `frequency.py` and try it!
+Create `frequency.py` and try it!
 
 ---
 
@@ -267,47 +253,23 @@ Hashing goes way beyond dictionaries:
 - **Password storage** — passwords are hashed (never stored in plaintext). When you log in, your input is hashed and compared to the stored hash.
 - **Git** — every commit has a SHA-1 hash that uniquely identifies its contents and history
 - **Caching** — hash URLs to quickly check if a page is cached
-- **Data integrity** — compare hashes to verify a file hasn't changed during download
-- **Sets** — Python sets use hashing for O(1) membership checks
-
-```python
-# Sets use hashing too — instant membership tests!
-seen = set()
-items = [1, 2, 3, 2, 1, 4, 5, 3]
-for item in items:
-    if item not in seen:  # O(1) — this is fast
-        seen.add(item)
-        print(f"New: {item}")
-# New: 1, New: 2, New: 3, New: 4, New: 5
-```
+- **Data integrity** — file checksums verify that downloads weren't corrupted
 
 ---
 
-## What You Just Learned
-
-- **Hash function** = maps data to a fixed-size number, deterministically
-- **Hash table** = an array of buckets, indexed by hash
-- **Collisions** = two keys sharing a bucket (handled by chaining)
-- **O(1) average** — hash tables are the fastest general-purpose lookup structure
-- **Only immutable types** can be hashed (strings, numbers, tuples)
-- Hashing powers dictionaries, sets, Git, passwords, and caches
-
----
-
-## What's Next?
-
-You now have a full toolkit:
+## Data Structures — You Built All Of These
 
 | Data Structure | Strength |
 |---|---|
-| Stack | LIFO — undo, back button |
-| Queue | FIFO — print jobs, ticketing |
-| Deque | Both ends — clipboard, recent items |
-| Linked List | Fast insert/delete in middle |
-| Tree | Hierarchical data |
-| Hash Table | Instant lookups |
+| **Stack** | LIFO — undo, back button |
+| **Queue** | FIFO — print jobs, ticketing |
+| **Deque** | Both ends — clipboard, recent items |
+| **Iterables / Generators** | How `for` works, lazy evaluation |
+| **Linked List** | Fast insert/delete in middle |
+| **Tree** | Hierarchical data |
+| **Hash Table** | Instant lookups |
 
-This wraps up the structured curriculum for now. You've gone from "what's a class?" to "what's a hash table?" — that's a massive journey, and you've built something real at every step.
+You've gone from "what's a class?" to "what's a hash table?" — that's a massive journey, and you've built something real at every step.
 
 ---
 

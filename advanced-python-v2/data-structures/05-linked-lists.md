@@ -1,20 +1,21 @@
 # Data Structures Lesson 5: Linked Lists ⛓️
 
-**← Back to [Recursion](../algorithms/01-recursion.md)**
+**← Back to [Lesson 4: Iterables & Iterators](04-iterables-iterators.md)**
 
 ---
 
 ## The Problem: Lists That Hate Insertion
 
-Python lists are amazing for random access: `my_list[500]` is instant. But they're terrible at insertions and deletions in the middle:
+Python lists are amazing for random access: `my_list[500]` is instant. But they're terrible at inserting or deleting in the middle:
 
 ```python
-# This looks simple...
 items = [10, 20, 30, 40, 50]
+
+# This looks simple...
 items.insert(2, 25)  # Insert 25 at position 2
 ```
 
-Behind the scenes, Python has to **shift every element after position 2** to make room. For a list of 1,000 items, that's ~998 elements moved. For 1,000,000, that's nearly a million.
+Behind the scenes, Python has to **shift every element after position 2** to make room. For a list of 1,000 items, that's ~998 elements moved. For 1,000,000, that's nearly a million elements just to insert ONE item.
 
 The same thing happens on deletion — elements shift left to fill the gap.
 
@@ -22,7 +23,7 @@ What if we could insert and delete without moving anything?
 
 ---
 
-## The Idea: Data That Points To The Next One
+## The Idea: Data That Points to the Next One
 
 A **linked list** solves this by not storing items in contiguous memory slots. Instead, each item (node) holds:
 
@@ -35,7 +36,7 @@ A **linked list** solves this by not storing items in contiguous memory slots. I
 
 Each node lives wherever it wants in memory. To get from one to the next, you follow the pointer. The last node points to `None` — the end of the list.
 
-To insert in the middle? Just change two pointers:
+**Insertion is just pointer changes:**
 
 ```
 Before:  [10 | →]  →  [20 | →]  →  [30 | →]  →  [40 | None]
@@ -52,7 +53,6 @@ Step 2: Point 20 to 25
 Before:  [10 | →]  →  [20 | ]     [30 | →]  →  [40 | None]
                             │              ↑
                             └──────────────┘
-                           (redirected)
 
 Result:  [10 | →]  →  [20 | →]  →  [25 | →]  →  [30 | →]  →  [40 | None]
 ```
@@ -61,7 +61,9 @@ No shifting. No copying. Just two pointer changes.
 
 ---
 
-## Building a Node
+## Building a Linked List Step by Step
+
+### Step 1: The Node
 
 ```python
 class Node:
@@ -72,9 +74,7 @@ class Node:
 
 That's it. A node has a value and a pointer to the next node. `None` means "end of list."
 
----
-
-## A Simple LinkedList
+### Step 2: Append (Add to the End)
 
 ```python
 class LinkedList:
@@ -116,9 +116,7 @@ ll.display()
 # 10 → 20 → 30 → None
 ```
 
----
-
-## Insert in the Middle (The Linked List Superpower)
+### Step 3: Insert in the Middle
 
 ```python
 def insert_after(self, target, value):
@@ -136,9 +134,7 @@ def insert_after(self, target, value):
 
 Notice: no element shifting. Just two pointer reassignments. This is O(1) once you're at the right position — compared to O(n) for a Python list.
 
----
-
-## The Tradeoff
+### The Tradeoff
 
 Linked lists are great at **insertion and deletion in the middle**, but they're slow at:
 
@@ -148,9 +144,7 @@ Linked lists are great at **insertion and deletion in the middle**, but they're 
 
 So linked lists are niche. But they're a **foundational concept** — trees, graphs, and many advanced data structures build on this exact idea.
 
----
-
-## The Recursive Nature
+### The Recursive Nature
 
 Linked lists are naturally recursive:
 
@@ -178,9 +172,9 @@ def recursive_display(node):
 
 Don't use `len()` — linked lists don't track length by default.
 
-**Hints:**
-- One approach: count the nodes, then walk half that many steps
-- Another approach: **slow-fast pointer** — a "tortoise and hare" where one moves one step and the other moves two. When the hare reaches the end, the tortoise is at the middle.
+**Two approaches to try:**
+1. **Count then walk:** Count the nodes first, then walk half that many steps
+2. **Tortoise and hare:** One pointer moves one step, another moves two. When the hare reaches the end, the tortoise is at the middle.
 
 ```python
 ll = LinkedList()
@@ -193,7 +187,7 @@ ll.append(6)
 print(ll.find_middle())  # 4
 ```
 
-Save as `linkedlist_middle.py` and try both approaches!
+Save as `linkedlist_middle.py` and try it!
 
 ---
 
@@ -273,8 +267,8 @@ print(f"Middle (fast/slow): {ll.find_middle_fast_slow()}")  # 4
 - **Linked list** = nodes connected by pointers, not contiguous memory
 - **Insertion/deletion** = O(1) after finding position (vs O(n) shifting for Python lists)
 - **Random access** = O(n) (vs O(1) for Python lists) — the tradeoff
-- Linked lists are **foundational** — they're the basis for trees and graphs
 - The **slow-fast pointer technique** is a classic linked list pattern
+- Linked lists are **foundational** — they're the basis for trees and graphs
 
 ---
 
@@ -282,8 +276,8 @@ print(f"Middle (fast/slow): {ll.find_middle_fast_slow()}")  # 4
 
 Now that you know the node-pointer pattern, you're ready for the most important self-referential structure in computer science: **trees** 🌳
 
-Next up: **[Trees](06-trees.md)** — the data structure behind file systems, HTML, and AI decision-making.
+Next up: **[Lesson 6: Trees](06-trees.md)** — the data structure behind file systems, HTML, and AI decision-making.
 
 ---
 
-**Linked lists are where memory starts to feel physical.** You're not just manipulating values — you're rearranging pointers. That's a new mental model, and it takes a minute to internalise. 💛
+**Your turn:** Build the linked list and implement `find_middle()` both ways. Then try implementing `reverse()` — can you flip the pointers without creating a new list? 💛

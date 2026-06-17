@@ -1,17 +1,18 @@
 # Data Structures Lesson 6: Trees 🌳
 
-**← Back to [Linked Lists](05-linked-lists.md)**
+**← Back to [Lesson 5: Linked Lists](05-linked-lists.md)**
 
 ---
 
-## The Problem: Data That Has Branches
+## The Problem: Data That Branches
 
 Linked lists are great for linear sequences. But what about data that naturally branches?
 
 - A file system (folders inside folders inside folders)
 - An HTML document (tags nested in tags)
-- A game AI's possible moves (each move leads to more moves)
+- A game AI's possible moves (each move leads to more possible moves)
 - A family tree (parents, children, siblings)
+- A decision tree ("if yes go here, if no go there")
 
 These aren't chains — they're **trees**. Each node can have multiple children instead of just one `next`.
 
@@ -22,15 +23,15 @@ These aren't chains — they're **trees**. Each node can have multiple children 
 A **tree** is like a linked list, but each node can point to many other nodes.
 
 ```
-       root
-        │
-    ┌───┼───┬────┐
-    │   │   │    │
+        root
+         │
+     ┌───┼───┬────┐
+     │   │   │    │
    child child child child
-    │
-  ┌─┼──┐
-  │ │  │
- ... ...
+     │
+   ┌─┼──┐
+   │ │  │
+  ... ...
 ```
 
 **Tree vocabulary:**
@@ -95,7 +96,9 @@ Each comparison eliminates half the remaining tree. That's **O(log n)** — loga
 
 ---
 
-## Building a BST
+## Building a BST Step by Step
+
+### Insert
 
 ```python
 class BST:
@@ -147,7 +150,7 @@ print(bst.search(12))  # False
 
 ---
 
-## Walking the Tree: Traversals
+## Walking the Tree: Three Traversals
 
 There are three classic ways to visit every node in a binary tree:
 
@@ -191,7 +194,7 @@ postorder(bst.root)
 # 3 7 5 20 15 10
 ```
 
-Inorder traversal of a BST gives you sorted order. That's not a coincidence — it's a property you can rely on.
+Inorder traversal of a BST gives you sorted order. That's a property you can rely on — no additional sorting needed.
 
 ---
 
@@ -237,10 +240,12 @@ for v in [1, 2, 3, 4, 5]:  # Inserted in order — straight line!
 print(is_balanced(unbalanced.root))  # False
 ```
 
-Hints:
-- You'll need the `height()` function (it's recursive!)
-- Check if left and right subtrees are balanced, AND their heights differ by ≤ 1
-- Both conditions must be true for every node
+**Think about it:** You need the `height()` function. For every node, check three things:
+1. Is the left subtree balanced?
+2. Is the right subtree balanced?
+3. Do the heights differ by at most 1?
+
+All three must be true.
 
 Save as `balanced_tree.py` and try it!
 
@@ -290,7 +295,6 @@ def is_balanced(node):
         return True
     left_height = height(node.left)
     right_height = height(node.right)
-    # Check current node AND all subtrees
     return (
         abs(left_height - right_height) <= 1
         and is_balanced(node.left)
@@ -332,4 +336,4 @@ Next up: **[Sorting](../algorithms/02-sorting.md)** — bubble sort, merge sort,
 
 ---
 
-**Trees click differently for everyone.** For some people, it's the visual shape that makes sense. For others, it's the recursive definition. Find your angle. 💛
+**Your turn:** Build the BST and implement `is_balanced`. Then try implementing `tree_min()` and `tree_max()` — what's the smallest value in a BST? Which side should you follow? 💛

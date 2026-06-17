@@ -1,21 +1,22 @@
-# Data Structures Lesson 3: Deque — The Double-Ended Queue 🔁
+# Data Structures Lesson 3: Deque — Add and Remove from Both Ends 🔁
 
 **← Back to [Lesson 2: Queues](02-queues.md)**
 
 ---
 
-## What is a Deque?
+## The Problem: A Queue That Can Do Both
 
-**Plain English:** A deque (pronounced "deck") is like a queue, but you can add and remove from EITHER end. It's a stack and a queue rolled into one flexible structure.
+Stacks are great for "last thing first." Queues are great for "first thing first."
 
-**Real-world analogy:** A deck of cards.
-- You can draw from the top OR the bottom
-- You can place a card on top OR tuck it underneath
-- The deck itself stays in order, but you interact with both ends freely
+But what about a clipboard that remembers your last 10 copies? You add to the end, and when you add an 11th, the oldest gets pushed out. That's adding at the back AND removing from the front — in the same structure. You'd have to manage both ends.
+
+Or a deck of cards where you can draw from the top or the bottom. A list can do `pop(0)` but it's slow. A deque does both ends instantly.
 
 ---
 
-## The Operations
+## The Idea: Double-Ended
+
+A **deque** (pronounced "deck", short for double-ended queue) lets you add and remove from EITHER end. It's a stack and a queue rolled into one.
 
 ```python
 from collections import deque
@@ -39,7 +40,7 @@ d[-1]                  # Rightmost
 
 ## The Secret Superpower: `maxlen`
 
-Set a maximum size, and old items get automatically evicted when new ones arrive:
+Set a maximum size, and old items get **automatically evicted** when new ones arrive:
 
 ```python
 from collections import deque
@@ -95,8 +96,8 @@ Useful for round-robin scheduling ("whose turn is it next?") or games where turn
 | Structure | Use case |
 |-----------|----------|
 | `list` | Random access by index, mostly append-only |
-| `Stack` (list-based) | Undo/redo, back button, expression evaluation |
-| `Queue` (deque-based) | Fair processing: print queue, ticket system |
+| Stack (list-based) | Undo/redo, back button, expression evaluation |
+| Queue (deque-based) | Fair processing: print queue, ticket system |
 | `deque(maxlen=N)` | "Last N items" — auto-eviction! |
 | `deque` (unlimited) | Palindromes, BFS, sliding windows |
 
@@ -107,11 +108,13 @@ Useful for round-robin scheduling ("whose turn is it next?") or games where turn
 **Your task:** Build a clipboard that remembers your last 10 copies and lets you cycle through them.
 
 Create a `Clipboard` class:
-- `copy(text)` — adds to clipboard (max 10 items)
+- `copy(text)` — adds text to the clipboard (max 10 items, oldest auto-evicted)
 - `paste()` — returns the most recently copied text
 - `cycle_back()` — move one step back in history
 - `cycle_forward()` — move one step forward
 - `current()` — returns the currently selected item
+
+**Think about it:** The clipboard uses `maxlen=10` so old items automatically disappear. The cursor starts at `-1` (the newest item). Moving back makes it `-2`, `-3`, etc. Copying new text resets the cursor to `-1`.
 
 **Test it:**
 
@@ -126,8 +129,8 @@ print(cb.cycle_back())  # World
 print(cb.cycle_back())  # Hello
 print(cb.cycle_forward())  # World
 
-cb.copy("New text")     # Resets cursor to newest!
-print(cb.current())     # New text
+cb.copy("New text")
+print(cb.current())     # New text (cursor reset)
 ```
 
 Create `clipboard.py` and try it!
@@ -145,7 +148,7 @@ class Clipboard:
 
     def __init__(self):
         self._items = deque(maxlen=self.MAX_ITEMS)
-        self._cursor = -1  # -1 = newest
+        self._cursor = -1  # -1 = newest item
 
     def copy(self, text):
         """Add text to clipboard. Resets cursor to newest."""
@@ -211,7 +214,7 @@ print(cb.current())        # New text
 
 ## What's Next?
 
-You've now got stacks, queues, and deques. All of them are **iterable** — you can loop over them. But how does iteration actually WORK in Python? What's happening behind `for item in collection:`?
+You've now got stacks, queues, and deques. All of them are iterable — you can loop over them. But how does iteration actually WORK in Python? What's happening behind `for item in collection:`?
 
 Continue to **[Lesson 4: Iterables & Iterators](04-iterables-iterators.md)** 🔄
 
