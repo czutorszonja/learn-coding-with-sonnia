@@ -1,4 +1,4 @@
-# Bridge Lesson 2: Protecting Your Data 🛡️
+# Lesson 2: Protecting Your Data 🛡️
 
 **← Back to [Lesson 1: Why Classes?](01-why-classes.md)**
 
@@ -196,7 +196,7 @@ print(account.summary())       # Szonja's account: £120.00
 
 `get_balance()` and `set_pages()` work, but they're a bit... clunky. Python has a much cleaner way to write getters and setters — `@property`. That's next.
 
-Continue to **[Bridge Lesson 3: Cleaner Access with @property](03-property-basics.md)** 🔑
+Continue to **[Lesson 3: Cleaner Access with @property](03-property-basics.md)** 🔑
 
 ---
 

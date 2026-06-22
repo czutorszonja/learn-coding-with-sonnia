@@ -1,6 +1,6 @@
-# Data Structures Lesson 9: Heaps — Always Grab the Smallest Instantly ⛰️
+# Lesson 16: Heaps — Always Grab the Smallest Instantly ⛰️
 
-**← Back to [Lesson 8: Hashing](08-hashing.md)**
+**← Back to [Lesson 15: Hashing](15-hashing.md)**
 
 ---
 
@@ -304,4 +304,4 @@ Typo: urgency = (6-5)×10 + 48 = 58
 
 ---
 
-**Next: [Lesson 10: Hash Map Superpowers — defaultdict & Counter](10-hash-map-superpowers.md) →**
+**Next: [Lesson 17: Hash Map Superpowers](17-hash-map-superpowers.md) →**

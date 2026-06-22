@@ -1,6 +1,6 @@
-# Data Structures Lesson 8: Hashing — Instant Lookups ✨
+# Lesson 15: Hashing — Instant Lookups ✨
 
-**← Back to [Lesson 7: Trees](07-trees.md)**
+**← Back to [Lesson 14: Trees](14-trees.md)**
 
 ---
 
@@ -277,4 +277,4 @@ You've gone from "what's a class?" to "what's a hash table?" — that's a massiv
 
 ---
 
-**Next: [Lesson 9: Heaps & Priority Queues](09-heaps.md) →**
+**Next: [Lesson 16: Heaps](16-heaps.md) →**

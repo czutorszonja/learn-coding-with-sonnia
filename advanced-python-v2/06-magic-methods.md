@@ -1,6 +1,6 @@
-# OOP Lesson 3: Making Your Objects Feel Pythonic ✨
+# Lesson 6: Making Your Objects Feel Pythonic ✨
 
-**← Back to [Lesson 2: Polymorphism](02-polymorphism.md)**
+**← Back to [Lesson 5: Same Interface, Different Behaviour](05-polymorphism.md)**
 
 ---
 
@@ -343,7 +343,7 @@ print(bool(p1))             # True
 
 You can now create classes that feel like they belong in Python. The last OOP concept: **composition** — when "has-a" is better than "is-a."
 
-Continue to **[OOP Lesson 4: Composition](04-composition.md)** 🧩
+Continue to **[Lesson 7: Composition](07-composition.md)** 🧩
 
 ---
 

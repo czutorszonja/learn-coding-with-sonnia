@@ -1,6 +1,6 @@
-# Algorithms: Time & Space Complexity ⏱️
+# Lesson 21: Time & Space Complexity ⏱️
 
-**← Back to [Hashing](../data-structures/08-hashing.md)**
+**← Back to [Lesson 15: Hashing](15-hashing.md)**
 
 ---
 

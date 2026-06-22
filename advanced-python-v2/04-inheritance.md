@@ -1,6 +1,6 @@
-# OOP Lesson 1: Sharing Behaviour with Inheritance 🧬
+# Lesson 4: Sharing Behaviour with Inheritance 🧬
 
-**← Back to [Bridge Lesson 3: @property](../bridge/03-property-basics.md)**
+**← Back to [Lesson 3: Cleaner Access with @property](03-property-basics.md)**
 
 ---
 
@@ -272,7 +272,7 @@ shelter.make_everyone_speak()
 
 Your `Shelter` can hold any Animal and call `make_sound()` on all of them — even though Dogs and Cats sound different. Python just figures it out. This is **polymorphism**, and it's next.
 
-Continue to **[OOP Lesson 2: Same Interface, Different Behaviour](../oop/02-polymorphism.md)** 🎭
+Continue to **[Lesson 5: Same Interface, Different Behaviour](05-polymorphism.md)** 🎭
 
 ---
 

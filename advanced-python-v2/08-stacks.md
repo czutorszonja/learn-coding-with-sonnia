@@ -1,6 +1,6 @@
-# Data Structures Lesson 1: Stacks 📚
+# Lesson 8: Stacks 📚
 
-**← Back to [OOP Lesson 4: Composition](../oop/04-composition.md)**
+**← Back to [Lesson 7: Composition](07-composition.md)**
 
 ---
 
@@ -329,7 +329,7 @@ print(bh.can_go_forward())  # False
 
 Stacks are LIFO. Queues are FIFO — first come, first served. Coffee shop line, print queue, message processing — all queues.
 
-Continue to **[Lesson 2: Queues](02-queues.md)** 🚶‍♂️
+Continue to **[Lesson 9: Queues](09-queues.md)** 🚶‍♂️
 
 ---
 
@@ -447,7 +447,7 @@ print(bh.can_go_forward())  # False
 
 Stacks are LIFO. Queues are FIFO — first come, first served. Coffee shop line, print queue, message processing — all queues.
 
-Continue to **[Lesson 2: Queues](02-queues.md)** 🚶‍♂️
+Continue to **[Lesson 9: Queues](09-queues.md)** 🚶‍♂️
 
 ---
 

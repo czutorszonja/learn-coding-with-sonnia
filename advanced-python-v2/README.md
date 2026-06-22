@@ -6,50 +6,31 @@ A gentler path from beginner to confident.
 
 ## The Path
 
-### Bridge: From Functions to Classes (3 lessons)
-| # | Topic | You'll Build |
-|---|-------|-------------|
-| B1 | [Why Classes?](bridge/01-why-classes.md) | A `Book` tracker |
-| B2 | [Protecting Your Data](bridge/02-protecting-data.md) | A bank account |
-| B3 | [Cleaner Access with @property](bridge/03-property-basics.md) | A temperature converter |
+21 lessons. One concept each. Go in order, or jump to whatever you need.
 
-### OOP: Thinking in Objects (4 lessons)
 | # | Topic | You'll Build |
 |---|-------|-------------|
-| O1 | [Inheritance](oop/01-inheritance.md) | An animal shelter system |
-| O2 | [Polymorphism](oop/02-polymorphism.md) | A notification dispatcher |
-| O3 | [Magic Methods](oop/03-magic-methods.md) | A 2D Point class |
-| O4 | [Composition](oop/04-composition.md) | A computer builder |
-
-### Data Structures (5 lessons)
-| # | Topic | You'll Build |
-|---|-------|-------------|
-| DS1 | [Stacks](data-structures/01-stacks.md) | Browser back/forward |
-| DS2 | [Queues](data-structures/02-queues.md) | A print queue |
-| DS3 | [Deque](data-structures/03-deque.md) | Clipboard history |
-| DS4 | [Iterables & Iterators](data-structures/04-iterables-iterators.md) | A Fibonacci generator |
-| DS5 | [Functions as First-Class Citizens](data-structures/05-functions-first-class.md) | A multiplier factory |
-
-### Advanced (1 lesson)
-| # | Topic | You'll Build |
-|---|-------|-------------|
-| A1 | [Decorators](advanced/01-decorators.md) | A bot with `@on_message` |
-
-### Algorithms (3 lessons)
-| # | Topic | You'll Build |
-|---|-------|-------------|
-| R1 | [Recursion](algorithms/01-recursion.md) | Sum a nested list |
-| S1 | [Sorting](algorithms/02-sorting.md) | Custom-key merge sort |
-| C1 | [Complexity](algorithms/03-complexity.md) | Spot O(n) vs O(n²) vs O(2ⁿ) |
-
-### Extra Data Structures (5 lessons)
-| # | Topic | You'll Build |
-|---|-------|-------------|
-| DS6 | [Linked Lists](data-structures/06-linked-lists.md) | Find the middle element |
-| DS7 | [Trees](data-structures/07-trees.md) | Check if a tree is balanced |
-| DS8 | [Hashing](data-structures/08-hashing.md) | A frequency counter |
-| DS9 | [Heaps & Priority Queues](data-structures/09-heaps.md) | An issue tracker |
-| DS10 | [Hash Map Superpowers](data-structures/10-hash-map-superpowers.md) | A page analytics tool |
+| 1 | [Why Classes?](01-why-classes.md) | A `Book` tracker |
+| 2 | [Protecting Your Data](02-protecting-data.md) | A bank account |
+| 3 | [Cleaner Access with @property](03-property-basics.md) | A temperature converter |
+| 4 | [Inheritance](04-inheritance.md) | An animal shelter system |
+| 5 | [Polymorphism](05-polymorphism.md) | A notification dispatcher |
+| 6 | [Magic Methods](06-magic-methods.md) | A 2D Point class |
+| 7 | [Composition](07-composition.md) | A computer builder |
+| 8 | [Stacks](08-stacks.md) | Browser back/forward |
+| 9 | [Queues](09-queues.md) | A print queue |
+| 10 | [Deque](10-deque.md) | Clipboard history |
+| 11 | [Iterables & Iterators](11-iterables-iterators.md) | A Fibonacci generator |
+| 12 | [Functions as First-Class Citizens](12-functions-first-class.md) | A multiplier factory |
+| 13 | [Linked Lists](13-linked-lists.md) | Find the middle element |
+| 14 | [Trees](14-trees.md) | Check if a tree is balanced |
+| 15 | [Hashing](15-hashing.md) | A frequency counter |
+| 16 | [Heaps & Priority Queues](16-heaps.md) | An issue tracker |
+| 17 | [Hash Map Superpowers](17-hash-map-superpowers.md) | A page analytics tool |
+| 18 | [Decorators](18-decorators.md) | A bot with `@on_message` |
+| 19 | [Recursion](19-recursion.md) | Sum a nested list |
+| 20 | [Sorting](20-sorting.md) | Custom-key merge sort |
+| 21 | [Time & Space Complexity](21-complexity.md) | Spot O(n) vs O(n²) vs O(2ⁿ) |
 
 ## How to Use
 

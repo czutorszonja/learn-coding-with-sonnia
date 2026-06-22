@@ -1,6 +1,6 @@
-# Advanced: Decorators 🎀
+# Lesson 18: Decorators 🎀
 
-**← Back to [Bridge Lesson 3: Property Basics](../bridge/03-property-basics.md)**
+**← Back to [Lesson 3: Cleaner Access with @property](03-property-basics.md)**
 
 ---
 
@@ -174,7 +174,7 @@ Trace it:
 
 Python has several built-in decorators:
 
-- **`@property`** — you already met this in Bridge 3. It makes a method look like a plain attribute.
+- **`@property`** — you already met this in Lesson 3. It makes a method look like a plain attribute.
 - **`@staticmethod`** — a method that doesn't need `self` (belongs to the class, not the instance)
 - **`@classmethod`** — a method that gets the class instead of the instance
 
@@ -336,7 +336,7 @@ Notice: the `wrapper` isn't strictly necessary here (the decorator could just re
 
 Decorators are one of those ideas that seem abstract until you use them a couple of times, then suddenly they're everywhere. They're the last "big language feature" before we shift into algorithmic thinking.
 
-Next up: **[Recursion](../algorithms/01-recursion.md)** — functions that call themselves 🔄
+Next up: **[Lesson 19: Recursion](19-recursion.md)** — functions that call themselves 🔄
 
 ---
 

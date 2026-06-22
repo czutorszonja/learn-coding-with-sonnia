@@ -1,4 +1,4 @@
-# Bridge Lesson 3: Cleaner Access with `@property` 🔑
+# Lesson 3: Cleaner Access with @property 🔑
 
 **← Back to [Lesson 2: Protecting Your Data](02-protecting-data.md)**
 
@@ -260,7 +260,7 @@ You now know how to:
 
 Next up: **inheritance** — how classes can share behaviour. This is where things get really powerful.
 
-Continue to **[OOP Lesson 1: Sharing Behaviour with Inheritance](../oop/01-inheritance.md)** 🧬
+Continue to **[Lesson 4: Sharing Behaviour with Inheritance](04-inheritance.md)** 🧬
 
 ---
 

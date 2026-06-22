@@ -1,6 +1,6 @@
-# Data Structures Lesson 5: Functions as First-Class Citizens 🎭
+# Lesson 12: Functions as First-Class Citizens 🎭
 
-**← Back to [Lesson 4: Iterables & Iterators](04-iterables-iterators.md)**
+**← Back to [Lesson 11: Iterables & Iterators](11-iterables-iterators.md)**
 
 ---
 
@@ -297,4 +297,4 @@ print(times_ten(5)) # 50
 
 ---
 
-**Next: [Lesson 6: Linked Lists](06-linked-lists.md) →**
+**Next: [Lesson 13: Linked Lists](13-linked-lists.md) →**

@@ -1,6 +1,6 @@
-# Data Structures Lesson 4: Iterables & Iterators 🔄
+# Lesson 11: Iterables & Iterators 🔄
 
-**← Back to [Lesson 3: Deque](03-deque.md)**
+**← Back to [Lesson 10: Deque](10-deque.md)**
 
 ---
 
@@ -309,7 +309,7 @@ From here, the curriculum continues with decorators, recursion, linked lists, tr
 
 When you're ready: **linked lists** — where you stop thinking about memory as numbered slots and start thinking about it as connected nodes.
 
-Next up: **[Lesson 5: Functions as First-Class Citizens](05-functions-first-class.md)** 🎭
+Next up: **[Lesson 12: Functions as First-Class Citizens](12-functions-first-class.md)** 🎭
 
 ---
 

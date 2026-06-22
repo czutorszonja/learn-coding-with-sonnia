@@ -1,6 +1,6 @@
-# OOP Lesson 2: Same Interface, Different Behaviour 🎭
+# Lesson 5: Same Interface, Different Behaviour 🎭
 
-**← Back to [Lesson 1: Inheritance](01-inheritance.md)**
+**← Back to [Lesson 4: Sharing Behaviour with Inheritance](04-inheritance.md)**
 
 ---
 
@@ -243,7 +243,7 @@ for result in results:
 
 You've built classes that behave differently. Now let's make them feel like real Python objects — supporting `+`, `print()`, `len()`, and all the built-in operations you know and love.
 
-Continue to **[OOP Lesson 3: Making Your Objects Pythonic](../oop/03-magic-methods.md)** ✨
+Continue to **[Lesson 6: Making Your Objects Feel Pythonic](06-magic-methods.md)** ✨
 
 ---
 

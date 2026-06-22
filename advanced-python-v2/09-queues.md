@@ -1,6 +1,6 @@
-# Data Structures Lesson 2: Queues 🚶‍♂️
+# Lesson 9: Queues 🚶‍♂️
 
-**← Back to [Lesson 1: Stacks](01-stacks.md)**
+**← Back to [Lesson 8: Stacks](08-stacks.md)**
 
 ---
 
@@ -290,7 +290,7 @@ print(f"Still waiting: {support.waiting}")
 
 A deque lets you add and remove from BOTH ends. It's a stack AND a queue combined — and it has some tricks that make it perfect for clipboard history, sliding windows, and "last N items" tracking.
 
-Continue to **[Lesson 3: Deque](03-deque.md)** 🔁
+Continue to **[Lesson 10: Deque](10-deque.md)** 🔁
 
 ---
 

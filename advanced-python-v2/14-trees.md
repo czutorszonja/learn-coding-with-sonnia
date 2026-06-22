@@ -1,6 +1,6 @@
-# Data Structures Lesson 7: Trees 🌳
+# Lesson 14: Trees 🌳
 
-**← Back to [Lesson 6: Linked Lists](06-linked-lists.md)**
+**← Back to [Lesson 13: Linked Lists](13-linked-lists.md)**
 
 ---
 
@@ -332,7 +332,7 @@ Notice that inserting in sorted order creates a "straight line" — basically a 
 
 Trees are everywhere in CS. Now let's look at the algorithms that make sense of data — starting with sorting.
 
-Next up: **[Sorting](../algorithms/02-sorting.md)** — bubble sort, merge sort, and why it matters 📊
+Next up: **[Lesson 20: Sorting](20-sorting.md)** — bubble sort, merge sort, and why it matters 📊
 
 ---
 

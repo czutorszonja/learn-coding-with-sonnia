@@ -1,6 +1,6 @@
-# Data Structures Lesson 10: Hash Map Superpowers — defaultdict & Counter 🦸
+# Lesson 17: Hash Map Superpowers — defaultdict & Counter 🦸
 
-**← Back to [Lesson 9: Heaps](09-heaps.md)**
+**← Back to [Lesson 16: Heaps](16-heaps.md)**
 
 ---
 

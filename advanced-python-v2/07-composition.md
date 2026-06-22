@@ -1,6 +1,6 @@
-# OOP Lesson 4: Composition — "Has-a" vs "Is-a" 🧩
+# Lesson 7: Composition — Has-a vs Is-a 🧩
 
-**← Back to [Lesson 3: Magic Methods](03-magic-methods.md)**
+**← Back to [Lesson 6: Making Your Objects Feel Pythonic](06-magic-methods.md)**
 
 ---
 
@@ -329,7 +329,7 @@ This wraps up the OOP section. You now know:
 
 Next up: **data structures** — the building blocks that make your programs fast and elegant.
 
-Continue to **[Data Structures Lesson 1: Stacks](../data-structures/01-stacks.md)** 📚
+Continue to **[Lesson 8: Stacks](08-stacks.md)** 📚
 
 ---
 
