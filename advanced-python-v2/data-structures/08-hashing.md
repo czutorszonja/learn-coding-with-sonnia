@@ -274,3 +274,7 @@ You've gone from "what's a class?" to "what's a hash table?" — that's a massiv
 ---
 
 **Each of these topics could fill a semester. You're learning them in afternoons. That's not just okay — that's how learning should feel when it fits right.** 💛
+
+---
+
+**Next: [Lesson 9: Heaps & Priority Queues](09-heaps.md) →**

@@ -42,12 +42,14 @@ A gentler path from beginner to confident.
 | S1 | [Sorting](algorithms/02-sorting.md) | Custom-key merge sort |
 | C1 | [Complexity](algorithms/03-complexity.md) | Spot O(n) vs O(n²) vs O(2ⁿ) |
 
-### Extra Data Structures (3 lessons)
+### Extra Data Structures (5 lessons)
 | # | Topic | You'll Build |
 |---|-------|-------------|
 | DS6 | [Linked Lists](data-structures/06-linked-lists.md) | Find the middle element |
 | DS7 | [Trees](data-structures/07-trees.md) | Check if a tree is balanced |
 | DS8 | [Hashing](data-structures/08-hashing.md) | A frequency counter |
+| DS9 | [Heaps & Priority Queues](data-structures/09-heaps.md) | An issue tracker |
+| DS10 | [Hash Map Superpowers](data-structures/10-hash-map-superpowers.md) | A page analytics tool |
 
 ## How to Use
 
