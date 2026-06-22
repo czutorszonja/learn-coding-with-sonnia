@@ -309,7 +309,7 @@ From here, the curriculum continues with decorators, recursion, linked lists, tr
 
 When you're ready: **linked lists** — where you stop thinking about memory as numbered slots and start thinking about it as connected nodes.
 
-Next up: **[Lesson 5: Linked Lists](05-linked-lists.md)** ⛓️
+Next up: **[Lesson 5: Functions as First-Class Citizens](05-functions-first-class.md)** 🎭
 
 ---
 

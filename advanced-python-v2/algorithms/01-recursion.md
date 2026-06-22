@@ -249,7 +249,7 @@ That's it. 8 lines. The function handles ANY depth of nesting — 2 levels, 10 l
 
 Recursion and linked lists go hand in hand — linked lists are naturally recursive data structures.
 
-Next up: **[Linked Lists](../data-structures/05-linked-lists.md)** — data that points to data that points to data... ⛓️
+Next up: **[Linked Lists](../data-structures/06-linked-lists.md)** — data that points to data that points to data... ⛓️
 
 ---
 

@@ -21,13 +21,14 @@ A gentler path from beginner to confident.
 | O3 | [Magic Methods](oop/03-magic-methods.md) | A 2D Point class |
 | O4 | [Composition](oop/04-composition.md) | A computer builder |
 
-### Data Structures (4 lessons)
+### Data Structures (5 lessons)
 | # | Topic | You'll Build |
 |---|-------|-------------|
 | DS1 | [Stacks](data-structures/01-stacks.md) | Browser back/forward |
 | DS2 | [Queues](data-structures/02-queues.md) | A print queue |
 | DS3 | [Deque](data-structures/03-deque.md) | Clipboard history |
 | DS4 | [Iterables & Iterators](data-structures/04-iterables-iterators.md) | A Fibonacci generator |
+| DS5 | [Functions as First-Class Citizens](data-structures/05-functions-first-class.md) | A multiplier factory |
 
 ### Advanced (1 lesson)
 | # | Topic | You'll Build |
@@ -44,9 +45,9 @@ A gentler path from beginner to confident.
 ### Extra Data Structures (3 lessons)
 | # | Topic | You'll Build |
 |---|-------|-------------|
-| DS5 | [Linked Lists](data-structures/05-linked-lists.md) | Find the middle element |
-| DS6 | [Trees](data-structures/06-trees.md) | Check if a tree is balanced |
-| DS7 | [Hashing](data-structures/07-hashing.md) | A frequency counter |
+| DS6 | [Linked Lists](data-structures/06-linked-lists.md) | Find the middle element |
+| DS7 | [Trees](data-structures/07-trees.md) | Check if a tree is balanced |
+| DS8 | [Hashing](data-structures/08-hashing.md) | A frequency counter |
 
 ## How to Use
 

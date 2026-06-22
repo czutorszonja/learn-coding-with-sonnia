@@ -1,6 +1,6 @@
 # Algorithms: Time & Space Complexity ⏱️
 
-**← Back to [Hashing](../data-structures/07-hashing.md)**
+**← Back to [Hashing](../data-structures/08-hashing.md)**
 
 ---
 

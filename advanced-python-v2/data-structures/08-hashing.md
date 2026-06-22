@@ -1,6 +1,6 @@
-# Data Structures Lesson 7: Hashing — Instant Lookups ✨
+# Data Structures Lesson 8: Hashing — Instant Lookups ✨
 
-**← Back to [Lesson 6: Trees](06-trees.md)**
+**← Back to [Lesson 7: Trees](07-trees.md)**
 
 ---
 

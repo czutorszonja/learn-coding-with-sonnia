@@ -1,6 +1,6 @@
 # Algorithms: Sorting 📊
 
-**← Back to [Trees](../data-structures/06-trees.md)**
+**← Back to [Trees](../data-structures/07-trees.md)**
 
 ---
 
@@ -281,7 +281,7 @@ Now your sort can handle anything — strings, objects, custom structs — as lo
 
 Sorting organises data. But how do you find data FAST without sorting? That's where **hashing** comes in.
 
-Next up: **[Hashing](../data-structures/07-hashing.md)** — instant lookups ✨
+Next up: **[Hashing](../data-structures/08-hashing.md)** — instant lookups ✨
 
 ---
 

@@ -1,6 +1,6 @@
-# Data Structures Lesson 6: Trees 🌳
+# Data Structures Lesson 7: Trees 🌳
 
-**← Back to [Lesson 5: Linked Lists](05-linked-lists.md)**
+**← Back to [Lesson 6: Linked Lists](06-linked-lists.md)**
 
 ---
 
