@@ -174,63 +174,66 @@ def make_counter(start=0):
 
 `nonlocal` tells Python: "count is not local to increment, and it's not global either — it's in the outer function's scope."
 
-### Part 6: Why This Matters for Data Structures
+### Part 6: Passing Functions Around — Why It Matters Now
 
-When we build linked lists, trees, and other structures, we'll use these patterns constantly:
-
-```python
-# Sorting a linked list with a custom comparison:
-def sort_list(head, key_func):
-    # key_func is passed in — could be lambda n: n.age or str.lower
-    ...
-
-# Traversing a tree with a visitor function:
-def walk_tree(node, visit_func):
-    visit_func(node)
-    if node.left:
-        walk_tree(node.left, visit_func)  # Same visitor for left subtree
-    if node.right:
-        walk_tree(node.right, visit_func) # Same visitor for right subtree
-
-# Building a custom data structure with a closure:
-def make_stack_factory():
-    stack = []
-    def push(item): stack.append(item)
-    def pop(): return stack.pop()
-    def peek(): return stack[-1] if stack else None
-    return push, pop, peek  # Returns three functions sharing the same stack!
-```
-
-### Part 7: Lambda — Quick, Nameless Functions
-
-Sometimes a function is so short that giving it a name feels wasteful. `lambda` creates a function without a `def`:
+You don't need linked lists or trees to use this. Here are real examples with things you already know:
 
 ```python
-# These are equivalent:
+# Example 1: A function that applies ANOTHER function twice
+def twice(func, value):
+    return func(func(value))
 
-def by_length(word):
-    return len(word)
+def add_exclamation(s):
+    return s + "!"
 
-sorted(words, key=by_length)
+print(twice(add_exclamation, "hi"))  # "hi!!"
+# Step 1: add_exclamation("hi") → "hi!"
+# Step 2: add_exclamation("hi!") → "hi!!"
 
-# vs.
+# Example 2: Transform every item in a list
+def transform_all(func, items):
+    result = []
+    for item in items:
+        result.append(func(item))
+    return result
 
-sorted(words, key=lambda word: len(word))
-```
+def shout(s):
+    return str(s).upper()
 
-Lambda syntax: `lambda arguments: expression`
-
-```python
-add = lambda a, b: a + b
-print(add(3, 4))  # 7
-
-# Lambda shines as an argument:
 numbers = [1, 2, 3, 4, 5]
-squares = list(map(lambda x: x ** 2, numbers))
-print(squares)  # [1, 4, 9, 16, 25]
+print(transform_all(lambda x: x * 10, numbers))  # [10, 20, 30, 40, 50]
+print(transform_all(shout, ["hi", "bye"]))       # ['HI', 'BYE']
+
+# Example 3: Find items that match a rule
+def keep_if(func, items):
+    result = []
+    for item in items:
+        if func(item):
+            result.append(item)
+    return result
+
+print(keep_if(lambda x: x > 3, [1, 2, 3, 4, 5, 6]))  # [4, 5, 6]
+print(keep_if(lambda x: x.startswith("S"), ["Szonja", "Arthur", "Sara"]))
+# ['Szonja', 'Sara']
 ```
 
-**Lambda rule:** Use it for one-liners passed to other functions. If the logic needs more than one line, use `def`.
+These are the same patterns as `map()` and `filter()` — now you know how they work inside.
+
+### Part 7: Lambda — A Quick Peek
+
+Sometimes a function is so short that writing `def` feels heavy. `lambda` creates a function without a name:
+
+```python
+# These do the same thing:
+sorted(words, key=lambda w: len(w))     # lambda — inline, no name
+
+# is equivalent to:
+def by_length(w):
+    return len(w)
+sorted(words, key=by_length)             # def — named, three lines
+```
+
+Lambda has its own full lesson now — see **[Lesson 12b: Lambda Functions](12b-lambda.md)** for a proper deep dive. For now, just know: `lambda x: expression` is a quick one-line function.
 
 ---
 
@@ -292,9 +295,10 @@ print(times_ten(5)) # 50
 - **Nested functions** are defined inside other functions — perfect for private helpers.
 - **Closures** are nested functions that remember their enclosing scope, even after the outer function returns.
 - **`nonlocal`** lets a nested function modify a variable in the outer scope.
-- **`lambda`** creates quick, one-expression functions — use it for simple callbacks.
-- **Higher-order functions** take or return other functions — `sorted(..., key=...)`, `map()`, `filter()`.
+- Passing a function to another function is like lending a tool — the receiver decides when to use it.
 
 ---
 
-**Next: [Lesson 13: Linked Lists](13-linked-lists.md) →**
+**Next: [Lesson 12b: Lambda Functions](12b-lambda.md) →**
+
+Or continue to **[Lesson 13: Linked Lists](13-linked-lists.md)** if you're comfortable with lambda already.

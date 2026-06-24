@@ -6,7 +6,7 @@ A gentler path from beginner to confident.
 
 ## The Path
 
-21 lessons. One concept each. Go in order, or jump to whatever you need.
+24 lessons. One concept each. Go in order, or jump to whatever you need.
 
 | # | Topic | You'll Build |
 |---|-------|-------------|
@@ -22,6 +22,7 @@ A gentler path from beginner to confident.
 | 10 | [Deque](10-deque.md) | Clipboard history |
 | 11 | [Iterables & Iterators](11-iterables-iterators.md) | A Fibonacci generator |
 | 12 | [Functions as First-Class Citizens](12-functions-first-class.md) | A multiplier factory |
+| 12b | [Lambda Functions](12b-lambda.md) | Quick data transformations |
 | 13 | [Linked Lists](13-linked-lists.md) | Find the middle element |
 | 14 | [Trees](14-trees.md) | Check if a tree is balanced |
 | 15 | [Hashing](15-hashing.md) | A frequency counter |
@@ -31,6 +32,9 @@ A gentler path from beginner to confident.
 | 19 | [Recursion](19-recursion.md) | Sum a nested list |
 | 20 | [Sorting](20-sorting.md) | Custom-key merge sort |
 | 21 | [Time & Space Complexity](21-complexity.md) | Spot O(n) vs O(n²) vs O(2ⁿ) |
+| 22 | [Graphs & BFS](22-graphs-bfs.md) | Degrees of separation finder |
+| 23 | [Graphs & DFS](23-graphs-dfs.md) | All introduction chains |
+
 
 ## How to Use
 
