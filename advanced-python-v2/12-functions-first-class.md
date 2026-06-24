@@ -174,9 +174,17 @@ def make_counter(start=0):
 
 `nonlocal` tells Python: "count is not local to increment, and it's not global either — it's in the outer function's scope."
 
-### Part 6: Passing Functions Around — Why It Matters Now
+### Part 6: Why Pass a Function to Another Function?
 
-You don't need linked lists or trees to use this. Here are real examples with things you already know:
+So far, every function you've written does ONE specific job. `add_exclamation("hi")` always adds an exclamation mark. `double(5)` always multiplies by 2.
+
+But imagine you're building a tool that needs to work with ANY kind of transformation — and you don't know what the transformation will be until the program is running. Maybe the user picks "uppercase" from a menu. Maybe a config file says "multiply by 1.2".
+
+**The problem:** You can't write `if user_picked_uppercase: do this, elif user_picked_double: do that` for every possible option. That's infinite, and you can't predict what someone will need.
+
+**The solution:** Pass the transformation IN as a function. The tool says "I'll apply whatever function you give me to every item" — and the caller decides what that function is.
+
+Here's what that looks like with things you already know:
 
 ```python
 # Example 1: A function that applies ANOTHER function twice
