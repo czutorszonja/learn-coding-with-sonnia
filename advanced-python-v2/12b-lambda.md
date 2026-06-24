@@ -255,7 +255,7 @@ rounded = ...
 # Step 2: Keep only prices that are £10 and above
 #          (use filter + lambda)
 # Your code:
-affordable = ...
+pricey = ...
 
 # Step 3: Sort the remaining prices from cheapest to most expensive
 #         (use sorted + lambda)
@@ -268,7 +268,7 @@ sorted_prices = ...
 with_vat = ...
 
 print("Step 1 - Rounded:", rounded)
-print("Step 2 - £10+:", affordable)
+print("Step 2 - £10+:", pricey)
 print("Step 3 - Sorted:", sorted_prices)
 print("Step 4 - +VAT:", with_vat)
 ```
@@ -300,16 +300,16 @@ prices = [4.99, 19.99, 0.50, 24.95, 9.99, 100.00, 14.99]
 rounded = list(map(lambda p: round(p), prices))
 
 # Step 2: Keep £10 and above
-affordable = list(filter(lambda p: p >= 10, rounded))
+pricey = list(filter(lambda p: p >= 10, rounded))
 
 # Step 3: Sort cheapest first
-sorted_prices = sorted(affordable, key=lambda p: p)
+sorted_prices = sorted(pricey, key=lambda p: p)
 
 # Step 4: Add 20% VAT
 with_vat = list(map(lambda p: p * 1.2, sorted_prices))
 
 print("Step 1 - Rounded:", rounded)
-print("Step 2 - £10+:", affordable)
+print("Step 2 - £10+:", pricey)
 print("Step 3 - Sorted:", sorted_prices)
 print("Step 4 - +VAT:", with_vat)
 ```
