@@ -279,9 +279,9 @@ Now your sort can handle anything — strings, objects, custom structs — as lo
 
 ## What's Next?
 
-Sorting transforms collections — but what if you don't want to store everything at once? That's where **iterables** come in.
+You sorted the shelf. Now let's FIND things on it — fast.
 
-Next up: **[Lesson 11: Iterables & Iterators](11-iterables-iterators.md)** — generate values on demand 🔄
+Next up: **[Lesson 10b: Binary Search](10b-binary-search.md)** — find anything in O(log n) 🔍
 
 ---
 

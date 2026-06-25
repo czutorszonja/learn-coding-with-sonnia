@@ -6,7 +6,7 @@ A gentler path from beginner to confident.
 
 ## The Path
 
-24 lessons. One concept each. Go in order, or jump to whatever you need.
+25 lessons. One concept each. Go in order, or jump to whatever you need.
 
 | # | Topic | You'll Build |
 |---|-------|-------------|
@@ -20,6 +20,7 @@ A gentler path from beginner to confident.
 | 8 | [Functions as First-Class Citizens 🎭](08-functions-first-class.md) | A multiplier factory |
 | 9 | [Lambda Functions ⚡](09-lambda.md) | Quick data transformations |
 | 10 | [Sorting 📊](10-sorting.md) | Custom-key merge sort |
+| 10b | [Binary Search 🔍](10b-binary-search.md) | Find anything in O(log n) |
 | 11 | [Iterables & Iterators 🔄](11-iterables-iterators.md) | A Fibonacci generator |
 | 12 | [Decorators 🎀](12-decorators.md) | A bot with `@on_message` |
 | 13 | [Recursion 🔄](13-recursion.md) | Sum a nested list |
