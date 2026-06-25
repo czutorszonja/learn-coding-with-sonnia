@@ -1,4 +1,4 @@
-# Lesson 4: Sharing Behaviour with Inheritance 🧬
+# Lesson 4: Sharing Behaviour with Inheritance
 
 **← Back to [Lesson 3: Cleaner Access with @property](03-property-basics.md)**
 

@@ -1,6 +1,6 @@
-# Lesson 21: Time & Space Complexity ⏱️
+# Lesson 14: Time & Space Complexity
 
-**← Back to [Lesson 15: Hashing](15-hashing.md)**
+**← Back to [Lesson 13: Recursion](13-recursion.md)**
 
 ---
 
@@ -354,3 +354,9 @@ Now when someone says "dictionary lookups are fast" you know exactly how fast �
 ---
 
 **You don't need to memorise these.** You need to develop the instinct: "am I writing a loop inside a loop? That's going to hurt at scale." The instinct comes from practice, not flashcards.
+
+---
+
+Now let's put complexity to work. We'll start with the simplest data structure that Big-O reasoning applies to — the **stack**.
+
+Continue to **[Lesson 15: Stacks](15-stacks.md)** 📚

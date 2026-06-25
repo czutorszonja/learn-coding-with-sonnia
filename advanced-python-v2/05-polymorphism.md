@@ -1,4 +1,4 @@
-# Lesson 5: Same Interface, Different Behaviour 🎭
+# Lesson 5: Same Interface, Different Behaviour
 
 **← Back to [Lesson 4: Sharing Behaviour with Inheritance](04-inheritance.md)**
 

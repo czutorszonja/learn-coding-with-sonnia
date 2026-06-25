@@ -10,32 +10,30 @@ A gentler path from beginner to confident.
 
 | # | Topic | You'll Build |
 |---|-------|-------------|
-| 1 | [Why Classes?](01-why-classes.md) | A `Book` tracker |
-| 2 | [Protecting Your Data](02-protecting-data.md) | A bank account |
-| 3 | [Cleaner Access with @property](03-property-basics.md) | A temperature converter |
-| 4 | [Inheritance](04-inheritance.md) | An animal shelter system |
-| 5 | [Polymorphism](05-polymorphism.md) | A notification dispatcher |
-| 6 | [Magic Methods](06-magic-methods.md) | A 2D Point class |
-| 7 | [Composition](07-composition.md) | A computer builder |
-| 8 | [Stacks](08-stacks.md) | Browser back/forward |
-| 9 | [Queues](09-queues.md) | A print queue |
-| 10 | [Deque](10-deque.md) | Clipboard history |
-| 11 | [Iterables & Iterators](11-iterables-iterators.md) | A Fibonacci generator |
-| 12 | [Functions as First-Class Citizens](12-functions-first-class.md) | A multiplier factory |
-| 12b | [Lambda Functions](12b-lambda.md) | Quick data transformations |
-| 13 | [Linked Lists](13-linked-lists.md) | Find the middle element |
-| 14 | [Trees](14-trees.md) | Check if a tree is balanced |
-| 15 | [Hashing](15-hashing.md) | A frequency counter |
-| 16 | [Heaps & Priority Queues](16-heaps.md) | An issue tracker |
-| 17 | [Hash Map Superpowers](17-hash-map-superpowers.md) | A page analytics tool |
-| 18 | [Decorators](18-decorators.md) | A bot with `@on_message` |
-| 19 | [Recursion](19-recursion.md) | Sum a nested list |
-| 20 | [Sorting](20-sorting.md) | Custom-key merge sort |
-| 21 | [Time & Space Complexity](21-complexity.md) | Spot O(n) vs O(n²) vs O(2ⁿ) |
-| 22 | [Graphs & BFS](22-graphs-bfs.md) | Degrees of separation finder |
-| 23 | [Graphs & DFS](23-graphs-dfs.md) | All introduction chains |
-
-
+| 1 | [Why Classes? 🤔](01-why-classes.md) | A `Book` tracker |
+| 2 | [Protecting Your Data 🛡️](02-protecting-data.md) | A bank account |
+| 3 | [Cleaner Access with @property 🔑](03-property-basics.md) | A temperature converter |
+| 4 | [Sharing Behaviour with Inheritance 🧬](04-inheritance.md) | An animal shelter system |
+| 5 | [Same Interface, Different Behaviour 🎭](05-polymorphism.md) | A notification dispatcher |
+| 6 | [Making Your Objects Feel Pythonic ✨](06-magic-methods.md) | A 2D Point class |
+| 7 | [Composition — Has-a vs Is-a 🧩](07-composition.md) | A computer builder |
+| 8 | [Functions as First-Class Citizens 🎭](08-functions-first-class.md) | A multiplier factory |
+| 9 | [Lambda Functions ⚡](09-lambda.md) | Quick data transformations |
+| 10 | [Sorting 📊](10-sorting.md) | Custom-key merge sort |
+| 11 | [Iterables & Iterators 🔄](11-iterables-iterators.md) | A Fibonacci generator |
+| 12 | [Decorators 🎀](12-decorators.md) | A bot with `@on_message` |
+| 13 | [Recursion 🔄](13-recursion.md) | Sum a nested list |
+| 14 | [Time & Space Complexity ⏱️](14-complexity.md) | Spot O(n) vs O(n²) vs O(2ⁿ) |
+| 15 | [Stacks 📚](15-stacks.md) | Browser back/forward |
+| 16 | [Queues 🚶](16-queues.md) | A print queue |
+| 17 | [Deque — Add and Remove from Both Ends 🔁](17-deque.md) | Clipboard history |
+| 18 | [Linked Lists ⛓️](18-linked-lists.md) | Find the middle element |
+| 19 | [Trees 🌳](19-trees.md) | Check if a tree is balanced |
+| 20 | [Heaps — Always Grab the Smallest Instantly ⛰️](20-heaps.md) | An issue tracker |
+| 21 | [Hashing — Instant Lookups ✨](21-hashing.md) | A frequency counter |
+| 22 | [Hash Map Superpowers — defaultdict & Counter 🦸](22-hash-map-superpowers.md) | A page analytics tool |
+| 23 | [Graphs & BFS 🕸️](23-graphs-bfs.md) | Degrees of separation finder |
+| 24 | [Graphs & DFS 🔍](24-graphs-dfs.md) | All introduction chains |
 ## How to Use
 
 1. Read the lesson — it tells a story, not a textbook

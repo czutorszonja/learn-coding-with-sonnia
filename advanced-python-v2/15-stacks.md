@@ -1,6 +1,6 @@
-# Lesson 8: Stacks 📚
+# Lesson 15: Stacks
 
-**← Back to [Lesson 7: Composition](07-composition.md)**
+**← Back to [Lesson 14: Time & Space Complexity](14-complexity.md)**
 
 ---
 
@@ -329,7 +329,7 @@ print(bh.can_go_forward())  # False
 
 Stacks are LIFO. Queues are FIFO — first come, first served. Coffee shop line, print queue, message processing — all queues.
 
-Continue to **[Lesson 9: Queues](09-queues.md)** 🚶‍♂️
+Continue to **[Lesson 16: Queues](16-queues.md)** 🚶‍♂️
 
 ---
 
@@ -447,7 +447,7 @@ print(bh.can_go_forward())  # False
 
 Stacks are LIFO. Queues are FIFO — first come, first served. Coffee shop line, print queue, message processing — all queues.
 
-Continue to **[Lesson 9: Queues](09-queues.md)** 🚶‍♂️
+Continue to **[Lesson 16: Queues](16-queues.md)** 🚶‍♂️
 
 ---
 

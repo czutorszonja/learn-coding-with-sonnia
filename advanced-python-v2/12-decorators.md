@@ -1,6 +1,6 @@
-# Lesson 18: Decorators 🎀
+# Lesson 12: Decorators
 
-**← Back to [Lesson 3: Cleaner Access with @property](03-property-basics.md)**
+**← Back to [Lesson 11: Iterables & Iterators](11-iterables-iterators.md)**
 
 ---
 
@@ -336,7 +336,7 @@ Notice: the `wrapper` isn't strictly necessary here (the decorator could just re
 
 Decorators are one of those ideas that seem abstract until you use them a couple of times, then suddenly they're everywhere. They're the last "big language feature" before we shift into algorithmic thinking.
 
-Next up: **[Lesson 19: Recursion](19-recursion.md)** — functions that call themselves 🔄
+Next up: **[Lesson 13: Recursion](13-recursion.md)** — functions that call themselves 🔄
 
 ---
 

@@ -1,6 +1,6 @@
-# Lesson 15: Hashing — Instant Lookups ✨
+# Lesson 21: Hashing — Instant Lookups
 
-**← Back to [Lesson 14: Trees](14-trees.md)**
+**← Back to [Lesson 20: Heaps — Always Grab the Smallest Instantly](20-heaps.md)**
 
 ---
 
@@ -277,4 +277,4 @@ You've gone from "what's a class?" to "what's a hash table?" — that's a massiv
 
 ---
 
-**Next: [Lesson 16: Heaps](16-heaps.md) →**
+**Next: [Lesson 22: Hash Map Superpowers](22-hash-map-superpowers.md) →**

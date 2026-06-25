@@ -1,4 +1,4 @@
-# Lesson 3: Cleaner Access with @property 🔑
+# Lesson 3: Cleaner Access with @property
 
 **← Back to [Lesson 2: Protecting Your Data](02-protecting-data.md)**
 

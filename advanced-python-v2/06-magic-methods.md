@@ -1,4 +1,4 @@
-# Lesson 6: Making Your Objects Feel Pythonic ✨
+# Lesson 6: Making Your Objects Feel Pythonic
 
 **← Back to [Lesson 5: Same Interface, Different Behaviour](05-polymorphism.md)**
 

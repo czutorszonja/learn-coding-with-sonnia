@@ -1,6 +1,6 @@
-# Lesson 10: Deque — Add and Remove from Both Ends 🔁
+# Lesson 17: Deque — Add and Remove from Both Ends
 
-**← Back to [Lesson 9: Queues](09-queues.md)**
+**← Back to [Lesson 16: Queues](16-queues.md)**
 
 ---
 
@@ -216,7 +216,7 @@ print(cb.current())        # New text
 
 You've now got stacks, queues, and deques. All of them are iterable — you can loop over them. But how does iteration actually WORK in Python? What's happening behind `for item in collection:`?
 
-Continue to **[Lesson 11: Iterables & Iterators](11-iterables-iterators.md)** 🔄
+Continue to **[Lesson 18: Linked Lists](18-linked-lists.md)** ⛓️
 
 ---
 

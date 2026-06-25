@@ -1,4 +1,4 @@
-# Lesson 1: Why Classes? 🤔
+# Lesson 1: Why Classes?
 
 ---
 

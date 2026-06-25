@@ -1,6 +1,6 @@
-# Lesson 20: Sorting 📊
+# Lesson 10: Sorting
 
-**← Back to [Lesson 14: Trees](14-trees.md)**
+**← Back to [Lesson 9: Lambda Functions](09-lambda.md)**
 
 ---
 
@@ -279,9 +279,9 @@ Now your sort can handle anything — strings, objects, custom structs — as lo
 
 ## What's Next?
 
-Sorting organises data. But how do you find data FAST without sorting? That's where **hashing** comes in.
+Sorting transforms collections — but what if you don't want to store everything at once? That's where **iterables** come in.
 
-Next up: **[Lesson 15: Hashing](15-hashing.md)** — instant lookups ✨
+Next up: **[Lesson 11: Iterables & Iterators](11-iterables-iterators.md)** — generate values on demand 🔄
 
 ---
 

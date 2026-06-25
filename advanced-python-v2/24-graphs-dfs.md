@@ -1,6 +1,6 @@
-# Lesson 23: Graphs & DFS 🔍
+# Lesson 24: Graphs & DFS
 
-**← Back to [Lesson 22: Graphs & BFS](22-graphs-bfs.md)**
+**← Back to [Lesson 23: Graphs & BFS](23-graphs-bfs.md)**
 
 ---
 
@@ -51,7 +51,7 @@ DFS uses a **stack** instead of a queue. There are two ways to implement it:
 | **Iterative** | Use an explicit stack (a Python list) | You want to see every step, avoid recursion limits |
 | **Recursive** | Use the function call stack | The code is cleaner, the problem is naturally recursive |
 
-You already know both tools: stacks from Lesson 8, recursion from Lesson 19. DFS is where they meet.
+You already know both tools: stacks from Lesson 15, recursion from Lesson 13. DFS is where they meet.
 
 We'll build both.
 
@@ -106,7 +106,7 @@ def dfs_traversal(graph, start):
 The ONLY difference: `popleft()` → `pop()`. Queue → Stack. That's it.
 
 ```python
-# Using the same Graph class from Lesson 22
+# Using the same Graph class from Lesson 23
 class Graph:
     def __init__(self):
         self.adj = {}
@@ -138,7 +138,7 @@ print("BFS:", bfs_traversal(g, "A"))
 print("DFS:", dfs_traversal(g, "A"))
 ```
 
-We're using the same `Graph` class from Lesson 22. Graph traversal doesn't care about the graph structure — it only cares about the exploration order.
+We're using the same `Graph` class from Lesson 23. Graph traversal doesn't care about the graph structure — it only cares about the exploration order.
 
 One gotcha: the `if current in visited: continue` check is needed in the iterative version because a node can be added to the stack multiple times before it's actually visited. In BFS, this rarely matters because the queue processes in order. In DFS, the stack can hold duplicates of the same node from different paths — we skip them when they surface.
 

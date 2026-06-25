@@ -1,6 +1,6 @@
-# Lesson 19: Recursion 🔄
+# Lesson 13: Recursion
 
-**← Back to [Lesson 18: Decorators](18-decorators.md)**
+**← Back to [Lesson 12: Decorators](12-decorators.md)**
 
 ---
 
@@ -249,7 +249,7 @@ That's it. 8 lines. The function handles ANY depth of nesting — 2 levels, 10 l
 
 Recursion and linked lists go hand in hand — linked lists are naturally recursive data structures.
 
-Next up: **[Lesson 13: Linked Lists](13-linked-lists.md)** — data that points to data that points to data... ⛓️
+Next up: **[Lesson 18: Linked Lists](18-linked-lists.md)** — data that points to data that points to data... ⛓️
 
 ---
 

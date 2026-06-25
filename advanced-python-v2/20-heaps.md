@@ -1,6 +1,6 @@
-# Lesson 16: Heaps — Always Grab the Smallest Instantly ⛰️
+# Lesson 20: Heaps — Always Grab the Smallest Instantly
 
-**← Back to [Lesson 15: Hashing](15-hashing.md)**
+**← Back to [Lesson 19: Trees](19-trees.md)**
 
 ---
 
@@ -304,4 +304,4 @@ Typo: urgency = (6-5)×10 + 48 = 58
 
 ---
 
-**Next: [Lesson 17: Hash Map Superpowers](17-hash-map-superpowers.md) →**
+**Next: [Lesson 22: Hash Map Superpowers](22-hash-map-superpowers.md) →**

@@ -1,6 +1,6 @@
-# Lesson 17: Hash Map Superpowers — defaultdict & Counter 🦸
+# Lesson 22: Hash Map Superpowers — defaultdict & Counter
 
-**← Back to [Lesson 16: Heaps](16-heaps.md)**
+**← Back to [Lesson 21: Hashing — Instant Lookups](21-hashing.md)**
 
 ---
 

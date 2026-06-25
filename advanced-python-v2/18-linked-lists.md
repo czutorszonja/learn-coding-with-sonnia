@@ -1,6 +1,6 @@
-# Lesson 13: Linked Lists ⛓️
+# Lesson 18: Linked Lists
 
-**← Back to [Lesson 12: Functions as First-Class Citizens](12-functions-first-class.md)**
+**← Back to [Lesson 17: Deque — Add and Remove from Both Ends](17-deque.md)**
 
 ---
 
@@ -276,7 +276,7 @@ print(f"Middle (fast/slow): {ll.find_middle_fast_slow()}")  # 4
 
 Now that you know the node-pointer pattern, you're ready for the most important self-referential structure in computer science: **trees** 🌳
 
-Next up: **[Lesson 14: Trees](14-trees.md)** — the data structure behind file systems, HTML, and AI decision-making.
+Next up: **[Lesson 19: Trees](19-trees.md)** — the data structure behind file systems, HTML, and AI decision-making.
 
 ---
 

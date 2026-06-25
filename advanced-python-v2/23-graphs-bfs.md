@@ -1,6 +1,6 @@
-# Lesson 22: Graphs & BFS 🕸️
+# Lesson 23: Graphs & BFS
 
-**← Back to [Lesson 21: Time & Space Complexity](21-complexity.md)**
+**← Back to [Lesson 22: Hash Map Superpowers — defaultdict & Counter](22-hash-map-superpowers.md)**
 
 ---
 
@@ -175,7 +175,7 @@ Distance 1:  Bob, Charlie          ← all of Alice's friends
 Distance 2:  Diana, Edward         ← friends of Bob + Charlie
 ```
 
-The key insight: BFS uses a **queue** (remember Lesson 9?). You add neighbours to the queue and process them in order — first in, first out. That guarantees you see closer nodes before farther ones.
+The key insight: BFS uses a **queue** (remember Lesson 16?). You add neighbours to the queue and process them in order — first in, first out. That guarantees you see closer nodes before farther ones.
 
 ---
 
@@ -477,7 +477,7 @@ The `parent` dictionary is the key to BFS pathfinding. It's a breadcrumb trail �
 
 BFS explores wide. DFS explores deep — it follows one path all the way to the end before backtracking. That's useful for maze solving, cycle detection, and finding ALL paths (not just the shortest).
 
-Next up: **[Lesson 23: Graphs & DFS](23-graphs-dfs.md)** 🔍
+Next up: **[Lesson 24: Graphs & DFS](24-graphs-dfs.md)** 🔍
 
 ---
 

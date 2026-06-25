@@ -1,6 +1,6 @@
-# Lesson 12: Functions as First-Class Citizens 🎭
+# Lesson 8: Functions as First-Class Citizens
 
-**← Back to [Lesson 11: Iterables & Iterators](11-iterables-iterators.md)**
+**← Back to [Lesson 7: Composition — Has-a vs Is-a](07-composition.md)**
 
 ---
 
@@ -241,7 +241,7 @@ def by_length(w):
 sorted(words, key=by_length)             # def — named, three lines
 ```
 
-Lambda has its own full lesson now — see **[Lesson 12b: Lambda Functions](12b-lambda.md)** for a proper deep dive. For now, just know: `lambda x: expression` is a quick one-line function.
+Lambda has its own full lesson now — see **[Lesson 9: Lambda Functions](09-lambda.md)** for a proper deep dive. For now, just know: `lambda x: expression` is a quick one-line function.
 
 ---
 
@@ -307,6 +307,6 @@ print(times_ten(5)) # 50
 
 ---
 
-**Next: [Lesson 12b: Lambda Functions](12b-lambda.md) →**
+**Next: [Lesson 9: Lambda Functions](09-lambda.md) →**
 
-Or continue to **[Lesson 13: Linked Lists](13-linked-lists.md)** if you're comfortable with lambda already.
+Or continue to **[Lesson 18: Linked Lists](18-linked-lists.md)** if you're comfortable with lambda already.

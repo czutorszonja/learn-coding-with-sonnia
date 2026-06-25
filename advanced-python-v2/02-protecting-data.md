@@ -1,4 +1,4 @@
-# Lesson 2: Protecting Your Data 🛡️
+# Lesson 2: Protecting Your Data
 
 **← Back to [Lesson 1: Why Classes?](01-why-classes.md)**
 

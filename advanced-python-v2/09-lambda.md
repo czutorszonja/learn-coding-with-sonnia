@@ -1,6 +1,6 @@
-# Lesson 12b: Lambda Functions ⚡
+# Lesson 9: Lambda Functions
 
-**Companion to [Lesson 12: Functions as First-Class Citizens](12-functions-first-class.md)** — do that one first.
+**Companion to [Lesson 8: Functions as First-Class Citizens](08-functions-first-class.md)** — do that one first.
 
 ---
 
@@ -361,8 +361,8 @@ Each of these is a one-line idea. Lambda lets you express it without ceremony.
 
 Lambda is a tool, not a topic on its own — it's the punctuation of higher-order functions. Now that you have it:
 
-- Continue to **[Lesson 13: Linked Lists](13-linked-lists.md)**
-- Or practice with **[Lesson 20: Sorting](20-sorting.md)** — every custom sort key is a lambda waiting to happen
+- Continue to **[Lesson 10: Sorting](10-sorting.md)** — every custom sort key is a lambda waiting to happen
+- Or jump ahead to **[Lesson 18: Linked Lists](18-linked-lists.md)**
 
 ---
 
