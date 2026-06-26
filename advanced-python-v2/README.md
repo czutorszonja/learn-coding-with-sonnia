@@ -6,7 +6,7 @@ A gentler path from beginner to confident.
 
 ## The Path
 
-25 lessons. One concept each. Go in order, or jump to whatever you need.
+26 lessons. One concept each. Go in order, or jump to whatever you need.
 
 | # | Topic | You'll Build |
 |---|-------|-------------|
@@ -35,6 +35,7 @@ A gentler path from beginner to confident.
 | 22 | [Hash Map Superpowers — defaultdict & Counter 🦸](22-hash-map-superpowers.md) | A page analytics tool |
 | 23 | [Graphs & BFS 🕸️](23-graphs-bfs.md) | Degrees of separation finder |
 | 24 | [Graphs & DFS 🔍](24-graphs-dfs.md) | All introduction chains |
+| 25 | [The Collections Toolbox 🧰](25-collections-toolbox.md) | A game score tracker |
 ## How to Use
 
 1. Read the lesson — it tells a story, not a textbook
