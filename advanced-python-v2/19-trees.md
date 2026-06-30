@@ -150,6 +150,198 @@ print(bst.search(12))  # False
 
 ---
 
+## Delete: The Tricky Operation
+
+Insert is easy — you find an empty spot and drop the node there. Delete is harder because removing a node might leave a gap in the tree. There are **three cases**:
+
+| Case | What to do |
+|------|-----------|
+| **1. Leaf** (no children) | Just remove it |
+| **2. One child** | Replace the node with its child |
+| **3. Two children** | Find the inorder successor, copy its value, delete the successor |
+
+### Case 1: Leaf Node
+
+Simply set the parent's left or right pointer to `None`.
+
+```
+      10                   10
+     /  \                 /  \
+    5    15      →       5    15
+         /
+        12                   (12 is gone)
+```
+
+```python
+def _delete(self, node, value):
+    if node is None:
+        return None
+
+    # Step 1: Find the node
+    if value < node.value:
+        node.left = self._delete(node.left, value)
+    elif value > node.value:
+        node.right = self._delete(node.right, value)
+    else:
+        # Found it! Now handle the three cases
+
+        # Case 1: No children (leaf)
+        if node.left is None and node.right is None:
+            return None
+        # ... cases 2 & 3 coming ...
+
+    return node
+```
+
+Look at that `return None` — the parent receives `None` and sets its pointer to it. The leaf is gone.
+
+### Case 2: One Child
+
+Replace the node with its only child.
+
+```
+      10                   10
+     /  \                 /  \
+    5    15      →       5    12
+         /                      \
+        12                       13
+          \
+           13
+```
+
+```python
+# Case 2a: Only right child
+if node.left is None:
+    return node.right
+
+# Case 2b: Only left child
+if node.right is None:
+    return node.left
+```
+
+The parent receives the child node and connects to it directly. Simple.
+
+### Case 3: Two Children
+
+This is the interesting one. You can't just remove the node — you'd have two orphans.
+
+The trick: **find the inorder successor** — the smallest value in the right subtree. It's guaranteed to be larger than everything in the left subtree *and* smaller than everything else in the right subtree. Copy its value into the node, then delete the successor (it's always a leaf or has one child, so cases 1 or 2 handle it).
+
+```
+Delete 10:
+
+      10                       12
+     /  \                     /  \
+    5    15      →          5    15
+         /  \                    /  \
+        12   20                 13   20
+          \
+           13
+
+  10 is gone. 12 (the inorder successor) took its place.
+  13 moved up as 12's old child.
+```
+
+```python
+# Case 3: Two children
+successor = self._min_value(node.right)   # smallest in right subtree
+node.value = successor.value              # copy the value up
+node.right = self._delete(node.right, successor.value)  # delete the original successor
+
+def _min_value(self, node):
+    """Find the smallest value in a subtree — follow left forever."""
+    current = node
+    while current.left is not None:
+        current = current.left
+    return current
+```
+
+### Putting It All Together
+
+```python
+class BST:
+    def __init__(self):
+        self.root = None
+
+    # ... insert, search (same as before) ...
+
+    def delete(self, value):
+        """Delete a value from the BST. Does nothing if not found."""
+        self.root = self._delete(self.root, value)
+
+    def _delete(self, node, value):
+        if node is None:
+            return None
+
+        # Search phase
+        if value < node.value:
+            node.left = self._delete(node.left, value)
+        elif value > node.value:
+            node.right = self._delete(node.right, value)
+        else:
+            # Found the node — apply the correct case
+
+            # Case 1: Leaf
+            if node.left is None and node.right is None:
+                return None
+
+            # Case 2a: Only right child
+            if node.left is None:
+                return node.right
+
+            # Case 2b: Only left child
+            if node.right is None:
+                return node.left
+
+            # Case 3: Two children
+            successor = self._min_value(node.right)
+            node.value = successor.value
+            node.right = self._delete(node.right, successor.value)
+
+        return node
+
+    def _min_value(self, node):
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
+```
+
+```python
+bst = BST()
+for v in [10, 5, 15, 3, 7, 12, 20]:
+    bst.insert(v)
+
+bst.delete(3)   # Case 1: leaf — easy
+bst.delete(20)  # Case 1: leaf — easy
+bst.delete(15)  # Case 3: two children — 20 was already deleted, now 15 has only 12...
+                # Wait, 15 now has one child (12) so it's actually Case 2!
+
+# Let's be more explicit:
+bst2 = BST()
+for v in [50, 30, 70, 20, 40, 60, 80]:
+    bst2.insert(v)
+
+bst2.delete(20)  # Case 1: leaf
+bst2.delete(30)  # Case 3: two children (20 and 40). Successor is 40.
+bst2.delete(70)  # Case 3: two children (60 and 80). Successor is 80.
+bst2.delete(50)  # Case 3: root! Two children. Successor is 60.
+```
+
+### Practice: Write `tree_max()`
+
+You've seen `_min_value` — follow left forever. Now write the counterpart:
+
+```python
+def _max_value(self, node):
+    # Your code here — which direction do you follow?
+    pass
+```
+
+**Hint:** If the smallest value is all the way left... where's the largest?
+
+---
+
 ## Walking the Tree: Three Traversals
 
 There are three classic ways to visit every node in a binary tree:
@@ -322,7 +514,8 @@ Notice that inserting in sorted order creates a "straight line" — basically a 
 
 - **Tree** = linked list but each node can have multiple children
 - **Binary tree** = each node has at most 2 children (left and right)
-- **BST** = left < node < right — enables O(log n) search
+- **BST** = left < node < right — enables O(log n) search, insert, and delete
+- **BST delete** = three cases: leaf (easy), one child (bypass), two children (find inorder successor)
 - **Traversals** = inorder (sorted), preorder (copy), postorder (delete)
 - **Balancing** matters — a BST is only fast if it's balanced
 
@@ -336,4 +529,24 @@ Next up: **[Lesson 20: Heaps](20-heaps.md)** — a tree-based structure that alw
 
 ---
 
-**Your turn:** Build the BST and implement `is_balanced`. Then try implementing `tree_min()` and `tree_max()` — what's the smallest value in a BST? Which side should you follow? 💛
+**Your turn:** Build the BST, implement `is_balanced`, and try deleting nodes from different cases (leaf, one child, two children). Then implement `_max_value()` and `tree_min()` — what's the smallest value in a BST? Which side should you follow? 💛
+
+### Bonus Solution: tree_max() and tree_min()
+
+```python
+def _min_value(self, node):
+    """Smallest value — follow left forever."""
+    current = node
+    while current.left is not None:
+        current = current.left
+    return current
+
+def _max_value(self, node):
+    """Largest value — follow right forever."""
+    current = node
+    while current.right is not None:
+        current = current.right
+    return current
+```
+
+It's symmetrical: `tree_min()` goes left, `tree_max()` goes right. No recursion needed — just a simple loop until you hit `None`.
