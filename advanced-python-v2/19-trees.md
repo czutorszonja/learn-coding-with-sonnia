@@ -407,6 +407,71 @@ print(height(bst.root))  # 2
 
 The height of our tree is 2 (root at 0, then 5 & 15 at depth 1, then 3, 7, 20 at depth 2). That's well-balanced!
 
+### Height vs Diameter: What's the Longest Path?
+
+**Height** = longest path from root to a leaf. That's what `height()` returns.
+
+But what if the longest path *doesn't* go through the root?
+
+```
+        A
+       / \
+      B   C
+     / \
+    D   E
+   /       \
+  F         G
+ /           \
+H             I
+
+Height from root = 3   (A → B → D → F → H, edges)
+Diameter = 7           (H → F → D → B → E → G → I, edges)
+```
+
+The **diameter** is the longest path between *any* two nodes in the tree. For each node, it's: left height + right height + 2 (the two edges connecting through this node). The overall diameter is the **maximum** of that across all nodes.
+
+```python
+def diameter(node):
+    """Return the diameter (longest path between any two nodes) of the tree."""
+    if node is None:
+        return 0
+
+    # Option 1: the longest path goes through this node
+    # It spans from deepest left leaf → node → deepest right leaf
+    through_root = height(node.left) + height(node.right) + 2
+
+    # Option 2: the longest path is entirely in the left subtree
+    left_diameter = diameter(node.left)
+
+    # Option 3: the longest path is entirely in the right subtree
+    right_diameter = diameter(node.right)
+
+    return max(through_root, left_diameter, right_diameter)
+```
+
+```python
+# Test
+bst = BST()
+for v in [10, 5, 15, 3, 7, 12, 20]:
+    bst.insert(v)
+
+print(height(bst.root))    # 2 — longest root-to-leaf path
+print(diameter(bst.root))  # 4 — longest path between any two nodes
+                            # (3 → 5 → 10 → 15 → 20, 4 edges)
+
+# The unbalanced tree actually has a large diameter too:
+unbalanced = BST()
+for v in [1, 2, 3, 4, 5]:
+    unbalanced.insert(v)
+print(diameter(unbalanced.root))  # 4 — it's just a straight line
+```
+
+**To summarise:**
+- `height()` → longest path from **root** to any leaf
+- `diameter()` → longest path between **any two nodes** in the tree
+
+If someone asks for "the length of the longest path," clarify which one they mean — but in coding challenges it's almost always the diameter!
+
 ---
 
 ## Practice: Check if a Tree is Balanced
@@ -517,6 +582,8 @@ Notice that inserting in sorted order creates a "straight line" — basically a 
 - **BST** = left < node < right — enables O(log n) search, insert, and delete
 - **BST delete** = three cases: leaf (easy), one child (bypass), two children (find inorder successor)
 - **Traversals** = inorder (sorted), preorder (copy), postorder (delete)
+- **Height** = longest path from root to leaf (already covered)
+- **Diameter** = longest path between *any* two nodes — may not pass through root
 - **Balancing** matters — a BST is only fast if it's balanced
 
 ---
