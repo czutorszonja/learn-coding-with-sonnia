@@ -472,6 +472,57 @@ print(diameter(unbalanced.root))  # 4 — it's just a straight line
 
 If someone asks for "the length of the longest path," clarify which one they mean — but in coding challenges it's almost always the diameter!
 
+### Depth: Distance From Root to a Specific Node
+
+Height tells you the deepest leaf. Diameter tells you the longest *any-to-any* path. But what if you want the distance from the root to a **specific** value? That's **depth** — the number of edges from root to that node.
+
+```
+        10          ← depth 0
+       /  \
+      5    15       ← depth 1
+     / \     \
+    3   7    20     ← depth 2
+```
+
+```python
+def depth(self, value):
+    """Return the number of edges from the root to a given value.
+    Returns -1 if the value is not in the tree."""
+    return self._depth_recursive(self.root, value, 0)
+
+def _depth_recursive(self, node, value, current_depth):
+    if node is None:
+        return -1                     # Not found
+    if node.value == value:
+        return current_depth          # Found it!
+    if value < node.value:
+        return self._depth_recursive(node.left, value, current_depth + 1)
+    return self._depth_recursive(node.right, value, current_depth + 1)
+```
+
+```python
+bst = BST()
+for v in [10, 5, 15, 3, 7, 20]:
+    bst.insert(v)
+
+print(bst.depth(10))   # 0 — the root is 0 edges from itself
+print(bst.depth(5))    # 1 — one step left
+print(bst.depth(20))   # 2 — two steps right
+print(bst.depth(99))   # -1 — not in the tree
+```
+
+The trick: start at depth 0 at the root, add 1 every time you step down. When you find the node, that's the depth. Recursion carries the running count for you.
+
+**Three tree measurements, summarised:**
+
+| Function | Answers |
+|----------|---------|
+| `height(node)` | Longest path from this node to any leaf |
+| `diameter(node)` | Longest path between *any* two nodes |
+| `depth(value)` | Number of edges from root to this specific value |
+
+Depth also tells you how many comparisons `search()` needed — every comparison takes you one level deeper. In a balanced BST, depth is O(log n).
+
 ---
 
 ## Practice: Check if a Tree is Balanced
@@ -582,8 +633,9 @@ Notice that inserting in sorted order creates a "straight line" — basically a 
 - **BST** = left < node < right — enables O(log n) search, insert, and delete
 - **BST delete** = three cases: leaf (easy), one child (bypass), two children (find inorder successor)
 - **Traversals** = inorder (sorted), preorder (copy), postorder (delete)
-- **Height** = longest path from root to leaf (already covered)
+- **Height** = longest path from root to leaf
 - **Diameter** = longest path between *any* two nodes — may not pass through root
+- **Depth** = distance (edges) from root to a specific node
 - **Balancing** matters — a BST is only fast if it's balanced
 
 ---
