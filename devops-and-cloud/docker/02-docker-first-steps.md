@@ -137,6 +137,8 @@ docker rm <id>           # Delete it completely
 docker ps -a             # Now it's gone
 ```
 
+**Important: `docker stop` does NOT free the container name.** If you stop a container named `my-redis`, that name is still taken. To reuse it, you need `docker rm` first, or use `docker rm -f` to stop and remove in one go.
+
 ---
 
 ## 6. Naming Containers
@@ -171,11 +173,11 @@ The `:alpine` tag means the image is built on **Alpine Linux** — a tiny Linux 
 
 ## 8. Looking Inside a Running Container
 
-Sometimes you need to peek inside or modify a running container:
+`docker exec` runs a command **inside** a running container. You always need to give it a command to run:
 
 ```bash
-# See what processes are running inside
-docker exec my-nginx ps aux
+# List files in the container's web root
+docker exec my-nginx ls /usr/share/nginx/html/
 
 # Start a shell inside the container (interactive)
 docker exec -it my-nginx /bin/bash
@@ -188,6 +190,8 @@ root@abc123:/# ls
 root@abc123:/# cat /usr/share/nginx/html/index.html
 root@abc123:/# exit   # back to your machine
 ```
+
+**Note:** `docker exec my-nginx` without a command will give you an error — it's asking "do what?" You always need to specify the command to run.
 
 ### Running a One-Liner Command
 
@@ -203,6 +207,16 @@ This runs the command inside the container and returns the output. Breaking it d
 - `sh -c "..."` — run this shell command inside it (`sh` is the shell, `-c` says "here's a command")
 
 **Why `sh -c` matters:** If you write `docker exec my-nginx echo 'Hello!' > file`, the `> file` part runs on **your** machine, not inside the container. Wrapping the whole thing in `sh -c` makes sure everything happens inside.
+
+**⚠️ Windows / PowerShell users:** PowerShell intercepts the `>` character before Docker can see it. Always wrap your `sh -c` command in **double quotes**:
+
+```powershell
+# ✅ Correct — quotes keep '>' inside the container
+docker exec my-nginx sh -c "echo 'Hello!' > /tmp/file"
+
+# ❌ Wrong — PowerShell steals the '>' and tries to write to C:\tmp\file
+docker exec my-nginx sh -c echo 'Hello!' > /tmp/file
+```
 
 Any changes you make inside a container are **lost when the container is removed** — containers start fresh from the image every time. That's why we have volumes (lesson 05) and Dockerfiles (lesson 03).
 
