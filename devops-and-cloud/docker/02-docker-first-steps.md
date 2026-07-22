@@ -2,7 +2,7 @@
 
 In lesson 01 we talked about what Docker *is*. Now let's actually use it.
 
-By the end of this lesson, you'll have Docker running on your machine and you'll have started a few real containers. No imagination needed — all of this is copy-paste-and-run.
+By the end of this lesson, you'll have Docker running on your machine and you'll have started a few real containers.
 
 ---
 
@@ -66,8 +66,6 @@ The flags:
 
 Open your browser and go to [http://localhost:8080](http://localhost:8080). You'll see the Nginx welcome page.
 
-Let's break down what happened:
-
 ```
              Your Machine                    Container
           ┌──────────────┐             ┌──────────────┐
@@ -76,24 +74,35 @@ Let's break down what happened:
           └──────────────┘             └──────────────┘
 ```
 
-The `-p` flag connects port 8080 on your machine to port 80 inside the container. Your browser talks to 8080, Docker forwards the traffic to nginx.
+The `-p` flag connects a port on your machine to a port inside the container. Your browser talks to 8080, Docker forwards the traffic to nginx.
 
-**The format is always `host_port:container_port`:**
-- Left side = the port on **your machine**
-- Right side = the port **inside the container**
+---
+
+## 4. Port Mapping — How `-p` Really Works
+
+The `-p` flag uses the format `host_port:container_port`:
 
 ```
 -p 8080:80
   │     │
-  │     └── Container port (what your app listens on)
+  │     └── Container port (what the app listens on inside)
   └── Host port (what you type in your browser)
 ```
 
-If you write only `-p 6379`, Docker assigns a **random** port on your machine (like 54321). That's sometimes useful, but most of the time you want to control which port you connect to, so specify both sides.
+- The **right side** is the port the application listens on (nginx listens on 80, Redis on 6379, PostgreSQL on 5432)
+- The **left side** is the port you want to use on your own machine
+
+You can pick any free port on your machine. If you wanted nginx on port 9090 instead:
+
+```bash
+docker run -d -p 9090:80 nginx
+```
+
+If you write only `-p 6379` (without the colon), Docker assigns a **random** port on your machine — useful sometimes, but usually you want to control it.
 
 ---
 
-## 4. Managing Containers
+## 5. Managing Containers
 
 Here are the commands you'll use constantly:
 
@@ -130,7 +139,7 @@ docker ps -a             # Now it's gone
 
 ---
 
-## 5. Naming Containers
+## 6. Naming Containers
 
 Docker assigns random names like `silly_babbage` or `pensive_curie`. You can name your own:
 
@@ -138,25 +147,15 @@ Docker assigns random names like `silly_babbage` or `pensive_curie`. You can nam
 docker run -d -p 8080:80 --name my-website nginx
 ```
 
-Now `docker stop my-website` and `docker start my-website` work with a real name instead of having to look up the ID every time.
+Now `docker stop my-website` and `docker start my-website` work with a real name you chose.
 
-**Common mistake:** `--name` goes **before** the image name, not after. If you put it after, Docker treats your name as an image name and gives you "pull access denied".
-
-```bash
-# ✅ Correct (name comes before the image)
-docker run -d --name my-container -p 8080:80 nginx
-
-# ❌ Wrong (Docker thinks 'my-container' is an image name)
-docker run my-container
-```
+The `--name` flag goes **before** the image name. If you accidentally put a name where the image goes, Docker will try to pull it as an image and fail with "pull access denied".
 
 ---
 
-### Image Tags — What's the `:alpine` For?
+## 7. Image Tags — What's the `:alpine` For?
 
-You've seen `nginx`, `redis:alpine`, and `hello-world`. What do these mean?
-
-An image name can have a **tag** after a colon:
+You've seen `nginx`, `redis:alpine`, and `hello-world`. Image names can have a **tag** after a colon:
 
 | Image name | What it is |
 |---|---|
@@ -164,68 +163,52 @@ An image name can have a **tag** after a colon:
 | `nginx:alpine` | nginx built on Alpine Linux (much smaller) |
 | `redis:alpine` | Redis on Alpine Linux (lightweight) |
 | `python:3.12` | Python 3.12 with full OS |
-| `python:3.12-slim` | Python 3.12 with minimal OS (smaller, faster download) |
+| `python:3.12-slim` | Python 3.12 with a minimal OS (smaller download) |
 
-The `:alpine` tag means the image is built on **Alpine Linux** — a tiny Linux distro (~5 MB) instead of the full OS. Most images offer an `alpine` variant that's 50-80% smaller.
+The `:alpine` tag means the image is built on **Alpine Linux** — a tiny Linux distro (~5 MB) instead of a full OS. Most images offer an `alpine` variant that's 50-80% smaller. When no tag is given, Docker uses `:latest` by default.
 
 ---
 
-## 6. Looking Inside a Running Container
+## 8. Looking Inside a Running Container
 
-Sometimes you need to peek inside a container to debug what's happening:
+Sometimes you need to peek inside or modify a running container:
 
 ```bash
-# Run nginx in the background
-docker run -d -p 8080:80 --name my-nginx nginx
-
 # See what processes are running inside
 docker exec my-nginx ps aux
 
-# Start a shell inside the container
+# Start a shell inside the container (interactive)
 docker exec -it my-nginx /bin/bash
 ```
 
-`-it` means "interactive terminal" — it gives you a shell prompt *inside* the container. You can explore the filesystem, check logs, or install things.
+`-it` means "interactive terminal" — it gives you a shell prompt inside the container. You can explore, check files, or install things:
 
 ```bash
-# Inside the container, you can explore:
 root@abc123:/# ls
-root@abc123:/# cd /usr/share/nginx/html
-root@abc123:/# cat index.html
+root@abc123:/# cat /usr/share/nginx/html/index.html
 root@abc123:/# exit   # back to your machine
 ```
 
-### Running a One-Liner Command with `sh -c`
+### Running a One-Liner Command
 
-You can also run a single command without opening an interactive shell:
+You can also run a single command without opening a full shell:
 
 ```bash
 docker exec my-nginx sh -c "echo 'Hello!'"
 ```
 
-This tells the container: "run this one command and give me the output back." No shell prompt, no `exit` needed.
-
-Breaking it down:
+This runs the command inside the container and returns the output. Breaking it down:
 - `docker exec` — enter a running container
-- `my-nginx` — which container to enter
-- `sh -c "..."` — run this shell command inside it (`sh` is the shell, `-c` means "here comes a command")
-- `"echo 'Hello!'"` — the actual command to run
+- `my-nginx` — which container
+- `sh -c "..."` — run this shell command inside it (`sh` is the shell, `-c` says "here's a command")
 
-**Why `sh -c`?** Because `echo 'Hello!' > file` involves shell features (`>` for redirecting output). If you write `docker exec my-nginx echo 'Hello!' > file`, the `> file` part runs on **your** machine, not inside the container. Wrapping it in `sh -c` makes sure everything runs inside.
+**Why `sh -c` matters:** If you write `docker exec my-nginx echo 'Hello!' > file`, the `> file` part runs on **your** machine, not inside the container. Wrapping the whole thing in `sh -c` makes sure everything happens inside.
 
-```bash
-# ✅ Inside container: writes "Hello!" to /tmp/greeting inside the container
-docker exec my-nginx sh -c "echo 'Hello!' > /tmp/greeting"
-
-# ❌ On your machine: tries to write to a file called "greeting" in your current folder
-docker exec my-nginx echo 'Hello!' > greeting
-```
-
-Any changes you make inside a container are **lost when the container is removed**. That's why we have volumes (lesson 05) and Dockerfiles (lesson 03).
+Any changes you make inside a container are **lost when the container is removed** — containers start fresh from the image every time. That's why we have volumes (lesson 05) and Dockerfiles (lesson 03).
 
 ---
 
-## 7. Viewing Logs
+## 9. Viewing Logs
 
 ```bash
 # See the logs of a container
@@ -240,9 +223,7 @@ docker logs --tail 50 my-nginx
 
 ---
 
-## 8. Images vs Containers — The Mental Model
-
-At this point you've used both images and containers. Let's make the distinction crystal clear:
+## 10. Images vs Containers — The Mental Model
 
 | | Image | Container |
 |---|---|---|
@@ -259,22 +240,13 @@ You can create many containers from the same image — just like you can bake ma
 ## 🔨 Your Turn
 
 1. Run an nginx container on port 9090 instead of 8080. Visit `http://localhost:9090`. Did it work?
-   *(Hint: this uses `-p 9090:80` from section 3.)*
 
 2. Run `docker ps -a` and look at the container that ran `hello-world`. What status does it show?
 
 3. Run a container named `my-redis` with `redis:alpine` in the background on port 6379.
-   *(Hint: combine `--name` from section 5, `-p` from section 3, and the `-d` flag. Watch out: the `:alpine` tag is part of the image name, so write `redis:alpine` not just `redis`.)*
-   - Expected command: `docker run -d --name my-redis -p 6379:6379 redis:alpine`
-   - Check it's running: `docker ps` — you should see port `0.0.0.0:6379->6379/tcp`
 
-4. Use `docker exec` to connect to your `my-nginx` container and change the welcome message in `/usr/share/nginx/html/index.html`:
-   ```bash
-   docker exec my-nginx sh -c "echo 'Hello from Sonnia!' > /usr/share/nginx/html/index.html"
-   ```
-   Refresh `http://localhost:8080` (or whatever port you used). What changed?
-   *(Hint: `sh -c "..."` is explained in section 6 — it makes sure the command runs entirely inside the container.)*
+4. Use `docker exec` to connect to your nginx container and change the welcome message in `/usr/share/nginx/html/index.html` using `echo "Hello from Sonnia!" > /usr/share/nginx/html/index.html`. Refresh the browser — what changed?
 
-5. Remove the nginx container and run a new one. Is your custom message still there? (Spoiler: it won't be.)
+5. Remove the nginx container and run a new one using the same command as before. Is your custom message still there?
 
 > **Next up:** Lesson 03 — Dockerfiles: baking your own images.
