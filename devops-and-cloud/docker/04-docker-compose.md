@@ -1,5 +1,8 @@
 # 04 — Docker Compose: Running Multiple Services
 
+**← Back to [Lesson 3: Dockerfiles: Baking Your Own Images](03-dockerfiles.md)**
+
+
 So far we've run one container at a time. But real apps are never just one thing.
 
 A typical web app has:
@@ -300,5 +303,7 @@ This is how modern teams ship. Compose files are as standard as `package.json` o
 3. Add a `depends_on: - redis` to the API service.
 4. Run `docker compose up --build` and verify all three services start.
 5. Run `docker compose ps` — you should see three containers running.
+
+**Continue to [Lesson 5: Volumes: Keeping Data Alive When Containers Die](05-docker-volumes.md)**
 
 > **Next up:** Lesson 05 — Volumes: keeping data alive when containers die.

@@ -1,4 +1,4 @@
-# 09 — Welcome to the Cloud: AWS Basics
+# 01 — Welcome to the Cloud: AWS Basics
 
 Docker taught us how to package apps consistently. Now we need somewhere to **run them** that's not our laptop.
 
@@ -136,4 +136,6 @@ Before moving on:
 4. Open the AWS Management Console and find the region selector (top-right) — switch to **London (eu-west-2)**
 5. Search for "S3" in the services search bar — we'll use it next
 
-> **Next up:** Lesson 10 — IAM: Who Gets to Do What. Security first.
+**Continue to [Lesson 02: IAM: Who Gets to Do What](02-aws-iam.md)**
+
+> **Next up:** Lesson 02 — IAM: Who Gets to Do What. Security first.

@@ -1,5 +1,8 @@
 # 03 — Dockerfiles: Baking Your Own Images
 
+**← Back to [Lesson 2: Docker First Steps: Running Containers](02-docker-first-steps.md)**
+
+
 We've run images that other people made (nginx, redis, hello-world). Now let's make our own.
 
 A **Dockerfile** is a recipe that tells Docker how to build your image. You write it once, and anyone can build the exact same image on any machine.
@@ -222,5 +225,7 @@ USER appuser
 3. Add a second route — `@app.route('/about')` — that returns a short bio. Rebuild.
 4. Check if the `pip install` step was cached (it should be, since you only changed `app.py`)
 5. Try removing `0.0.0.0` from `app.run()` — just `app.run(port=5000)`. Rebuild and visit `localhost:5000`. What happens? Fix it and move on.
+
+**Continue to [Lesson 4: Docker Compose: Running Multiple Services](04-docker-compose.md)**
 
 > **Next up:** Lesson 04 — Docker Compose: running multiple containers together.

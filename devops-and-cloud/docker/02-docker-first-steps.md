@@ -1,5 +1,8 @@
 # 02 — Docker First Steps: Running Containers
 
+**← Back to [Lesson 1: What Is Docker and Why Does It Matter?](01-docker-intro.md)**
+
+
 In lesson 01 we talked about what Docker *is*. Now let's actually use it.
 
 By the end of this lesson, you'll have Docker running on your machine and you'll have started a few real containers.
@@ -262,5 +265,7 @@ You can create many containers from the same image — just like you can bake ma
 4. Use `docker exec` to connect to your nginx container and change the welcome message in `/usr/share/nginx/html/index.html` using `echo "Hello from Sonnia!" > /usr/share/nginx/html/index.html`. Refresh the browser — what changed?
 
 5. Remove the nginx container and run a new one using the same command as before. Is your custom message still there?
+
+**Continue to [Lesson 3: Dockerfiles: Baking Your Own Images](03-dockerfiles.md)**
 
 > **Next up:** Lesson 03 — Dockerfiles: baking your own images.

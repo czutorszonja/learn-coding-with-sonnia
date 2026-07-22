@@ -1,4 +1,7 @@
-# 10 — IAM: Who Gets to Do What
+# 02 — IAM: Who Gets to Do What
+
+**← Back to [Lesson 01: Welcome to the Cloud: AWS Basics](01-aws-intro.md)**
+
 
 IAM (Identity and Access Management) is the most important AWS service — and the most skipped by beginners.
 
@@ -165,4 +168,6 @@ Root User (only for billing + MFA)
 3. Create an IAM user in that group named `ci-deploy` (for automated deployments) — generate access keys for it
 4. Open **Credential Report** in IAM → check when each user last used their credentials
 
-> **Next up:** Lesson 11 — S3: The World's Most Used Storage Service.
+**Continue to [Lesson 03: S3: Store Everything in the Cloud](03-aws-s3.md)**
+
+> **Next up:** Lesson 03 — S3: The World's Most Used Storage Service.

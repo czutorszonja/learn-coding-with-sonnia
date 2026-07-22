@@ -1,5 +1,8 @@
 # 06 — Docker Networking: Connecting Containers
 
+**← Back to [Lesson 5: Volumes: Keeping Data Alive When Containers Die](05-docker-volumes.md)**
+
+
 So far, our Flask API talks to PostgreSQL using the hostname `db`. But how?
 
 When you use Docker Compose, it creates a **network** automatically and registers each service name as a hostname. Containers can reach each other by name without knowing IP addresses.
@@ -200,5 +203,7 @@ The API connects to `db:5432` and `redis:6379` using Docker's internal DNS. Your
 3. Without the `-p` flag on the nginx container, can you access the nginx welcome page from your browser? Why or why not?
 4. In the note-taking Compose project, check what network Compose created with `docker network ls`.
 5. Try running `docker compose exec api ping db` inside the running project. Does it connect?
+
+**Continue to [Lesson 7: Docker Best Practices](07-docker-best-practices.md)**
 
 > **Next up:** Lesson 07 — Docker Best Practices.

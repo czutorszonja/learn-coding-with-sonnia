@@ -1,4 +1,7 @@
-# 15 — Final Project: Full-Stack Notes App on AWS
+# 07 — Final Project: Full-Stack Notes App on AWS
+
+**← Back to [Lesson 06: ECS: Running Docker on AWS](06-aws-ecs.md)**
+
 
 This is where everything comes together. We'll take the URL shortener (or the note-taking API from earlier Docker lessons) and **deploy it to AWS for real** — with a serverless option and a container option.
 

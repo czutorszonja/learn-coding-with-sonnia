@@ -1,4 +1,7 @@
-# 14 — ECS: Running Docker on AWS
+# 06 — ECS: Running Docker on AWS
+
+**← Back to [Lesson 05: Lambda: Code Without Servers](05-aws-lambda.md)**
+
 
 You've containerised your app with Docker. Now let's run it in the cloud — properly.
 
@@ -228,4 +231,6 @@ Set up alarms:
 5. Scale the service to 3 tasks — what happens?
 6. Clean up: delete the service, cluster, and ECR repository when done
 
-> **Next up:** Lesson 15 — Final Project: Full-Stack App on AWS.
+**Continue to [Lesson 07: Final Project: Full-Stack Notes App on AWS](07-aws-project.md)**
+
+> **Next up:** Lesson 07 — Final Project: Full-Stack App on AWS.

@@ -1,5 +1,8 @@
 # 07 — Docker Best Practices
 
+**← Back to [Lesson 6: Docker Networking: Connecting Containers](06-docker-networking.md)**
+
+
 By now you can build images, run containers, and connect services. This lesson covers how to do it **well** — practices that save time, reduce image size, and prevent security issues.
 
 ---
@@ -259,5 +262,7 @@ Build with: `docker build --build-arg DEBUG=true -t my-app .`
 3. Add a non-root user to the backend Dockerfile.
 4. Add a health check endpoint to the Flask API and a healthcheck in docker-compose.yml.
 5. Try building with `FROM python:3.12` instead of `python:3.12-slim`. Compare image sizes with `docker images`.
+
+**Continue to [Lesson 8: Docker Project: Build a Real-World App](08-docker-project.md)**
 
 > **Next up:** Lesson 08 — Docker Project: building a complete real-world app.

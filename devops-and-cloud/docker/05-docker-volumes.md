@@ -1,5 +1,8 @@
 # 05 — Volumes: Keeping Data Alive When Containers Die
 
+**← Back to [Lesson 4: Docker Compose: Running Multiple Services](04-docker-compose.md)**
+
+
 There's a hard rule in Docker: **when a container is removed, everything inside it is gone forever.**
 
 This is by design — containers are meant to be disposable. Need a newer version of your app? Remove the old container, start a new one. It's clean, reliable, and predictable.
@@ -216,5 +219,7 @@ In development, bind mounts are great. In production, you rarely use them — in
 1. Create a named volume called `mydata`. Run a container that writes the current date to `/data/date.txt` on that volume. Remove the container. Run another container that reads that file — is it still there?
 2. Try a bind mount: create a local folder `./logs`, mount it to `/app/logs` in a container, have the container write a log file. Verify the file appears on your machine.
 3. In the note-taking Compose project from lesson 04, remove the `pgdata` volume config from the database service. Run `docker compose down -v` and `docker compose up`. Create a note, then down and up again. What happened to the note?
+
+**Continue to [Lesson 6: Docker Networking: Connecting Containers](06-docker-networking.md)**
 
 > **Next up:** Lesson 06 — Networking: how containers talk to each other.

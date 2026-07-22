@@ -1,4 +1,7 @@
-# 12 — EC2: Your First Cloud Server
+# 04 — EC2: Your First Cloud Server
+
+**← Back to [Lesson 03: S3: Store Everything in the Cloud](03-aws-s3.md)**
+
 
 EC2 (Elastic Compute Cloud) is AWS's virtual server service. You choose the specs, launch it, SSH in, and treat it like a computer in the cloud.
 
@@ -204,4 +207,6 @@ aws ec2 terminate-instances --instance-ids i-1234567890
 5. Modify the security group to allow port 8080. Run a second container on port 8080. Visit `<ip>:8080`.
 6. **Important:** Terminate the instance when you're done.
 
-> **Next up:** Lesson 13 — Lambda: Serverless Functions.
+**Continue to [Lesson 05: Lambda: Code Without Servers](05-aws-lambda.md)**
+
+> **Next up:** Lesson 05 — Lambda: Serverless Functions.
