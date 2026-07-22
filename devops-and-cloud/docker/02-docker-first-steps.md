@@ -152,7 +152,7 @@ docker run my-container
 
 ---
 
-## 5½. Image Tags — What's the `:alpine` For?
+### Image Tags — What's the `:alpine` For?
 
 You've seen `nginx`, `redis:alpine`, and `hello-world`. What do these mean?
 
