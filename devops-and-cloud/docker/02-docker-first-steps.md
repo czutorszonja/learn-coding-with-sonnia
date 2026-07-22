@@ -143,11 +143,11 @@ Now `docker stop my-website` and `docker start my-website` work with a real name
 **Common mistake:** `--name` goes **before** the image name, not after. If you put it after, Docker treats your name as an image name and gives you "pull access denied".
 
 ```bash
-# ✅ Correct
-docker run -d --name my-redis -p 6379:6379 redis:alpine
+# ✅ Correct (name comes before the image)
+docker run -d --name my-container -p 8080:80 nginx
 
-# ❌ Wrong (tries to pull an image called 'my-redis')
-docker run my-redis
+# ❌ Wrong (Docker thinks 'my-container' is an image name)
+docker run my-container
 ```
 
 ---
