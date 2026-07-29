@@ -120,33 +120,45 @@ Outbound Rules (all traffic allowed out — usually fine)
 
 ---
 
-## 5. Running Your Docker App on EC2
+## 5. Running a Simple App on EC2
 
-Let's deploy the URL shortener from lesson 08 onto your EC2 instance:
+Let's deploy a real web app on your EC2 instance. We'll create a simple Flask API directly on the server — no extra tools needed.
 
 ```bash
-# Install Docker on EC2
+# Update packages and install Python
 sudo yum update -y
-sudo yum install docker -y
-sudo systemctl start docker
-sudo systemctl enable docker   # Start on boot
+sudo yum install python3 python3-pip -y
 
-# Add ec2-user to docker group (so you can run docker without sudo)
-sudo usermod -aG docker ec2-user
+# Install Flask
+pip3 install flask
 
-# Log out and back in (or just restart the SSH session)
-exit
-ssh -i ~/Downloads/my-keys.pem ec2-user@<ip>
+# Create a simple app
+cat > /home/ec2-user/app.py << 'EOF'
+from flask import Flask, jsonify
 
-# Clone your project
-# (You could also use scp, or install git and clone)
-# For now, let's create a simple test container:
-docker run -d -p 80:80 nginx
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Hello from EC2! 🌐"
+
+@app.route('/about')
+def about():
+    return jsonify({"name": "My EC2 App", "platform": "AWS"})
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80)
+EOF
+
+# Run it (in the background)
+sudo python3 /home/ec2-user/app.py &
 ```
 
-Now open your browser and go to `http://<your-ec2-public-ip>`. You should see the Nginx welcome page.
+Now open your browser and go to `http://<your-ec2-public-ip>`. You should see "Hello from EC2!"
 
 **Your app is live on the internet.** 🌐
+
+> **Note:** We're running the dev server here. For production, you'd use Gunicorn or uWSGI behind nginx. But for learning, this works fine.
 
 ---
 
@@ -172,13 +184,25 @@ You can provide a script that runs automatically when the instance starts:
 ```bash
 #!/bin/bash
 yum update -y
-yum install docker -y
-systemctl start docker
-systemctl enable docker
-docker run -d -p 80:80 nginx
+yum install python3 python3-pip -y
+pip3 install flask
+
+# Create and run a simple web app
+cat > /home/ec2-user/app.py << 'APPEOF'
+from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+def hello():
+    return "Hello from EC2! 🌐"
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80)
+APPEOF
+
+# Start the app
+cd /home/ec2-user && python3 app.py &
 ```
 
-Paste this into the **User data** section when launching an instance. The first time it boots, it installs Docker and runs nginx automatically. No manual SSH needed.
+Paste this into the **User data** section when launching an instance. The first time it boots, it sets up Python and starts your web app automatically. No manual SSH needed.
 
 ---
 
@@ -202,9 +226,9 @@ aws ec2 terminate-instances --instance-ids i-1234567890
 
 1. Launch a t2.micro EC2 instance with Amazon Linux
 2. SSH into it and run `uname -a` — what kernel version is it running?
-3. Install Docker on the instance and run an nginx container on port 80
-4. Visit your instance's public IP in a browser — can you see nginx?
-5. Modify the security group to allow port 8080. Run a second container on port 8080. Visit `<ip>:8080`.
+3. Install Python and Flask, then run the sample app from section 5
+4. Visit your instance's public IP in a browser — can you see your app?
+5. Modify the security group to allow port 8080. Create a second app listening on port 8080 and visit `<ip>:8080`.
 6. **Important:** Terminate the instance when you're done.
 
 **Continue to [Lesson 05: Lambda: Code Without Servers](05-aws-lambda.md)**

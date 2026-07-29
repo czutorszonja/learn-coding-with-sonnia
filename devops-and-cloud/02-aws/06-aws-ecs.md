@@ -181,9 +181,9 @@ This creates ECS task definitions, services, and a load balancer **from your com
 
 ## 6. Deploying Updates
 
-When you push a new version of your image:
+When you update your app:
 
-1. Build and push the new image to ECR
+1. Push the new version of your image to ECR (or update your task definition to use a different public image)
 2. Update the task definition (point to the new image tag)
 3. Update the service with the new task definition revision
 4. ECS performs a **rolling update** — starts new tasks, stops old ones
@@ -191,12 +191,12 @@ When you push a new version of your image:
 ```bash
 # Trigger a new deployment
 aws ecs update-service \
-  --cluster url-shortener-cluster \
-  --service url-shortener-service \
+  --cluster hello-cluster \
+  --service hello-service \
   --force-new-deployment
 ```
 
-Zero downtime. ECS starts new containers, waits for health checks, then stops the old ones.
+Zero downtime. ECS starts new tasks, waits for health checks, then stops the old ones.
 
 ---
 
@@ -206,13 +206,13 @@ ECS automatically sends logs to CloudWatch:
 
 ```bash
 # View logs
-aws logs tail /ecs/url-shortener --follow
+aws logs tail /ecs/hello-app --follow
 
 # See metrics
 aws cloudwatch get-metric-statistics \
   --namespace AWS/ECS \
   --metric-name CPUUtilization \
-  --dimensions Name=ServiceName,Value=url-shortener-service
+  --dimensions Name=ServiceName,Value=hello-service
 ```
 
 Set up alarms:
@@ -224,11 +224,13 @@ Set up alarms:
 
 ## 🔨 Your Turn
 
-1. Push the URL shortener Docker image to ECR
-2. Create an ECS task definition (Fargate) for it
-3. Create a cluster and a service with 1 running task
-4. View the logs in CloudWatch — can you see your app starting?
+1. Create an ECS cluster with Fargate
+2. Use the public sample image (`public.ecr.aws/ecs-sample-image/hello-world`) to create a task definition
+3. Create a service with 1 running task
+4. Find the public IP of your task and visit it in your browser
 5. Scale the service to 3 tasks — what happens?
-6. Clean up: delete the service, cluster, and ECR repository when done
+6. Clean up: delete the service, cluster, and any resources created
+
+> **📁 Deploy your own app?** If you've completed the Docker lessons, come back and try pushing your own image to ECR instead of the sample.
 
 **Continue to [Lesson 07: Final Project: Full-Stack Notes App on AWS](07-aws-project.md)**

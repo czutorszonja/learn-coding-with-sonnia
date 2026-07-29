@@ -1,8 +1,8 @@
 # 01 — Welcome to the Cloud: AWS Basics
 
-Docker taught us how to package apps consistently. Now we need somewhere to **run them** that's not our laptop.
+You've built an app. It runs on your laptop. But what happens when you want other people to use it? Your laptop goes to sleep. Your WiFi drops. Your friends can't reach it.
 
-That's the cloud — someone else's computers that you can use over the internet. AWS is the biggest one.
+That's where the **cloud** comes in — someone else's computers, running 24/7, accessible over the internet. AWS (Amazon Web Services) is the biggest one.
 
 ---
 
@@ -60,7 +60,7 @@ There are **200+** AWS services. You'll probably use 10 regularly. Here are the 
 | **S3** | Store files (images, backups, static websites) | 11 |
 | **EC2** | Virtual servers (run any software) | 12 |
 | **Lambda** | Serverless functions (code that runs on-demand) | 13 |
-| **ECS / Fargate** | Run Docker containers on AWS | 14 |
+| **ECS / Fargate** | Run containerised apps on AWS | 14 |
 | **RDS** | Managed databases (PostgreSQL, MySQL, etc.) | 14 |
 | **CloudFront** | Content delivery network (fast worldwide) | 11 |
 | **Route 53** | DNS (domain names) | — |
@@ -90,16 +90,16 @@ AWS will happily let you provision expensive resources and send you a bill. **Se
 
 ## 5. Real-World Scenario
 
-**Why AWS over just Docker on your laptop?**
+**Why AWS?**
 
-You've built the URL shortener from lesson 08. It works great locally. But:
+Maybe you've built an app — a website, a notes app, an API. It works great on your laptop. But:
 
 - **Your laptop goes to sleep** → the app goes offline
-- **Your friend wants to use it** → they need to be on your WiFi
-- **It gets popular** → your laptop can't handle 10,000 requests/second
-- **The database gets corrupted** → you didn't set up backups
+- **Someone else wants to use it** → they can't reach your machine
+- **It gets popular** → your laptop can't handle thousands of requests
+- **The database file gets corrupted** → you lose everything
 
-AWS solves all of these. You deploy your Docker containers to EC2 or ECS, put a load balancer in front, use RDS for the database with automated backups, and CloudFront for fast global access.
+AWS solves all of these. You run your app on servers that never sleep, put a load balancer in front to handle traffic, use a managed database with automated backups, and CloudFront for fast global access.
 
 The app doesn't change — you just run it on better hardware that you rent by the hour.
 

@@ -1,187 +1,56 @@
 # 07 — Final Project: Full-Stack Notes App on AWS
 
-**← Back to [Lesson 06: ECS: Running Docker on AWS](06-aws-ecs.md)**
+**← Back to [Lesson 06: ECS: Running Apps at Scale on AWS](06-aws-ecs.md)**
 
 
-This is where everything comes together. We'll take the URL shortener (or the note-taking API from earlier Docker lessons) and **deploy it to AWS for real** — with a serverless option and a container option.
+This is where everything comes together. We'll build and **deploy a full-stack Notes app to AWS** — entirely serverless, with no servers to manage.
 
 You'll use:
-- **Docker** → package the app
-- **ECR** → store the image
-- **ECS Fargate** → run the container
-- **RDS** → managed PostgreSQL
-- **S3 + CloudFront** → static assets and CDN
-- **Lambda + API Gateway** → serverless endpoints
-- **Route 53** → custom domain (optional)
+- **Lambda + API Gateway** → serverless API endpoints
+- **DynamoDB** → database
+- **S3 + CloudFront** → static frontend and CDN
 - **CloudWatch** → monitoring and logs
+- *(Optional: containerised deployment with ECS if you've done the Docker lessons)*
 
 ---
 
 ## Architecture Overview
 
 ```
-                           ┌──────────────┐
-                           │  CloudFront   │
-                           │  (CDN)        │
-                           └────┬────┬────┘
-                                │    │
-                    ┌───────────┘    └───────────┐
-                    ▼                             ▼
-           ┌──────────────┐            ┌──────────────┐
-           │  S3           │            │  ALB         │
-           │  (static     │            │  (Load       │
-           │   website)   │            │   Balancer)  │
-           └──────────────┘            └──────┬───────┘
-                                              │
-                                     ┌────────▼───────┐
-                                     │  ECS Fargate    │
-                                     │  (Flask API)    │
-                                     └────────┬───────┘
-                                              │
-                    ┌─────────────────────────┼──────────────┐
-                    │                         │              │
-           ┌────────▼───────┐       ┌─────────▼───────┐     │
-           │  RDS            │       │  ElastiCache    │     │
-           │  (PostgreSQL)   │       │  (Redis)        │     │
-           └─────────────────┘       └─────────────────┘     │
-                                                             │
-           ┌─────────────────────────────────────────────────┘
-           │  (Serverless option)
-           ▼
-    ┌──────────────┐
-    │  API Gateway  │
-    └──────┬───────┘
-           │
-    ┌──────▼───────┐
-    │  Lambda       │
-    │  (DynamoDB)   │
-    └──────────────┘
+                    ┌──────────────┐
+                    │  CloudFront   │
+                    │  (CDN)        │
+                    └──────┬───────┘
+                           │
+                    ┌──────▼───────┐
+                    │  S3           │
+                    │  (Static     │
+                    │   Frontend)  │
+                    └──────────────┘
+
+                    ┌──────────────┐
+                    │  API Gateway  │
+                    └──────┬───────┘
+                           │
+                    ┌──────▼───────┐
+                    │  Lambda       │
+                    │  (Backend     │
+                    │   Logic)      │
+                    └──────┬───────┘
+                           │
+                    ┌──────▼───────┐
+                    │  DynamoDB    │
+                    │  (Database)  │
+                    └──────────────┘
 ```
 
-**Two deployment options:**
-1. **Containerised** (ECS Fargate) — for when you need full control
-2. **Serverless** (Lambda + DynamoDB) — for simplicity and minimal cost
+All serverless — no servers to manage, minimum cost, auto-scaling.
+
+> **Containerised option:** If you've completed the Docker lessons and want to deploy via ECS + RDS instead, the **ECS lesson** covers those building blocks — same concepts, different packaging.
 
 ---
 
-## Option 1: Containerised Deployment (ECS + RDS)
-
-This is what a startup would do. Docker image in ECR, run on Fargate, RDS for persistence.
-
-### Step 1: Set up RDS PostgreSQL
-
-```bash
-# Create the database
-aws rds create-db-instance \
-  --db-instance-identifier notes-db \
-  --db-instance-class db.t3.micro \
-  --engine postgres \
-  --master-username notesapp \
-  --master-user-password YourStrongPassword \
-  --allocated-storage 20 \
-  --region eu-west-2
-
-# Get the endpoint (takes ~5 minutes)
-aws rds describe-db-instances \
-  --db-instance-identifier notes-db \
-  --query "DBInstances[0].Endpoint.Address"
-```
-
-**Security:** Create the RDS in a private subnet (not accessible from the internet). Only your ECS tasks can reach it.
-
-### Step 2: Create the ECR Repository
-
-```bash
-aws ecr create-repository --repository-name notes-api --region eu-west-2
-```
-
-### Step 3: Build and Push the Docker Image
-
-```bash
-# Login
-aws ecr get-login-password --region eu-west-2 | docker login \
-  --username AWS --password-stdin \
-  <account-id>.dkr.ecr.eu-west-2.amazonaws.com
-
-# Build for ARM (Fargate default)
-docker build --platform linux/arm64 \
-  -t notes-api \
-  -f backend/Dockerfile.prod \
-  ./backend
-
-# Tag and push
-docker tag notes-api:latest \
-  <account-id>.dkr.ecr.eu-west-2.amazonaws.com/notes-api:latest
-docker push <account-id>.dkr.ecr.eu-west-2.amazonaws.com/notes-api:latest
-```
-
-### Step 4: Create the ECS Cluster and Service
-
-```bash
-# Create ECS cluster
-aws ecs create-cluster --cluster-name notes-cluster
-
-# Register task definition (Fargate)
-aws ecs register-task-definition \
-  --family notes-api \
-  --network-mode awsvpc \
-  --requires-compatibilities FARGATE \
-  --cpu 256 --memory 512 \
-  --execution-role-arn arn:aws:iam::<account-id>:role/ecsTaskExecutionRole \
-  --container-definitions '[
-    {
-      "name": "api",
-      "image": "<account-id>.dkr.ecr.eu-west-2.amazonaws.com/notes-api:latest",
-      "portMappings": [{"containerPort": 5000}],
-      "environment": [
-        {"name": "DB_HOST", "value": "<rds-endpoint>"},
-        {"name": "DB_NAME", "value": "notes"},
-        {"name": "DB_USER", "value": "notesapp"},
-        {"name": "DB_PASSWORD", "value": "YourStrongPassword"}
-      ],
-      "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "/ecs/notes-api",
-          "awslogs-region": "eu-west-2",
-          "awslogs-stream-prefix": "ecs"
-        }
-      }
-    }
-  ]'
-
-# Create a service
-aws ecs create-service \
-  --cluster notes-cluster \
-  --service-name notes-api-service \
-  --task-definition notes-api \
-  --desired-count 2 \
-  --launch-type FARGATE \
-  --network-configuration "awsvpcConfiguration={subnets=[subnet-xxx],securityGroups=[sg-xxx],assignPublicIp=ENABLED}" \
-  --load-balancers "targetGroupArn=arn:aws:elasticloadbalancing:eu-west-2:<account-id>:targetgroup/notes-tg/xxx,containerName=api,containerPort=5000"
-```
-
-### Step 5: Create a Load Balancer
-
-1. Go to **EC2** → **Load Balancers** → **Create Application Load Balancer**
-2. Scheme: **internet-facing**
-3. Listeners: **HTTP:80** (or **HTTPS:443** with a certificate)
-4. Create a **target group** for port 5000 with health check on `/health`
-5. Attach the ECS service to the target group
-
-### Step 6: Add a Custom Domain (Optional, but Fun)
-
-1. Buy a domain on Route 53 (or use an existing one)
-2. Create a **Hosted Zone**
-3. Add an **A record** pointing to your ALB (alias)
-4. Request an **SSL certificate** in ACM (Certificate Manager)
-5. Add HTTPS listener on the ALB with the certificate
-
-Now `https://notes.yourdomain.com` points to your app.
-
----
-
-## Option 2: Serverless Deployment (Lambda + DynamoDB)
+## Deploy the Serverless Backend (Lambda + DynamoDB)
 
 For simple apps, this costs essentially **nothing** at low traffic.
 
@@ -305,48 +174,23 @@ aws cloudwatch put-dashboard \
       "type": "metric",
       "properties": {
         "metrics": [
-          ["AWS/ECS", "CPUUtilization", {"stat": "Average"}],
-          ["AWS/RDS", "DatabaseConnections"]
+          ["AWS/Lambda", "Invocations", {"stat": "Sum"}],
+          ["AWS/Lambda", "Errors", {"stat": "Sum"}],
+          ["AWS/API Gateway", "Count", {"stat": "Sum"}]
         ],
         "period": 300,
         "stat": "Average",
         "region": "eu-west-2",
-        "title": "App Metrics"
+        "title": "Notes App"
       }
     }]
   }'
 ```
 
 **Set up alerts for:**
-- CPU > 80% → scale up ECS tasks
-- 5xx errors > 1% → notify you
-- RDS storage > 85% → increase storage
 - Lambda errors > 0 → check the logs
-
----
-
-## Multi-Environment Strategy
-
-Real projects have multiple environments:
-
-```
-dev.sonnia-notes.com
-    │
-    ├── Dev (free-tier, for experimenting)
-    │   └── Smaller instances, shorter retention
-    │
-staging.sonnia-notes.com
-    │
-    ├── Staging (mirrors production)
-    │   └── Same specs as prod, connected to staging DB
-    │
-app.sonnia-notes.com
-    │
-    └── Production (real users)
-        └── Multi-AZ, auto-scaling, backups
-```
-
-Use **Infrastructure as Code** (Terraform, CloudFormation, or CDK) to define all of this as text files — so your staging and production are guaranteed identical, and you can recreate everything from scratch in minutes.
+- API Gateway 5xx errors > 1% → notify you
+- DynamoDB throttled requests > 0 → check capacity
 
 ---
 
@@ -355,23 +199,18 @@ Use **Infrastructure as Code** (Terraform, CloudFormation, or CDK) to define all
 AWS costs real money if you leave things running. After you're done:
 
 ```bash
-# ECS
-aws ecs delete-service --cluster notes-cluster --service notes-api-service --force
-aws ecs delete-cluster --cluster notes-cluster
-
-# RDS
-aws rds delete-db-instance --db-instance-identifier notes-db --skip-final-snapshot
-
-# ECR images
-aws ecr delete-repository --repository-name notes-api --force
-
-# Deleted files in S3
+# S3 bucket (must be empty first)
 aws s3 rm s3://notes-app-bucket --recursive
 aws s3 rb s3://notes-app-bucket
 
-# Lambda + API Gateway (delete manually in console — harder via CLI)
+# Lambda functions (delete from console)
+# API Gateway API (delete from console)
+
+# DynamoDB table
+aws dynamodb delete-table --table-name notes
+
 # CloudWatch log groups
-aws logs delete-log-group --log-group-name /ecs/notes-api
+aws logs delete-log-group --log-group-name /aws/lambda/notes-api
 ```
 
 Always check the **Billing Dashboard** after cleaning up to confirm nothing is still accruing.
@@ -382,24 +221,27 @@ Always check the **Billing Dashboard** after cleaning up to confirm nothing is s
 
 By completing this project, you've built what a real startup would call their **MVP (Minimum Viable Product)**:
 
-- ✅ A containerised app running 24/7 in the cloud
-- ✅ A managed database with automated backups
-- ✅ A load balancer for distributing traffic
-- ✅ A serverless option for low-traffic endpoints
+- ✅ A fully serverless API with Lambda + API Gateway
+- ✅ DynamoDB as a managed database with auto-scaling
+- ✅ A static frontend on S3 + CloudFront CDN
 - ✅ Static assets served from a CDN
 - ✅ Monitoring and alerts
 - ✅ Multi-environment infrastructure
 
-Everything from Docker to AWS, from localhost to production — that's the full stack. ☁️🐳
+Everything from serverless functions to a global CDN — that's the power of AWS. ☁️
 
 ---
 
 ## 🔨 Your Turn
 
-1. Deploy the containerised notes API to ECS Fargate following the steps above
-2. Create the API Gateway + Lambda version and test it with `curl`
-3. Host the static frontend (even a basic HTML page) on S3 → CloudFront
-4. Set up a CloudWatch dashboard to see all your metrics in one place
-5. **Crucially:** clean everything up when you're done, then check your billing dashboard
+1. Create the DynamoDB table for notes
+2. Write the Lambda function for the Notes API (use the code from this lesson)
+3. Set up API Gateway with GET, POST, DELETE methods
+4. Test your API with `curl`
+5. Host the static frontend (even a basic HTML page) on S3 → CloudFront
+6. Set up a CloudWatch dashboard to see your metrics
+7. **Crucially:** clean everything up when you're done, then check the billing dashboard
+
+> **Want to deploy with containers instead?** If you've completed the Docker lessons, check the **ECS lesson** for the containerised deployment pattern — it builds on the same architecture but packages your app differently.
 
 > **Final stop:** Check the **glossary.md** for a quick reference of every term and command we've covered.

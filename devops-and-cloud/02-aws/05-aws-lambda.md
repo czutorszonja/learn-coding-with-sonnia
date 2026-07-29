@@ -221,7 +221,7 @@ Steps:
 4. Point both to your Lambda function
 5. Deploy the API → get a URL
 
-Now `curl https://your-api.execute-api.eu-west-2.amazonaws.com/prod/notes` works — no servers, no Docker, no SSH. Just code + triggers.
+Now `curl https://your-api.execute-api.eu-west-2.amazonaws.com/prod/notes` works — no servers to manage, no SSH. Just code + triggers.
 
 ---
 
@@ -247,4 +247,4 @@ Lambda is dramatically cheaper for sporadic workloads.
 3. (Advanced) Build a fully serverless URL shortener: API Gateway + Lambda + DynamoDB. The Lambda receives a URL, stores it in DynamoDB with a short code, and returns the short URL.
 4. Check CloudWatch Logs to see your Lambda's `print()` output
 
-**Continue to [Lesson 06: ECS: Running Docker on AWS](06-aws-ecs.md)**
+**Continue to [Lesson 06: ECS: Running Apps at Scale on AWS](06-aws-ecs.md)**
