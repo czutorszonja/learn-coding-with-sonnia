@@ -208,5 +208,3 @@ aws ec2 terminate-instances --instance-ids i-1234567890
 6. **Important:** Terminate the instance when you're done.
 
 **Continue to [Lesson 05: Lambda: Code Without Servers](05-aws-lambda.md)**
-
-> **Next up:** Lesson 05 — Lambda: Serverless Functions.

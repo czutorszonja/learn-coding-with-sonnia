@@ -232,5 +232,3 @@ Set up alarms:
 6. Clean up: delete the service, cluster, and ECR repository when done
 
 **Continue to [Lesson 07: Final Project: Full-Stack Notes App on AWS](07-aws-project.md)**
-
-> **Next up:** Lesson 07 — Final Project: Full-Stack App on AWS.

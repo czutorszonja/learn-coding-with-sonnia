@@ -376,4 +376,4 @@ print('Cached keys:', r.keys())
 4. Run `docker compose logs` — can you spot the health check pings?
 5. Stop Redis (`docker compose stop redis`). Try visiting a short URL you already visited. Does it still work? What about a new one?
 
-> **Next up:** Lesson 01 — Welcome to the Cloud: AWS basics. ☁️
+**Continue to [Lesson 01: Welcome to the Cloud: AWS Basics ☁️](../02-aws/01-aws-intro.md)**

@@ -137,5 +137,3 @@ Before moving on:
 5. Search for "S3" in the services search bar — we'll use it next
 
 **Continue to [Lesson 02: IAM: Who Gets to Do What](02-aws-iam.md)**
-
-> **Next up:** Lesson 02 — IAM: Who Gets to Do What. Security first.

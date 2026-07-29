@@ -248,5 +248,3 @@ Lambda is dramatically cheaper for sporadic workloads.
 4. Check CloudWatch Logs to see your Lambda's `print()` output
 
 **Continue to [Lesson 06: ECS: Running Docker on AWS](06-aws-ecs.md)**
-
-> **Next up:** Lesson 06 — ECS: Running Docker Containers on AWS.

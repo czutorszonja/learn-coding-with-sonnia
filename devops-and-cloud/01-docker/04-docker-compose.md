@@ -305,5 +305,3 @@ This is how modern teams ship. Compose files are as standard as `package.json` o
 5. Run `docker compose ps` — you should see three containers running.
 
 **Continue to [Lesson 5: Volumes: Keeping Data Alive When Containers Die](05-docker-volumes.md)**
-
-> **Next up:** Lesson 05 — Volumes: keeping data alive when containers die.

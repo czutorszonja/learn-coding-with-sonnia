@@ -267,5 +267,3 @@ You can create many containers from the same image — just like you can bake ma
 5. Remove the nginx container and run a new one using the same command as before. Is your custom message still there?
 
 **Continue to [Lesson 3: Dockerfiles: Baking Your Own Images](03-dockerfiles.md)**
-
-> **Next up:** Lesson 03 — Dockerfiles: baking your own images.

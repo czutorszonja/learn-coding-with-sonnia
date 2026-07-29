@@ -229,5 +229,3 @@ print(url)  # Temporary link, expires in 1 hour
 5. Use the AWS Console to browse to a file and generate a pre-signed URL. Open it in an incognito window — does it work?
 
 **Continue to [Lesson 04: EC2: Your First Cloud Server](04-aws-ec2.md)**
-
-> **Next up:** Lesson 04 — EC2: Virtual Servers in the Cloud.

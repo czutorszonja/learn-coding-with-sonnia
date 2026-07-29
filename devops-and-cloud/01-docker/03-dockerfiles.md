@@ -227,5 +227,3 @@ USER appuser
 5. Try removing `0.0.0.0` from `app.run()` — just `app.run(port=5000)`. Rebuild and visit `localhost:5000`. What happens? Fix it and move on.
 
 **Continue to [Lesson 4: Docker Compose: Running Multiple Services](04-docker-compose.md)**
-
-> **Next up:** Lesson 04 — Docker Compose: running multiple containers together.

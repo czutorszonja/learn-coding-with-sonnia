@@ -102,5 +102,3 @@ Later you'll also learn about **Docker Compose** (running multiple containers to
 3. Think about the note-taking API from the Python lessons — if it uses both a Flask server and a PostgreSQL database, how many containers do you think it needs?
 
 **Continue to [Lesson 2: Docker First Steps: Running Containers](02-docker-first-steps.md)**
-
-> **Next up:** Lesson 02 — we'll actually install Docker and run our first container. 🐳

@@ -205,5 +205,3 @@ The API connects to `db:5432` and `redis:6379` using Docker's internal DNS. Your
 5. Try running `docker compose exec api ping db` inside the running project. Does it connect?
 
 **Continue to [Lesson 7: Docker Best Practices](07-docker-best-practices.md)**
-
-> **Next up:** Lesson 07 — Docker Best Practices.

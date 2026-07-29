@@ -169,5 +169,3 @@ Root User (only for billing + MFA)
 4. Open **Credential Report** in IAM → check when each user last used their credentials
 
 **Continue to [Lesson 03: S3: Store Everything in the Cloud](03-aws-s3.md)**
-
-> **Next up:** Lesson 03 — S3: The World's Most Used Storage Service.

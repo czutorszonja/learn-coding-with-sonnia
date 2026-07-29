@@ -258,8 +258,6 @@ You now know how to:
 - Protect data (methods as gatekeepers, `_private`)
 - Use `@property` for clean attribute access
 
-Next up: **inheritance** — how classes can share behaviour. This is where things get really powerful.
-
 Continue to **[Lesson 4: Sharing Behaviour with Inheritance](04-inheritance.md)** 🧬
 
 ---

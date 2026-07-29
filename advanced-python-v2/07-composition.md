@@ -327,8 +327,6 @@ This wraps up the OOP section. You now know:
 5. How to make objects feel Pythonic (magic methods)
 6. How to build from pieces (composition)
 
-Next up: **functions as first-class citizens** — passing functions around like variables, the gateway to lambda, decorators, and functional programming.
-
 Continue to **[Lesson 8: Functions as First-Class Citizens](08-functions-first-class.md)** 🎭
 
 ---

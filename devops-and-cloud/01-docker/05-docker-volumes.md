@@ -221,5 +221,3 @@ In development, bind mounts are great. In production, you rarely use them — in
 3. In the note-taking Compose project from lesson 04, remove the `pgdata` volume config from the database service. Run `docker compose down -v` and `docker compose up`. Create a note, then down and up again. What happened to the note?
 
 **Continue to [Lesson 6: Docker Networking: Connecting Containers](06-docker-networking.md)**
-
-> **Next up:** Lesson 06 — Networking: how containers talk to each other.
