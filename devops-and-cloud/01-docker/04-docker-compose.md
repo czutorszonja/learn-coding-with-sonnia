@@ -57,24 +57,34 @@ And start everything with:
 docker compose up
 ```
 
+> 🔔 **Don't copy this example yet** — it's just to show the idea. The practice exercise below uses `backend/` instead of `api/` and `frontend/`. Follow that one step by step.
+
 ---
 
 ## 2. Our First Compose File
 
 Let's build the note-taking API from scratch — a Flask backend + PostgreSQL database.
 
-### Project structure
+### 📁 Step 0: Create all the files first
+
+Before we can run `docker compose up`, we need every file in place. Create a folder called `note-app` (or whatever you want), then create these files inside it:
 
 ```
 note-app/
-├── docker-compose.yml
+├── docker-compose.yml     ← The glue that ties everything together
 ├── backend/
-│   ├── Dockerfile
-│   ├── requirements.txt
-│   └── app.py
+│   ├── Dockerfile          ← How to build the Flask app image
+│   ├── requirements.txt    ← Python dependencies
+│   └── app.py              ← The Flask application code
+└── db/
+    └── init.sql            ← SQL to create the notes table
 ```
 
-### Backend — `backend/app.py`
+Create each one before moving on:
+
+---
+
+#### File 1: `backend/app.py`
 
 ```python
 from flask import Flask, request, jsonify
@@ -120,14 +130,18 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
 ```
 
-### Backend — `backend/requirements.txt`
+---
+
+#### File 2: `backend/requirements.txt`
 
 ```
 flask==3.1.0
 psycopg2-binary==2.9.9
 ```
 
-### Backend — `backend/Dockerfile`
+---
+
+#### File 3: `backend/Dockerfile`
 
 ```dockerfile
 FROM python:3.12-slim
@@ -138,7 +152,21 @@ COPY app.py .
 CMD ["python", "app.py"]
 ```
 
-### The magic glue — `docker-compose.yml`
+---
+
+#### File 4: `db/init.sql`
+
+```sql
+CREATE TABLE IF NOT EXISTS notes (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    body TEXT NOT NULL
+);
+```
+
+---
+
+#### File 5: `docker-compose.yml`
 
 ```yaml
 services:
@@ -166,25 +194,17 @@ services:
     depends_on:
       - db
     volumes:
-      - ./backend:/app    # Hot-reload: code changes visible immediately
+      - ./backend:/app
 
 volumes:
   pgdata:
 ```
 
-Wait — we reference `./db/init.sql`. Create that file too:
+---
 
-### `db/init.sql`
+### ▶️ Now run it
 
-```sql
-CREATE TABLE IF NOT EXISTS notes (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(200) NOT NULL,
-    body TEXT NOT NULL
-);
-```
-
-### Run it
+Once all 5 files exist, run:
 
 ```bash
 docker compose up
