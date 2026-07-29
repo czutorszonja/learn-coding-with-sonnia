@@ -218,6 +218,8 @@ Docker Compose will:
 
 Test it:
 
+> **💻 Cross-platform tip:** The commands below use Unix-style curl with backslash line breaks and single quotes. If you're on **Windows PowerShell**, see the Windows alternatives after the demo section.
+
 ```bash
 # Create a note
 curl -X POST http://localhost:5000/notes \
@@ -227,6 +229,23 @@ curl -X POST http://localhost:5000/notes \
 # List all notes
 curl http://localhost:5000/notes
 ```
+
+> **💡 Windows PowerShell alternatives**
+>
+> PowerShell's built-in `curl` is actually `Invoke-WebRequest` — it won't work with these flags.
+> Use one of these instead:
+>
+> ```powershell
+> # A) Use curl.exe with a variable for the JSON body
+> $body = '{"title":"Shopping","body":"Milk, eggs, bread"}'
+> curl.exe -X POST http://localhost:5000/notes -H "Content-Type: application/json" -d $body
+>
+> # B) PowerShell-native (no curl needed)
+> Invoke-RestMethod -Uri http://localhost:5000/notes -Method Post -ContentType "application/json" -Body '{"title":"Shopping","body":"Milk, eggs, bread"}'
+>
+> # To list notes:
+> Invoke-RestMethod -Uri http://localhost:5000/notes
+> ```
 
 ---
 
