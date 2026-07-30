@@ -343,4 +343,155 @@ This is how modern teams ship. Compose files are as standard as `package.json` o
 4. Run `docker compose up --build` and verify all three services start.
 5. Run `docker compose ps` — you should see three containers running.
 
+---
+
+### ✅ Solution
+
+Here's what you need to change:
+
+#### 1. Update `docker-compose.yml` — add Redis service + depends_on
+
+```yaml
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: notes
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  redis:                                    # ← new: Redis for caching
+    image: redis:7-alpine                   # lightweight Alpine-based Redis
+    # No ports needed — the API reaches it internally by hostname "redis"
+    # If you wanted to inspect Redis from outside, add: ports: ["6379:6379"]
+
+  api:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: db
+      DB_NAME: notes
+      DB_USER: postgres
+      DB_PASSWORD: secret
+    depends_on:
+      - db
+      - redis                                  # ← new: wait for Redis too
+    volumes:
+      - ./backend:/app
+
+volumes:
+  pgdata:
+```
+
+#### 2. Update `backend/requirements.txt` — add redis
+
+```
+flask==3.1.0
+psycopg2-binary==2.9.9
+redis==5.2.1              # ← new
+```
+
+#### 3. Update `backend/app.py` — add Redis caching
+
+```python
+from flask import Flask, request, jsonify
+import psycopg2
+import os
+import redis as redis_module           # ← new: import the redis client
+
+app = Flask(__name__)
+
+# Connect to Redis — hostname matches the service name in docker-compose.yml
+cache = redis_module.Redis(
+    host=os.getenv('REDIS_HOST', 'redis'),   # defaults to 'redis' — Docker DNS
+    port=6379,
+    decode_responses=True                    # return strings, not bytes
+)
+
+def get_db():
+    return psycopg2.connect(
+        host=os.getenv('DB_HOST', 'db'),
+        database=os.getenv('DB_NAME', 'notes'),
+        user=os.getenv('DB_USER', 'postgres'),
+        password=os.getenv('DB_PASSWORD', 'secret')
+    )
+
+@app.route('/notes', methods=['GET'])
+def list_notes():
+    # Try cache first
+    cached = cache.get('notes:all')          # ← new: check Redis
+    if cached:
+        return cached, 200, {'Content-Type': 'application/json'}
+
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute('SELECT id, title, body FROM notes ORDER BY id')
+    notes = [{'id': r[0], 'title': r[1], 'body': r[2]} for r in cur.fetchall()]
+    cur.close()
+    conn.close()
+
+    # Cache for 30 seconds so repeated GETs are instant
+    cache.setex('notes:all', 30, jsonify(notes).get_data(as_text=True))
+    return jsonify(notes)
+
+@app.route('/notes', methods=['POST'])
+def create_note():
+    data = request.get_json()
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute(
+        'INSERT INTO notes (title, body) VALUES (%s, %s) RETURNING id',
+        (data['title'], data['body'])
+    )
+    note_id = cur.fetchone()[0]
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    # Invalidate cache so next GET picks up the new note
+    cache.delete('notes:all')                # ← new: clear old cache
+
+    # Also cache the new note individually
+    cache.setex(f'note:{note_id}', 60, jsonify({
+        'id': note_id, 'title': data['title'], 'body': data['body']
+    }).get_data(as_text=True))
+
+    return jsonify({'id': note_id, 'title': data['title'], 'body': data['body']}), 201
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+```
+
+#### 4. Run it
+
+```bash
+docker compose up --build
+```
+
+You should see three healthy services in the logs. Open another terminal and check:
+
+```bash
+docker compose ps
+```
+
+```
+NAME              IMAGE               COMMAND                  SERVICE   STATUS   PORTS
+note-app-api-1    note-app-api        "python app.py"          api       running  0.0.0.0:5000->5000/tcp
+note-app-db-1     postgres:16         "docker-entrypoint.s…"  db        running  0.0.0.0:5432->5432/tcp
+note-app-redis-1  redis:7-alpine      "redis-server"          redis     running  6379/tcp
+```
+
+> 💡 The first time you hit `GET /notes`, it reads from PostgreSQL and caches the result in Redis for 30 seconds. Any repeated GETs within that window skip the database entirely. When you `POST` a new note, the cache is invalidated so the next GET is fresh. You can verify Redis is working by connecting to it:
+>
+> ```bash
+> docker compose exec redis redis-cli ping
+> # Should reply: PONG
+> ```
+
 **Continue to [Lesson 5: Volumes: Keeping Data Alive When Containers Die](05-docker-volumes.md)**
