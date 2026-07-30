@@ -2,15 +2,18 @@
 
 So you can code. Now what?
 
-This track is about taking the code you write and making it **available**, **reliable**, and **repeatable**. Two big ideas:
+This track is about taking the code you write and making it **available**, **reliable**, and **repeatable**. Three big ideas:
 
 - **Docker** — package your app so it runs the same way everywhere
+- **Kubernetes** — run containers across many machines automatically
 - **AWS** — the cloud platform where you run it at scale
 
 You won't become a cloud architect overnight. But by the end of these lessons, you'll be able to:
 
 - Containerise a web app with Docker
 - Run multiple services together with Docker Compose
+- Run a Kubernetes cluster on your own machine
+- Deploy and scale apps with Kubernetes Deployments and Services
 - Store files in the cloud (S3)
 - Deploy a server (EC2)
 - Go serverless (Lambda)
@@ -21,7 +24,7 @@ You won't become a cloud architect overnight. But by the end of these lessons, y
 
 ## How These Lessons Work
 
-Each lesson builds on the last. Start at **01** and work through in order — especially the Docker ones, where later lessons assume you've done the earlier ones.
+Each lesson builds on the last. Start at **01** and work through in order — especially the Docker and Kubernetes ones, where later lessons assume you've done the earlier ones.
 
 The AWS section is more modular. You can jump between S3, EC2, and Lambda depending on what interests you.
 
@@ -37,6 +40,7 @@ Every lesson has:
 Throughout this track, we'll come back to one project: a **note-taking API** with a database backend.
 
 - Docker lessons: build and run it locally
+- Kubernetes lessons: deploy it on a cluster with auto-scaling and self-healing
 - AWS lessons: deploy it to the cloud
 - Final project: a full production-style setup
 
@@ -48,8 +52,8 @@ This isn't a toy — it's the same pattern used by real startups to ship their f
 
 - **Basic terminal comfort:** you've used `cd`, `ls`, `mkdir` before
 - **A computer with internet:** everything here runs on Mac, Windows, or Linux
-- **No AWS or Docker experience needed:** that's what this is for
+- **No Docker, Kubernetes, or AWS experience needed:** that's what this is for
 
 ---
 
-Let's go. 🐳☁️
+Let's go. 🐳☸️☁️

@@ -48,6 +48,73 @@ docker network ls            List networks
 
 ---
 
+## Kubernetes
+
+| Term | What it is |
+|---|---|
+| **Cluster** | A group of machines (nodes) running Kubernetes. One control plane + one or more workers. |
+| **Node** | A single machine in the cluster — can be physical, virtual, or a Minikube container. |
+| **Control Plane** | The brain of Kubernetes — makes scheduling decisions, stores cluster state, runs the API server. |
+| **Pod** | The smallest unit Kubernetes runs. One or more containers with shared IP, storage, and lifecycle. |
+| **Deployment** | Declares how many copies of a pod should run. Handles updates, rollbacks, and self-healing. |
+| **ReplicaSet** | Created by a Deployment — ensures the right number of pods are running. |
+| **Service** | A stable network endpoint that routes traffic to pods (even as pods come and go). |
+| **ClusterIP** | Default service type — reachable only inside the cluster. |
+| **NodePort** | Opens a port on every node so you can reach a service from outside the cluster. |
+| **LoadBalancer** | Provisions an external load balancer (cloud only — behaves like NodePort on Minikube). |
+| **kubectl** | The command-line tool to interact with your Kubernetes cluster. |
+| **Minikube** | Runs a single-node Kubernetes cluster on your machine for learning. |
+| **ConfigMap** | Stores non-sensitive configuration (environment variables, config files). |
+| **Secret** | Stores sensitive data (passwords, API keys). Values are base64-encoded. |
+| **Label** | Key-value pairs attached to resources. Used by Services and Deployments to find the right pods. |
+| **Selector** | A label-based filter — "find pods with label app=api". |
+| **Rolling update** | Gradually replacing old pods with new ones — zero downtime. |
+| **Rollback** | Reverting a Deployment to a previous version. |
+| **Self-healing** | Kubernetes automatically restarts failed pods and replaces crashed ones. |
+| **Scaling** | Changing the number of pod replicas — manually or automatically. |
+| **PersistentVolume (PV)** | Actual storage resource (disk, cloud volume) available to the cluster. |
+| **PersistentVolumeClaim (PVC)** | A request for storage ("I need 1GB fast"). Kubernetes binds it to a PV. |
+| **kubelet** | The agent running on every worker node. Makes sure containers are running as told. |
+| **etcd** | The database that stores all cluster state — the source of truth. |
+| **YAML** | The declarative format for defining Kubernetes resources (Deployments, Services, Pods). |
+
+### kubectl Commands
+
+```
+kubectl get nodes                  List all nodes
+kubectl get pods                   List all pods
+kubectl get deployments            List all deployments
+kubectl get services               List all services
+kubectl get pods -o wide           Show pod IPs and nodes
+kubectl get pods -l app=my-app     Filter pods by label
+kubectl describe pod <name>        Show detailed pod info
+kubectl logs <pod>                 View pod logs
+kubectl logs -f <pod>              Follow pod logs
+kubectl exec <pod> -- <cmd>        Run command inside a pod
+kubectl exec -it <pod> -- /bin/sh  Interactive shell inside a pod
+kubectl apply -f file.yaml         Create or update resources
+kubectl delete -f file.yaml        Delete resources from a file
+kubectl delete pod <name>          Delete a specific pod
+kubectl scale deployment <name> --replicas=N   Scale a deployment
+kubectl rollout status deployment/<name>       Watch a rollout
+kubectl rollout undo deployment/<name>         Roll back a deployment
+```
+
+### Minikube Commands
+
+```
+minikube start --driver=docker     Start a local cluster
+minikube stop                      Stop the cluster
+minikube delete                    Delete the cluster entirely
+minikube status                    Check cluster status
+minikube dashboard                 Open the web dashboard
+minikube service <name>            Open a service in the browser
+minikube service <name> --url      Get a service's URL
+minikube ip                        Get the cluster's IP address
+```
+
+---
+
 ## AWS
 
 | Term | What it is |
@@ -144,6 +211,20 @@ docker build -t my-app . 2>&1 | tail -20
 - Check `DB_HOST` env var — probably `localhost` instead of the service name
 - Check port — are you using the container port (5432) or mapped port?
 - Is the database service started? `docker compose ps`
+
+### "Is my Kubernetes pod running?"
+```bash
+kubectl get pods
+kubectl describe pod <name>
+kubectl logs <name>
+```
+
+### "Can't reach my Kubernetes service?"
+```bash
+kubectl get services
+kubectl describe service <name>
+minikube service <name> --url   # Minikube only
+```
 
 ### "Is my AWS bill going to surprise me?"
 - Check **Billing Dashboard** → **Budgets**
