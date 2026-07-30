@@ -310,7 +310,47 @@ The bind mount maps the `./logs` folder on your machine directly into the contai
 
 ### Exercise 3: Removing the volume from Compose
 
-In your `docker-compose.yml`, find the `db` service and **remove** the `volumes` section:
+This exercise shows what happens when you stop using a named volume: existing data is lost.
+
+**First, add `init_db()` to `app.py`** so the app creates its own table on startup (important: without this, the next steps will break because the `notes` table won't exist):
+
+```python
+def init_db():
+    """Create the notes table on startup."""
+    conn = psycopg2.connect(
+        host=os.getenv('DB_HOST', 'db'),
+        database=os.getenv('DB_NAME', 'notes'),
+        user=os.getenv('DB_USER', 'postgres'),
+        password=os.getenv('DB_PASSWORD', 'secret')
+    )
+    cur = conn.cursor()
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS notes (
+            id SERIAL PRIMARY KEY,
+            title TEXT,
+            body TEXT
+        )
+    ''')
+    conn.commit()
+    cur.close()
+    conn.close()
+```
+
+Then add `init_db()` before `app.run()` in your startup block:
+
+```python
+if __name__ == '__main__':
+    init_db()
+    app.run(host='0.0.0.0', port=5000)
+```
+
+Rebuild the API image so the new code is included:
+
+```bash
+docker compose build api
+```
+
+Now, in your `docker-compose.yml`, find the `db` service and **remove** its `volumes` section:
 
 ```yaml
   db:
@@ -323,49 +363,53 @@ In your `docker-compose.yml`, find the `db` service and **remove** the `volumes`
     #   - pgdata:/var/lib/postgresql/data
 ```
 
-Then:
-
 ```bash
-# Shut down and delete volumes
+# Shut down and delete volumes (the named pgdata volume is wiped)
 docker compose down -v
 
-# Start fresh
+# Start fresh — init_db() creates the notes table automatically
 docker compose up -d
 ```
 
-Create a note — use the command for your platform:
+Create a note (port 5000 is published, so use commands from your host machine):
 
 ```bash
-# macOS / Linux (curl from your machine — port 5000 is published)
+# macOS / Linux
 curl -X POST http://localhost:5000/notes -H "Content-Type: application/json" -d '{"title":"Test","body":"Will this survive?"}'
 
-# Windows PowerShell with Invoke-RestMethod (no quoting issues):
+# Windows PowerShell (Invoke-RestMethod avoids all quoting issues):
 $body = @{title="Test"; body="Will this survive?"} | ConvertTo-Json
 Invoke-RestMethod -Uri http://localhost:5000/notes -Method Post -ContentType "application/json" -Body $body
-
-# Windows PowerShell with curl.exe (from the host — NOT inside the container):
-curl.exe -X POST http://localhost:5000/notes -H "Content-Type: application/json" -d '{"title":"Test","body":"Will this survive?"}'
 ```
 
-> 💡 **Why not `docker compose exec`?** Running curl inside the container means you need `curl` installed in the image, and on Windows, `curl.exe` won't exist inside a Linux container anyway. Using `curl` from your host machine (against `localhost:5000`) is simpler and avoids both problems.
-
-Then test if the data survives:
+Check the note exists:
 
 ```bash
-# Shut down again
+curl http://localhost:5000/notes
+# or on Windows PowerShell:
+Invoke-RestMethod -Uri http://localhost:5000/notes
+```
+
+Now restart without the named volume:
+
+```bash
 docker compose down
 
-# Start again
 docker compose up -d
+```
 
-# Check your notes — they're gone!
+Check your notes — **they're gone!**
+
+```bash
 curl http://localhost:5000/notes
 # Output: []
 ```
 
-**What happened?** Without the `pgdata` named volume, PostgreSQL uses an **anonymous volume** or the container's internal filesystem. When you ran `docker compose down` (without `-v`), the anonymous volume was detached and a new one was created on restart — fresh database, no data. The note is lost.
+**What happened?** Without the `pgdata` named volume, PostgreSQL creates an **anonymous volume** on the first start. When you ran `docker compose down` (without `-v`), the anonymous volume was detached. On restart, a new anonymous volume was created with a fresh database. The notes are gone.
 
-This is why explicit named volumes are important — they let data survive container restarts.
+But the app still works — `init_db()` created the table on startup, so you can create new notes even after a volume reset.
+
+This is why explicit named volumes are important: they survive restarts and intentionally persist data.
 
 ---
 

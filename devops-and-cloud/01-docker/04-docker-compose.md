@@ -126,7 +126,23 @@ def create_note():
     conn.close()
     return jsonify({'id': note_id, 'title': data['title'], 'body': data['body']}), 201
 
+def init_db():
+    \"\"\"Create the notes table if it doesn't exist (data survives volume resets).\"\"\"
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS notes (
+            id SERIAL PRIMARY KEY,
+            title TEXT,
+            body TEXT
+        )
+    ''')
+    conn.commit()
+    cur.close()
+    conn.close()
+
 if __name__ == '__main__':
+    init_db()
     app.run(host='0.0.0.0', port=5000)
 ```
 
