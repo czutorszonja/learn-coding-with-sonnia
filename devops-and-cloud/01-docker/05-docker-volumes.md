@@ -202,18 +202,23 @@ docker volume prune
 # Remove a specific volume
 docker volume rm pgdata
 
-# Copy data between containers and volumes
-# "my-container" is a placeholder — replace it with your actual container name
-docker cp my-container:/logs/app.log ./          # Copy FROM container TO your machine
-docker cp ./config.json my-container:/app/       # Copy FROM your machine INTO container
+# Copy files between a container and your machine
+# This works with containers from your note-app project
 
-# Real example — with your note-app Compose project running:
-docker ps                                       # find your container names first
-# docker cp note-app-api-1:/app/app.py ./        # copy the Flask app out of the API container
-# docker cp ./backup.sql note-app-db-1:/tmp/     # copy a SQL file into the database container
+# First, make sure your note-app containers are running
+docker compose up -d                 # start them if they aren't already
+
+# Copy app.py FROM the API container TO your machine
+docker cp note-app-api-1:/app/app.py ./
+
+# Edit app.py locally, then copy it back INTO the container
+docker cp ./app.py note-app-api-1:/app/app.py
+
+# You can also copy other files from the container
+docker cp note-app-api-1:/app/requirements.txt ./
 ```
 
-> 💡 **`my-container` is not a file.** It's a container name — the same one you see when you run `docker ps` or `docker compose ps`. Replace it with whatever your container is called (like `note-app-api-1`, `note-app-db-1`, `my-website`, etc.).
+> 💡 Container names like `note-app-api-1` come from `docker compose ps`. Docker Compose names them as `{folder}-{service}-{number}`.
 
 ---
 
