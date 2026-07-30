@@ -125,7 +125,9 @@ Enable public access:
 
 ```bash
 # Bucket policy (allows public reads)
-aws s3api put-bucket-policy --bucket my-static-site-szonja --policy '{
+# Save the policy to a file to avoid shell quoting issues
+cat > bucket-policy.json << EOF
+{
   "Version": "2012-10-17",
   "Statement": [{
     "Effect": "Allow",
@@ -133,8 +135,18 @@ aws s3api put-bucket-policy --bucket my-static-site-szonja --policy '{
     "Action": "s3:GetObject",
     "Resource": "arn:aws:s3:::my-static-site-szonja/*"
   }]
-}'
+}
+EOF
+aws s3api put-bucket-policy --bucket my-static-site-szonja --policy file://bucket-policy.json
 ```
+
+> **💻 Windows PowerShell / CMD note:** Heredocs (`cat > file << EOF`) don't work in PowerShell or CMD. Create the JSON file manually:
+>
+> 1. Create a file called `bucket-policy.json` with the JSON content above
+> 2. Run:
+> ```powershell
+> aws s3api put-bucket-policy --bucket my-static-site-szonja --policy file://bucket-policy.json
+> ```
 
 Turn on static hosting:
 
