@@ -36,20 +36,31 @@ Docker provides **networks** to connect containers. When containers are on the s
 docker network create my-app-net
 
 # Run PostgreSQL on the network
-docker run -d \
-  --name my-db \
-  --network my-app-net \
-  -e POSTGRES_PASSWORD=secret \
-  postgres:16
+docker run -d --name my-db --network my-app-net -e POSTGRES_PASSWORD=secret postgres:16
 
 # Run the API on the same network
-docker run -d \
-  --name my-api \
-  --network my-app-net \
-  -p 5000:5000 \
-  -e DB_HOST=my-db \
-  my-api-image
+docker run -d --name my-api --network my-app-net -p 5000:5000 -e DB_HOST=my-db my-api-image
 ```
+
+> **💻 Cross-platform tip:** The backslash (`\`) line continuation only works in macOS/Linux terminals. If the one-liner above gets hard to read, in **Windows PowerShell** use the backtick (`` ` ``) instead:
+>
+> ```powershell
+> docker run -d `
+>   --name my-db `
+>   --network my-app-net `
+>   -e POSTGRES_PASSWORD=secret `
+>   postgres:16
+> ```
+>
+> Or on **Windows Command Prompt** (cmd.exe), use the caret (`^`):
+>
+> ```cmd
+> docker run -d ^
+>   --name my-db ^
+>   --network my-app-net ^
+>   -e POSTGRES_PASSWORD=secret ^
+>   postgres:16
+> ```
 
 Now `my-api` can reach `my-db:5432` (hostname:port). Docker's built-in DNS resolves `my-db` to the PostgreSQL container's IP address on this network.
 

@@ -51,15 +51,21 @@ A **volume** is a storage folder managed by Docker, outside the container's file
 docker volume create pgdata
 
 # Run PostgreSQL with the volume attached
-docker run -d \
-  --name test-db \
-  -e POSTGRES_PASSWORD=secret \
-  -v pgdata:/var/lib/postgresql/data \
-  postgres:16
+docker run -d --name test-db -e POSTGRES_PASSWORD=secret -v pgdata:/var/lib/postgresql/data postgres:16
 
 # Now PostgreSQL stores its data on the 'pgdata' volume,
 # NOT inside the container filesystem
 ```
+
+> **💻 Windows PowerShell note:** The backslash (`\`) line continuation doesn't work in PowerShell. On Windows, put the whole command on one line (as shown above), or use the backtick (`` ` ``) as a line continuation:
+>
+> ```powershell
+> docker run -d `
+>   --name test-db `
+>   -e POSTGRES_PASSWORD=secret `
+>   -v pgdata:/var/lib/postgresql/data `
+>   postgres:16
+> ```
 
 Try the experiment again:
 
@@ -72,11 +78,7 @@ docker exec -it test-db psql -U postgres -c "INSERT INTO cats VALUES ('Whiskers'
 docker rm -f test-db
 
 # Start a new one with the SAME volume
-docker run -d \
-  --name test-db2 \
-  -e POSTGRES_PASSWORD=secret \
-  -v pgdata:/var/lib/postgresql/data \
-  postgres:16
+docker run -d --name test-db2 -e POSTGRES_PASSWORD=secret -v pgdata:/var/lib/postgresql/data postgres:16
 
 # Check for Whiskers (give it a second to start)
 docker exec -it test-db2 psql -U postgres -c "SELECT * FROM cats;"
@@ -122,10 +124,21 @@ Remember our Flask app from lesson 03? Every time we changed the code, we had to
 
 ```bash
 # Run with a bind mount instead of COPY
-docker run -d -p 5000:5000 \
-  -v $(pwd):/app \
-  flask-app
+# macOS / Linux:
+docker run -d -p 5000:5000 -v $(pwd):/app flask-app
+
+# Windows PowerShell:
+# docker run -d -p 5000:5000 -v ${PWD}:/app flask-app
+#
+# Windows Command Prompt (cmd.exe):
+# docker run -d -p 5000:5000 -v %cd%:/app flask-app
 ```
+
+> 💻 **Cross-platform tip:** The `$(pwd)` syntax works on macOS and Linux but **not** on Windows. Use `${PWD}` in PowerShell or `%cd%` in Command Prompt. Or just use the full absolute path to be safe on any platform:
+>
+> ```bash
+> docker run -d -p 5000:5000 -v /full/path/to/your/project:/app flask-app
+> ```
 
 Now any change you make to `app.py` on your machine is instantly visible inside the container. If Flask is in debug mode, it auto-reloads. No rebuild needed.
 

@@ -312,6 +312,8 @@ cd url-shortener
 docker compose up --build
 ```
 
+> **💻 Cross-platform tip:** The curl commands below use Unix-style backslash continuations and single quotes. If you're on Windows, scroll down for PowerShell and Command Prompt alternatives.
+
 Wait for all services to be healthy (check with `docker compose ps`).
 
 ```bash
@@ -330,6 +332,30 @@ curl -L http://localhost:5000/aB3xYz
 curl http://localhost:5000/stats/aB3xYz
 # → {"short_code": "aB3xYz", "original_url": "https://docs.docker.com", ...}
 ```
+
+> **💡 Windows alternatives for curl commands**
+>
+> **PowerShell:**
+> ```powershell
+> # Shorten a URL (using curl.exe + variable)
+> $body = '{"url": "https://docs.docker.com"}'
+> curl.exe -X POST http://localhost:5000/shorten -H "Content-Type: application/json" -d $body
+>
+> # Or PowerShell-native:
+> Invoke-RestMethod -Uri http://localhost:5000/shorten -Method Post -ContentType "application/json" -Body '{"url": "https://docs.docker.com"}'
+>
+> # Follow a redirect (PowerShell can't use -L like curl — use Invoke-WebRequest with -MaximumRedirection)
+> Invoke-WebRequest -Uri http://localhost:5000/aB3xYz -MaximumRedirection 5
+>
+> # Check stats:
+> Invoke-RestMethod -Uri http://localhost:5000/stats/aB3xYz
+> ```
+>
+> **Command Prompt (cmd.exe):**
+> ```cmd
+> REM Escape double quotes with backslash — cmd.exe needs them
+> curl -X POST http://localhost:5000/shorten -H "Content-Type: application/json" -d "{\"url\": \"https://docs.docker.com\"}"
+> ```
 
 **Test persistence:**
 
