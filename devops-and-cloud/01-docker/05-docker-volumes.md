@@ -331,12 +331,25 @@ docker compose down -v
 
 # Start fresh
 docker compose up -d
+```
 
-# Create a note
-curl -X POST http://localhost:5000/notes \
-  -H "Content-Type: application/json" \
-  -d '{"title":"Test","body":"Will this survive?"}'
+Create a note (choose the command for your platform):
 
+```bash
+# macOS / Linux
+docker compose exec api curl -X POST http://localhost:5000/notes -H "Content-Type: application/json" -d '{"title":"Test","body":"Will this survive?"}'
+
+# Windows PowerShell (use double quotes, escape inner ones with backtick)
+docker compose exec api curl.exe -X POST http://localhost:5000/notes -H "Content-Type: application/json" -d '{"title":"""Test"","""body"":"""Will this survive?"""}'
+
+# Or use Invoke-RestMethod (PowerShell, any machine):
+$body = @{title="Test"; body="Will this survive?"} | ConvertTo-Json
+Invoke-RestMethod -Uri http://localhost:5000/notes -Method Post -ContentType "application/json" -Body $body
+```
+
+Then test if the data survives:
+
+```bash
 # Shut down again
 docker compose down
 
