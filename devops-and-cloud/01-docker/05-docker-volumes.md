@@ -134,11 +134,24 @@ docker run -d -p 5000:5000 -v $(pwd):/app flask-app
 # docker run -d -p 5000:5000 -v %cd%:/app flask-app
 ```
 
-> 💻 **Cross-platform tip:** The `$(pwd)` syntax works on macOS and Linux but **not** on Windows. Use `${PWD}` in PowerShell or `%cd%` in Command Prompt. Or just use the full absolute path to be safe on any platform:
+> 💻 **Cross-platform tip:** The `$(pwd)` syntax works on macOS and Linux but **not** on Windows. Use one of these instead — replace `C:\Users\Szonja\my-project` with your actual project folder:
 >
-> ```bash
-> docker run -d -p 5000:5000 -v /full/path/to/your/project:/app flask-app
+> **PowerShell:**
+> ```powershell
+> docker run -d -p 5000:5000 -v ${PWD}:/app flask-app
 > ```
+>
+> **Command Prompt (cmd.exe):**
+> ```cmd
+> docker run -d -p 5000:5000 -v %cd%:/app flask-app
+> ```
+>
+> **Or use a full path (works everywhere):**
+> ```bash
+> docker run -d -p 5000:5000 -v /home/szonja/my-project:/app flask-app
+> ```
+> 
+> ⚠️ Important: replace `/home/szonja/my-project` with your actual folder path — don't use it literally!
 
 Now any change you make to `app.py` on your machine is instantly visible inside the container. If Flask is in debug mode, it auto-reloads. No rebuild needed.
 
