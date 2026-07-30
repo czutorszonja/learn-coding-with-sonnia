@@ -203,22 +203,27 @@ docker volume prune
 docker volume rm pgdata
 
 # Copy files between a container and your machine
-# This works with containers from your note-app project
-
-# First, make sure your note-app containers are running
-docker compose up -d                 # start them if they aren't already
+# First find your actual container name:
+docker compose ps
+# The output shows columns: NAME, IMAGE, COMMAND, SERVICE, STATUS, PORTS
+# The NAME column is what you use with docker cp
+# Docker Compose names containers as: {project-folder}-{service}-1
+#   e.g. Docker_compose_practice-api-1   ← her API container
+#         Docker_compose_practice-db-1    ← her database container
+#         note-app-api-1                  ← if the project folder is called "note-app"
 
 # Copy app.py FROM the API container TO your machine
-docker cp note-app-api-1:/app/app.py ./
+# Replace {container-name} with the actual name from docker compose ps:
+docker cp {container-name}:/app/app.py ./
 
-# Edit app.py locally, then copy it back INTO the container
-docker cp ./app.py note-app-api-1:/app/app.py
+# Move a local file INTO the container
+docker cp ./app.py {container-name}:/app/app.py
 
-# You can also copy other files from the container
-docker cp note-app-api-1:/app/requirements.txt ./
+# You can also grab requirements.txt from the container
+docker cp {container-name}:/app/requirements.txt ./
 ```
 
-> 💡 Container names like `note-app-api-1` come from `docker compose ps`. Docker Compose names them as `{folder}-{service}-{number}`.
+> 💡 **How to find your container name:** Run `docker compose ps` and look at the first column (NAME). It's always `{folder}-{service}-1`. So if your project folder is called `Docker_compose_practice`, the API container is `Docker_compose_practice-api-1`.
 
 ---
 
