@@ -205,25 +205,22 @@ docker volume rm pgdata
 # Copy files between a container and your machine
 # First find your actual container name:
 docker compose ps
-# The output shows columns: NAME, IMAGE, COMMAND, SERVICE, STATUS, PORTS
-# The NAME column is what you use with docker cp
-# Docker Compose names containers as: {project-folder}-{service}-1
-#   e.g. Docker_compose_practice-api-1   ← her API container
-#         Docker_compose_practice-db-1    ← her database container
-#         note-app-api-1                  ← if the project folder is called "note-app"
+# The NAME column shows container names.
+# Docker Compose names them: {your-folder}-{service}-1
+#   e.g. Docker_compose_practice-api-1   ← if your folder is Docker_compose_practice
+#         note-app-api-1                  ← if your folder is note-app
 
 # Copy app.py FROM the API container TO your machine
-# Replace {container-name} with the actual name from docker compose ps:
-docker cp {container-name}:/app/app.py ./
+docker cp docker_compose_practice-api-1:/app/app.py ./
 
 # Move a local file INTO the container
-docker cp ./app.py {container-name}:/app/app.py
+docker cp ./app.py docker_compose_practice-api-1:/app/app.py
 
 # You can also grab requirements.txt from the container
-docker cp {container-name}:/app/requirements.txt ./
+docker cp docker_compose_practice-api-1:/app/requirements.txt ./
 ```
 
-> 💡 **How to find your container name:** Run `docker compose ps` and look at the first column (NAME). It's always `{folder}-{service}-1`. So if your project folder is called `Docker_compose_practice`, the API container is `Docker_compose_practice-api-1`.
+> 💡 **Don't know your container name?** Run `docker compose ps` and look at the NAME column. It's always `{your-project-folder}-{service}-1`. With folder `Docker_compose_practice`, you get `docker_compose_practice-api-1`. With folder `note-app`, you'd get `note-app-api-1`.
 
 ---
 
