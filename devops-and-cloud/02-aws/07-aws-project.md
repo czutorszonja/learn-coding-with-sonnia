@@ -57,11 +57,11 @@ For simple apps, this costs essentially **nothing** at low traffic.
 ### Step 1: Create DynamoDB Table
 
 ```bash
-aws dynamodb create-table \
-  --table-name notes \
-  --attribute-definitions '[{"AttributeName":"id","AttributeType":"S"}]' \
-  --key-schema '[{"AttributeName":"id","KeyType":"HASH"}]' \
-  --billing-mode PAY_PER_REQUEST
+# macOS / Linux
+aws dynamodb create-table --table-name notes --attribute-definitions '[{"AttributeName":"id","AttributeType":"S"}]' --key-schema '[{"AttributeName":"id","KeyType":"HASH"}]' --billing-mode PAY_PER_REQUEST
+
+# Windows PowerShell — same command on one line
+# aws dynamodb create-table --table-name notes --attribute-definitions '[{"AttributeName":"id","AttributeType":"S"}]' --key-schema '[{"AttributeName":"id","KeyType":"HASH"}]' --billing-mode PAY_PER_REQUEST
 ```
 
 ### Step 2: Write the Lambda Function
@@ -166,9 +166,8 @@ Upload to S3 and enable static website hosting (lesson 11). Put CloudFront in fr
 ## Monitoring and Alerting
 
 ```bash
-# Create a CloudWatch dashboard
-aws cloudwatch put-dashboard \
-  --dashboard-name NotesApp \
+# macOS / Linux — Create a CloudWatch dashboard
+aws cloudwatch put-dashboard --dashboard-name NotesApp \
   --dashboard-body '{
     "widgets": [{
       "type": "metric",

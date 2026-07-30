@@ -149,14 +149,15 @@ The ALB:
 Instead of running PostgreSQL in a container (which loses data on restart), use **RDS**:
 
 ```bash
-aws rds create-db-instance \
-  --db-instance-identifier url-shortener-db \
-  --db-instance-class db.t3.micro \
-  --engine postgres \
-  --master-username postgres \
-  --master-user-password secret \
-  --allocated-storage 20 \
-  --region eu-west-2
+# macOS / Linux
+aws rds create-db-instance --db-instance-identifier url-shortener-db --db-instance-class db.t3.micro --engine postgres --master-username postgres --master-user-password secret --allocated-storage 20 --region eu-west-2
+
+# Windows PowerShell — put it on one line (same command, no backslashes)
+# Or use backtick continuations if you prefer:
+# aws rds create-db-instance `
+#   --db-instance-identifier url-shortener-db `
+#   --engine postgres --master-username postgres
+#   (etc.)
 ```
 
 RDS gives you:
@@ -190,10 +191,7 @@ When you update your app:
 
 ```bash
 # Trigger a new deployment
-aws ecs update-service \
-  --cluster hello-cluster \
-  --service hello-service \
-  --force-new-deployment
+aws ecs update-service --cluster hello-cluster --service hello-service --force-new-deployment
 ```
 
 Zero downtime. ECS starts new tasks, waits for health checks, then stops the old ones.
@@ -209,10 +207,7 @@ ECS automatically sends logs to CloudWatch:
 aws logs tail /ecs/hello-app --follow
 
 # See metrics
-aws cloudwatch get-metric-statistics \
-  --namespace AWS/ECS \
-  --metric-name CPUUtilization \
-  --dimensions Name=ServiceName,Value=hello-service
+aws cloudwatch get-metric-statistics --namespace AWS/ECS --metric-name CPUUtilization --dimensions Name=ServiceName,Value=hello-service
 ```
 
 Set up alarms:

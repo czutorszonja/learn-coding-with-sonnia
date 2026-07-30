@@ -166,10 +166,10 @@ Your site is now live at:
 Enable **versioning** on a bucket and S3 keeps every version of every object.
 
 ```bash
-aws s3api put-bucket-versioning \
-  --bucket my-app-bucket \
-  --versioning-configuration Status=Enabled
+aws s3api put-bucket-versioning --bucket my-app-bucket --versioning-configuration Status=Enabled
 ```
+
+> 💻 **Windows tip:** PowerShell users write the whole thing on one line (no backtick needed for short commands). CMD users can use `^` if needed, but this one fits on one line.
 
 Now if someone overwrites or deletes a file, you can restore the old version.
 
@@ -197,12 +197,13 @@ aws s3 cp /tmp/backup-$(date +%F).sql s3://my-backups/database/
 
 ### Log Archive
 ```bash
-# Move old logs to cheaper storage
+# macOS / Linux — Move old logs to cheaper storage
 aws s3 cp logs/ s3://my-logs/ --recursive
-aws s3api put-object-tagging \
-  --bucket my-logs \
-  --key old-log.gz \
-  --tagging '{"TagSet": [{"Key": "class", "Value": "glacier"}]}'
+aws s3api put-object-tagging --bucket my-logs --key old-log.gz --tagging '{"TagSet": [{"Key": "class", "Value": "glacier"}]}'
+
+# Windows PowerShell (write tagging JSON to file first to avoid quoting issues):
+# Create a file tagging.json with: {"TagSet": [{"Key": "class", "Value": "glacier"}]}
+# aws s3api put-object-tagging --bucket my-logs --key old-log.gz --tagging file://tagging.json
 ```
 
 ### Serving Static Assets
