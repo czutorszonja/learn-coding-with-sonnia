@@ -261,4 +261,97 @@ In development, bind mounts are great. In production, you rarely use them — in
 2. Try a bind mount: create a local folder `./logs`, mount it to `/app/logs` in a container, have the container write a log file. Verify the file appears on your machine.
 3. In the note-taking Compose project from lesson 04, remove the `pgdata` volume config from the database service. Run `docker compose down -v` and `docker compose up`. Create a note, then down and up again. What happened to the note?
 
+## 📝 Solutions
+
+### Exercise 1: Named volume persistence
+
+```bash
+# Step 1: Create the volume
+docker volume create mydata
+
+# Step 2: Run a container that writes the date to /data/date.txt
+docker run --rm -v mydata:/data alpine sh -c "date > /data/date.txt && echo 'Date written!'"
+
+# Step 3: Run another container to read the file
+docker run --rm -v mydata:/data alpine cat /data/date.txt
+# Output: Thu Jul 30 15:30:00 UTC 2026 (or whatever the current date is)
+```
+
+The file **is still there** because even though the first container was deleted (`--rm` removes it automatically), the named volume persists. The second container mounted the same volume and found the file.
+
+### Exercise 2: Bind mount for logs
+
+```bash
+# Step 1: Create a local folder
+mkdir -p ./logs
+
+# Windows (PowerShell): New-Item -ItemType Directory -Path ./logs -Force
+# Windows (CMD): mkdir logs
+
+# Step 2: Run a container that writes a log file
+# On macOS / Linux:
+docker run --rm -v $(pwd)/logs:/app/logs alpine sh -c "echo 'App started at \$(date)' > /app/logs/app.log && ls -la /app/logs"
+
+# For Windows PowerShell, replace $(pwd) with ${PWD}:
+docker run --rm -v ${PWD}/logs:/app/logs alpine sh -c "echo 'App started at \$(date)' > /app/logs/app.log && ls -la /app/logs"
+
+# For Windows CMD, replace $(pwd) with %cd%:
+docker run --rm -v %cd%/logs:/app/logs alpine sh -c "echo 'App started at \$(date)' > /app/logs/app.log && ls -la /app/logs"
+
+# Step 3: Verify the file exists on your machine
+cat ./logs/app.log
+# Output: App started at Thu Jul 30 15:30:00 UTC 2026
+
+# Windows PowerShell:
+Get-Content ./logs/app.log
+```
+
+The bind mount maps the `./logs` folder on your machine directly into the container at `/app/logs`. Anything the container writes there shows up on your computer.
+
+### Exercise 3: Removing the volume from Compose
+
+In your `docker-compose.yml`, find the `db` service and **remove** the `volumes` section:
+
+```yaml
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: notes
+      POSTGRES_PASSWORD: secret
+    # Remove or comment out these lines:
+    # volumes:
+    #   - pgdata:/var/lib/postgresql/data
+```
+
+Then:
+
+```bash
+# Shut down and delete volumes
+docker compose down -v
+
+# Start fresh
+docker compose up -d
+
+# Create a note
+curl -X POST http://localhost:5000/notes \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Test","body":"Will this survive?"}'
+
+# Shut down again
+docker compose down
+
+# Start again
+docker compose up -d
+
+# Check your notes — they're gone!
+curl http://localhost:5000/notes
+# Output: []
+```
+
+**What happened?** Without the `pgdata` named volume, PostgreSQL uses an **anonymous volume** or the container's internal filesystem. When you ran `docker compose down` (without `-v`), the anonymous volume was detached and a new one was created on restart — fresh database, no data. The note is lost.
+
+This is why explicit named volumes are important — they let data survive container restarts.
+
+---
+
 **Continue to [Lesson 6: Docker Networking: Connecting Containers](06-docker-networking.md)**
