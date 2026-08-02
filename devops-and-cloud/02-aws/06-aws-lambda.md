@@ -1,6 +1,6 @@
-# 05 — Lambda: Code Without Servers
+# 06 — Lambda: Code Without Servers
 
-**← Back to [Lesson 04: EC2: Your First Cloud Server](04-aws-ec2.md)**
+**← Back to [Lesson 05: EC2: Your First Cloud Server](05-aws-ec2.md)**
 
 
 EC2 gives you a whole server. But what if you only need to **run a function** when something happens? No server to manage, no SSH, no patching — just code that runs when triggered.
@@ -247,4 +247,4 @@ Lambda is dramatically cheaper for sporadic workloads.
 3. (Advanced) Build a fully serverless URL shortener: API Gateway + Lambda + DynamoDB. The Lambda receives a URL, stores it in DynamoDB with a short code, and returns the short URL.
 4. Check CloudWatch Logs to see your Lambda's `print()` output
 
-**Continue to [Lesson 06: ECS: Running Apps at Scale on AWS](06-aws-ecs.md)**
+**Continue to [Lesson 07: ECS: Running Docker on AWS](07-aws-ecs.md)**

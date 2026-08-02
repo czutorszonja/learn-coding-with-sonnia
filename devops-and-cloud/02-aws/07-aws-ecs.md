@@ -1,6 +1,6 @@
-# 06 — ECS: Running Docker on AWS
+# 07 — ECS: Running Docker on AWS
 
-**← Back to [Lesson 05: Lambda: Code Without Servers](05-aws-lambda.md)**
+**← Back to [Lesson 06: Lambda: Code Without Servers](06-aws-lambda.md)**
 
 
 You've containerised your app with Docker. Now let's run it in the cloud — properly.
@@ -11,7 +11,7 @@ EC2 was "rent a server and install Docker." **ECS** (Elastic Container Service) 
 
 ## 1. The Problem EC2 Doesn't Solve
 
-Running Docker on EC2 (lesson 4) works, but you're still managing:
+Running Docker on EC2 (lesson 5) works, but you're still managing:
 
 - What happens if the EC2 instance dies?
 - What if traffic spikes — who launches more instances?
@@ -228,4 +228,4 @@ Set up alarms:
 
 > **📁 Deploy your own app?** If you've completed the Docker lessons, come back and try pushing your own image to ECR instead of the sample.
 
-**Continue to [Lesson 07: Final Project: Full-Stack Notes App on AWS](07-aws-project.md)**
+**Continue to [Lesson 08: Final Project: Full-Stack Notes App on AWS](08-aws-project.md)**

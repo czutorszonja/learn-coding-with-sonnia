@@ -1,6 +1,6 @@
-# 07 — Final Project: Full-Stack Notes App on AWS
+# 08 — Final Project: Full-Stack Notes App on AWS
 
-**← Back to [Lesson 06: ECS: Running Apps at Scale on AWS](06-aws-ecs.md)**
+**← Back to [Lesson 07: ECS: Running Docker on AWS](07-aws-ecs.md)**
 
 
 This is where everything comes together. We'll build and **deploy a full-stack Notes app to AWS** — entirely serverless, with no servers to manage.
@@ -159,7 +159,7 @@ Create a simple HTML frontend and serve it from S3:
 </html>
 ```
 
-Upload to S3 and enable static website hosting (lesson 3). Put CloudFront in front for HTTPS and speed.
+Upload to S3 and enable static website hosting (lesson 4). Put CloudFront in front for HTTPS and speed.
 
 ---
 

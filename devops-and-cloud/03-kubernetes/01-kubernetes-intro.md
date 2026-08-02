@@ -1,6 +1,6 @@
 # 01 — What Is Kubernetes and Why Does It Matter?
 
-**← Back to [AWS Project: Build and Deploy a Serverless App](../02-aws/07-aws-project.md)**
+**← Back to [AWS Project: Build and Deploy a Serverless App](../02-aws/08-aws-project.md)**
 
 ---
 

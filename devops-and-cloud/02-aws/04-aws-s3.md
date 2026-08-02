@@ -1,6 +1,6 @@
-# 03 — S3: Store Everything in the Cloud
+# 04 — S3: Store Everything in the Cloud
 
-**← Back to [Lesson 02: IAM: Who Gets to Do What](02-aws-iam.md)**
+**← Back to [Lesson 03: Elastic Beanstalk: Deploy Your App Without the Server Headache](03-aws-elastic-beanstalk.md)**
 
 
 S3 is **the** AWS service. It's simple, cheap, and you'll use it in almost every project.
@@ -241,4 +241,4 @@ print(url)  # Temporary link, expires in 1 hour
 4. Create a simple `index.html` with your name on it. Host it as a static website.
 5. Use the AWS Console to browse to a file and generate a pre-signed URL. Open it in an incognito window — does it work?
 
-**Continue to [Lesson 04: EC2: Your First Cloud Server](04-aws-ec2.md)**
+**Continue to [Lesson 05: EC2: Your First Cloud Server](05-aws-ec2.md)**

@@ -57,14 +57,15 @@ There are **200+** AWS services. You'll probably use 10 regularly. Here are the 
 | Service | What it does | Lesson |
 |---|---|---|
 | **IAM** | Users, permissions, security | 2 |
-| **S3** | Store files (images, backups, static websites) | 3 |
-| **EC2** | Virtual servers (run any software) | 4 |
-| **Lambda** | Serverless functions (code that runs on-demand) | 5 |
-| **ECS / Fargate** | Run containerised apps on AWS | 6 |
-| **RDS** | Managed databases (PostgreSQL, MySQL, etc.) | 6 |
-| **CloudFront** | Content delivery network (fast worldwide) | 7 |
+| **Elastic Beanstalk** | Deploy apps without managing servers (PaaS) | 3 |
+| **S3** | Store files (images, backups, static websites) | 4 |
+| **EC2** | Virtual servers (run any software) | 5 |
+| **Lambda** | Serverless functions (code that runs on-demand) | 6 |
+| **ECS / Fargate** | Run containerised apps on AWS | 7 |
+| **RDS** | Managed databases (PostgreSQL, MySQL, etc.) | 7 |
+| **CloudFront** | Content delivery network (fast worldwide) | 8 |
 | **Route 53** | DNS (domain names) | — |
-| **VPC** | Virtual network (security, isolation) | 6 |
+| **VPC** | Virtual network (security, isolation) | 7 |
 
 ---
 
@@ -82,6 +83,7 @@ AWS is famously "pay as you go" — but it's also infamous for surprise bills. T
 - **EC2** — 750 hours/month of a t2.micro instance (a small virtual server)
 - **RDS** — 750 hours/month of a db.t2.micro database
 - **S3** — 20,000 GET requests
+- **Elastic Beanstalk** — the service itself is free; you only pay for the EC2/load balancer underneath (covered by the EC2 free tier)
 
 ### ⚠️ Cost Warning
 AWS will happily let you provision expensive resources and send you a bill. **Set up billing alerts first** (we'll do this in the IAM lesson). Never leave unused resources running.
@@ -134,6 +136,6 @@ Before moving on:
 2. Set up a billing alert for $5/month in the Billing Dashboard
 3. Enable MFA on your root account
 4. Open the AWS Management Console and find the region selector (top-right) — switch to **London (eu-west-2)**
-5. Search for "S3" in the services search bar — we'll use it next
+5. Search for "Elastic Beanstalk" in the services search bar — we'll use it next
 
 **Continue to [Lesson 02: IAM: Who Gets to Do What](02-aws-iam.md)**

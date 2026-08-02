@@ -181,4 +181,4 @@ Root User (only for billing + MFA)
 3. Create an IAM user in that group named `ci-deploy` (for automated deployments) — generate access keys for it
 4. Open **Credential Report** in IAM → check when each user last used their credentials
 
-**Continue to [Lesson 03: S3: Store Everything in the Cloud](03-aws-s3.md)**
+**Continue to [Lesson 03: Elastic Beanstalk: Deploy Your App Without the Server Headache](03-aws-elastic-beanstalk.md)**
