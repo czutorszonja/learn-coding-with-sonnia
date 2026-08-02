@@ -11,7 +11,7 @@ EC2 was "rent a server and install Docker." **ECS** (Elastic Container Service) 
 
 ## 1. The Problem EC2 Doesn't Solve
 
-Running Docker on EC2 (lesson 12) works, but you're still managing:
+Running Docker on EC2 (lesson 4) works, but you're still managing:
 
 - What happens if the EC2 instance dies?
 - What if traffic spikes — who launches more instances?

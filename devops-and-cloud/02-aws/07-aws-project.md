@@ -159,7 +159,7 @@ Create a simple HTML frontend and serve it from S3:
 </html>
 ```
 
-Upload to S3 and enable static website hosting (lesson 11). Put CloudFront in front for HTTPS and speed.
+Upload to S3 and enable static website hosting (lesson 3). Put CloudFront in front for HTTPS and speed.
 
 ---
 

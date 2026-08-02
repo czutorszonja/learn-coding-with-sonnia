@@ -56,15 +56,15 @@ There are **200+** AWS services. You'll probably use 10 regularly. Here are the 
 
 | Service | What it does | Lesson |
 |---|---|---|
-| **IAM** | Users, permissions, security | 10 |
-| **S3** | Store files (images, backups, static websites) | 11 |
-| **EC2** | Virtual servers (run any software) | 12 |
-| **Lambda** | Serverless functions (code that runs on-demand) | 13 |
-| **ECS / Fargate** | Run containerised apps on AWS | 14 |
-| **RDS** | Managed databases (PostgreSQL, MySQL, etc.) | 14 |
-| **CloudFront** | Content delivery network (fast worldwide) | 11 |
+| **IAM** | Users, permissions, security | 2 |
+| **S3** | Store files (images, backups, static websites) | 3 |
+| **EC2** | Virtual servers (run any software) | 4 |
+| **Lambda** | Serverless functions (code that runs on-demand) | 5 |
+| **ECS / Fargate** | Run containerised apps on AWS | 6 |
+| **RDS** | Managed databases (PostgreSQL, MySQL, etc.) | 6 |
+| **CloudFront** | Content delivery network (fast worldwide) | 7 |
 | **Route 53** | DNS (domain names) | — |
-| **VPC** | Virtual network (security, isolation) | 14 |
+| **VPC** | Virtual network (security, isolation) | 6 |
 
 ---
 
@@ -120,7 +120,7 @@ The app doesn't change — you just run it on better hardware that you rent by t
 - Enable **Receive Free Tier Usage Alerts**
 - Create a **budget** for $5/month (just in case)
 
-Then go to **IAM** (Identity and Access Management) — we'll set up proper access in lesson 10.
+Then go to **IAM** (Identity and Access Management) — we'll set up proper access in lesson 2.
 
 > ⚠️ **Keep your root account safe.** The email you signed up with is the "root user" — it has full access to everything. Enable Multi-Factor Authentication (MFA) on it immediately. Then create IAM users for everyday work.
 
