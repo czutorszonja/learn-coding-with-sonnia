@@ -56,6 +56,19 @@ In the AWS Console:
 
 Now **log out** of the root account and **log in** as `admin-szonja`. From now on, do everything from this user.
 
+### ⚠️ "Access denied" on the billing page?
+
+You'll probably see **Access denied** on the **Billing / Cost summary** page as `admin-szonja`. That's normal — not a mistake. AWS keeps billing separate from IAM permissions: even `AdministratorAccess` can't view costs until the **root user** switches it on.
+
+To fix it (as root):
+
+1. Log in with your root account
+2. Click your account name (top-right) → **Account**
+3. Scroll to **IAM user and role access to Billing information** → **Edit**
+4. Check **Activate IAM Access** → **Update**
+
+Wait a few minutes, log back in as `admin-szonja`, and the Cost summary will load. (You can also skip this — the lessons don't need billing access.)
+
 ---
 
 ## 4. The Principle of Least Privilege
