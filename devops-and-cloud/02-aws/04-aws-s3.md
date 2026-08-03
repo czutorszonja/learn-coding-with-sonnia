@@ -107,12 +107,20 @@ Not all data is created equal. S3 has different storage tiers:
 
 This is one of S3's best features. You can host a static site (HTML + CSS + JS) for pennies.
 
-### Setup
+> ⚠️ **Two different places — don't confuse them.**
+>
+> Almost every task in this section can be done **either** in the **web console** (pointing and clicking in your browser) **or** the **command line** (typing `aws ...` commands). They do the same thing; you only need **one** path per task. The lesson shows you both, but you never mix them mid-task:
+>
+> - **Web console** = the AWS website you log into. Click around, use tabs and edit boxes.
+> - **Command line (CLI)** = a terminal where you type commands. There are two places you can run them:
+>   1. **AWS Cloud Shell** — a terminal built into the console. Look for the `>_` icon near the top-right of the AWS page, next to the region selector. Click it and a terminal opens *inside* your browser, already logged into AWS. No install needed. **This is the easiest place to type `aws ...` commands.**
+>   2. **Your local terminal** — Terminal (Mac) / Command Prompt (Windows). Only use this if you've **installed the AWS CLI** (`aws --version` should print a version, not an error) **and** run `aws configure` once with your Access Key / Secret Key.
+>
+> If you're just getting it live as quickly as possible, **use the console** for the whole task — no CLI needed. The CLI steps are there for when you want to do it faster or script it.
 
-1. Create a bucket with the **same name as your domain** (or any name)
-2. Enable **Static website hosting** in bucket properties
-3. Upload your HTML files
-4. Make them publicly readable
+### The goal
+
+You want `index.html` (plus any `style.css`, `script.js`) sitting in a bucket, publicly readable, served as a website.
 
 ```
 Bucket: my-static-site-szonja
@@ -121,10 +129,58 @@ Bucket: my-static-site-szonja
 └── script.js
 ```
 
-Enable public access:
+### Steps, both paths
+
+**1. Create the bucket** (name it the same as your domain, or anything unique)
+
+- **Console:** S3 → **Create bucket** → name → leave defaults → Create.
+- **CLI:** `aws s3 mb s3://my-static-site-szonja --region eu-west-2`
+
+**2. Upload your HTML files** ← this is where they go
+
+- **Console:** Open your bucket → **Objects** tab (this is the "files" view) → **Upload** button (top right) → drag your files in (or **Add files**) → **Upload** at the bottom.
+- Make sure your files sit at the **root** of the bucket — the Objects tab shows `index.html`, `style.css`, `script.js` directly, **not** inside a subfolder. The site URL looks for `index.html` at the root.
+- **CLI:** `aws s3 cp index.html s3://my-static-site-szonja/` (repeat for each file, or `aws s3 cp . s3://my-static-site-szonja/ --recursive` to grab everything in the current folder)
+
+**3. Turn on static website hosting** (tells AWS "serve `index.html` as the homepage")
+
+- **Console:** Bucket → **Properties** tab → scroll to **Static website hosting** → **Edit** → select **Enable** → set **Index document** to `index.html` → Save. Note the **Bucket website endpoint** URL that appears (that's your live site address).
+- **CLI:** `aws s3 website s3://my-static-site-szonja/ --index-document index.html`
+
+**4. Make the files publicly readable** (the crucial `index.html` would otherwise 403 in the browser)
+
+- **Console:** Bucket → **Permissions** tab → scroll to **Bucket policy** → **Edit** → paste the JSON below → replace `my-static-site-szonja` with **your** bucket name → Save. (If you get a "block public access" error, finish step 5 first, then come back.)
+- **CLI:** See the policy JSON below. In Cloud Shell or your local terminal, save it to a file then apply it with `aws s3api put-bucket-policy`.
+
+**5. Turn **off** "Block public access" for the bucket** (a newer safety default that blocks the public policy above)
+
+- **Console:** Bucket → **Permissions** tab → top section **Block public access (bucket settings)** → **Edit** → **uncheck** all four boxes → Save.
+- **CLI:** `aws s3api put-public-access-block --bucket my-static-site-szonja --public-access-block-configuration BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false`
+- ⚠️ Only do this on a bucket you *intend* to be public. For anything private, leave it on.
+
+### The bucket policy JSON
+
+This is the JSON you paste in the console (step 4) **or** save to a file for the CLI:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Principal": "*",
+    "Action": "s3:GetObject",
+    "Resource": "arn:aws:s3:::my-static-site-szonja/*"
+  }]
+}
+```
+
+> 💡 **What this says:** anyone (`"Principal": "*"`) can read (`s3:GetObject`) any object inside your bucket. The `/*` at the end of the Resource means "everything inside the bucket".
+
+### Enabling the public policy via the CLI (only if you chose the CLI path)
+
+The command needs the policy saved to a file so your terminal doesn't mangle the quotes:
 
 ```bash
-# Bucket policy (allows public reads)
 # Save the policy to a file to avoid shell quoting issues
 cat > bucket-policy.json << EOF
 {
@@ -140,22 +196,18 @@ EOF
 aws s3api put-bucket-policy --bucket my-static-site-szonja --policy file://bucket-policy.json
 ```
 
-> **💻 Windows PowerShell / CMD note:** Heredocs (`cat > file << EOF`) don't work in PowerShell or CMD. Create the JSON file manually:
->
-> 1. Create a file called `bucket-policy.json` with the JSON content above
-> 2. Run:
+> **💻 Windows PowerShell / CMD note:** Heredocs (`cat > file << EOF`) don't work in PowerShell or CMD. Create the file manually: make a new file called `bucket-policy.json`, paste the JSON above into it, save, then run:
 > ```powershell
 > aws s3api put-bucket-policy --bucket my-static-site-szonja --policy file://bucket-policy.json
 > ```
+> You need the local AWS CLI installed for this (PowerShell/CMD can't use Cloud Shell).
 
-Turn on static hosting:
+### Test it
 
-```bash
-aws s3 website s3://my-static-site-szonja/ --index-document index.html
-```
-
-Your site is now live at:
+Open the **Bucket website endpoint** from step 3 in an **incognito/private** browser window:
 `http://my-static-site-szonja.s3-website-eu-west-2.amazonaws.com`
+
+From a normal window it may look "worked" just because you're logged in; incognito makes sure a random visitor can really see it. A `403 Access Denied` means a public-read step got missed. An empty page usually means files aren't at the bucket root.
 
 **Cost:** ~$0.023/GB/month for storage + pennies for data transfer. A personal blog costs about the same as a coffee per year.
 
@@ -238,7 +290,7 @@ print(url)  # Temporary link, expires in 1 hour
 1. Create an S3 bucket (via console or CLI)
 2. Upload a text file. Download it to a different location — verify it matches.
 3. Enable versioning. Upload the same file twice with different content. List versions.
-4. Create a simple `index.html` with your name on it. Host it as a static website.
+4. Create a simple `index.html` with your name on it. Host it as a static website — follow the two-path guide in **Section 4**, and test it in a private window.
 5. Use the AWS Console to browse to a file and generate a pre-signed URL. Open it in an incognito window — does it work?
 
 **Continue to [Lesson 05: EC2: Your First Cloud Server](05-aws-ec2.md)**
