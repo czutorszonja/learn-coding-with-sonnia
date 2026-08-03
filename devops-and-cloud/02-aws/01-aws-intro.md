@@ -61,11 +61,11 @@ There are **200+** AWS services. You'll probably use 10 regularly. Here are the 
 | **S3** | Store files (images, backups, static websites) | 4 |
 | **EC2** | Virtual servers (run any software) | 5 |
 | **Lambda** | Serverless functions (code that runs on-demand) | 6 |
-| **ECS / Fargate** | Run containerised apps on AWS | 7 |
-| **RDS** | Managed databases (PostgreSQL, MySQL, etc.) | 7 |
+| **ECS / Fargate** | Run containerised apps on AWS | 8 |
+| **RDS** | Managed databases (PostgreSQL, MySQL, etc.) | 8 |
 | **CloudFront** | Content delivery network (fast worldwide) | 8 |
 | **Route 53** | DNS (domain names) | — |
-| **VPC** | Virtual network (security, isolation) | 7 |
+| **VPC** | Virtual network (security, isolation) | 8 |
 
 ---
 

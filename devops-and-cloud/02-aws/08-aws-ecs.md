@@ -1,6 +1,6 @@
-# 07 — ECS: Running Docker on AWS
+# 08 — ECS: Running Docker on AWS
 
-**← Back to [Lesson 06: Lambda: Code Without Servers](06-aws-lambda.md)**
+**← Back to [Lesson 07: ECR: Your Docker Image Registry](07-aws-ecr.md)**
 
 
 You've containerised your app with Docker. Now let's run it in the cloud — properly.
@@ -228,4 +228,4 @@ Set up alarms:
 
 > **📁 Deploy your own app?** If you've completed the Docker lessons, come back and try pushing your own image to ECR instead of the sample.
 
-**Continue to [Lesson 08: Final Project: Full-Stack Notes App on AWS](08-aws-project.md)**
+**Continue to [Lesson 09: Final Project: Full-Stack Notes App on AWS](09-aws-project.md)**

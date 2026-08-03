@@ -247,4 +247,4 @@ Lambda is dramatically cheaper for sporadic workloads.
 3. (Advanced) Build a fully serverless URL shortener: API Gateway + Lambda + DynamoDB. The Lambda receives a URL, stores it in DynamoDB with a short code, and returns the short URL.
 4. Check CloudWatch Logs to see your Lambda's `print()` output
 
-**Continue to [Lesson 07: ECS: Running Docker on AWS](07-aws-ecs.md)**
+**Continue to [Lesson 07: ECR: Your Docker Image Registry](07-aws-ecr.md)**

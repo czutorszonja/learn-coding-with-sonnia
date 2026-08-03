@@ -1,6 +1,6 @@
 # 08 — Final Project: Full-Stack Notes App on AWS
 
-**← Back to [Lesson 07: ECS: Running Docker on AWS](07-aws-ecs.md)**
+**← Back to [Lesson 08: ECS: Running Docker on AWS](08-aws-ecs.md)**
 
 
 This is where everything comes together. We'll build and **deploy a full-stack Notes app to AWS** — entirely serverless, with no servers to manage.

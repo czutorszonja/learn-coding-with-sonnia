@@ -248,7 +248,9 @@ Deployment → manages ReplicaSet → runs Pods → exposed via Service
 
 ### ECS / Fargate
 - **Cluster** → **Task Definition** (recipe: image, ports, env) → **Task** (one running instance) → **Service** (keeps N tasks running).
-- **ECR** = Docker registry inside AWS.
+- **ECR** = Docker registry inside AWS — **private by default**, secured with **IAM**. Full image name format: `<account>.dkr.ecr.<region>.amazonaws.com/<repo>:<tag>`.
+- **Full ECR flow:** `docker build` → `docker tag` (to the full ECR address) → `aws ecr get-login-password | docker login` → `docker push`.
+- **Exam:** tags are mutable labels (enable *tag immutability* to block overwrites); ECS pulls via an IAM execution role needing `ecr:GetAuthorizationToken` + `ecr:BatchGetImage`.
 - **ALB** in front: `User → https://app → ALB (443) → ECS Task (5000)`.
 
 ### Elastic Beanstalk
