@@ -17,7 +17,12 @@ You can run containers from images stored anywhere. But storing images inside AW
 - **Speed** — ECR lives inside AWS, so ECS pulls images fast (and historically, no data-transfer cost between ECS and ECR)
 - **Security** — you control exactly who can push and pull, with IAM
 
-Think of ECR like the **pantry** in the ECS kitchen metaphor: you don't cook straight from the delivery truck, you stock the pantry first, then the chef (ECS) pulls from it.
+Think of it like a **kitchen** (keep this image in mind for the ECS lesson next):
+
+- The **pantry** is ECR — you don't cook straight from the delivery truck, you stock the pantry first with ingredients (your Docker images).
+- The **chef** that cooks from the pantry is **ECS** (the orchestrator that runs your containers).
+
+For now, the only part that matters here: **ECR is the shelf where you store your images** so a service can pull them later.
 
 ```
 Local machine                         AWS
