@@ -70,26 +70,37 @@ Wait ~30 seconds. You'll see it go from `pending` → `running`.
 
 ### Connect via SSH
 
+**Choose your OS. You only run ONE of these blocks:**
+
+**💻 macOS / Linux:**
+
 ```bash
-# Make sure your key file isn't publicly visible (macOS / Linux)
+# Make sure your key file isn't publicly visible (only needed on Mac/Linux)
 chmod 400 ~/Downloads/my-keys.pem
 
 # Connect
 ssh -i ~/Downloads/my-keys.pem ec2-user@<public-ip-address>
 ```
 
-> **💻 Windows notes:**
->
-> **1. Key permissions** — Windows doesn't use `chmod`. If SSH complains about permissions, open File Explorer, right-click your `.pem` file → **Properties → Security → Advanced**, remove inherited permissions and add yourself with Full Control. Or just move the file to `C:\Users\YourName\.ssh\` and skip chmod entirely.
->
-> **2. `~/Downloads/` path** — On Windows that would be `C:\Users\YourName\Downloads\` or wherever the browser saved the key. Adjust the path accordingly:
-> ```powershell
-> ssh -i C:\Users\Szonja\Downloads\my-keys.pem ec2-user@<public-ip>
-> ```
->
-> **3. SSH client** — Windows 10/11 come with a built-in OpenSSH client. Run `ssh` in PowerShell or CMD. If it says the command isn't found, install it from **Settings → Apps → Optional Features → Add a feature → OpenSSH Client**.
+**🪟 Windows (PowerShell or CMD):**
 
-(Find the public IP in the EC2 console — under your instance's details.)
+> **There is no `chmod` on Windows — skip it entirely.** If you typed `chmod` and got "not recognized as a command", that's expected here. Windows 10/11 come with a built-in OpenSSH client, so you can SSH directly:
+
+```powershell
+ssh -i C:\Users\Szonja\Downloads\my-first-server-key-pair.pem ec2-user@<public-ip-address>
+```
+
+> Replace `Szonja` with your actual Windows username, and make sure the path points to where your browser **actually saved** the `.pem` key (usually `Downloads`).
+>
+> **If SSH complains about key permissions** ("UNPROTECTED PRIVATE KEY FILE"), fix it:
+> 1. Right-click your `.pem` file → **Properties** → **Security** → **Advanced**
+> 2. **Disable inheritance** → **Remove** all inherited permissions
+> 3. **Add** yourself (your Windows account) with **Full Control**
+> 4. Apply and retry SSH
+>
+> Or simply move the `.pem` into `C:\Users\YourName\.ssh\` and skip the permissions dance entirely.
+
+*(Find the public IP in the EC2 console — under your instance's details.)*
 
 You're now inside a real Linux server in AWS! Try:
 
