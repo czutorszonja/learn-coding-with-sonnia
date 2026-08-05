@@ -135,9 +135,9 @@ Inbound Rules (what's allowed in):
 Outbound Rules (all traffic allowed out — usually fine)
 ```
 
-> **🔑 Match the port to the rules!** The app in Section 5 runs on **port 80** (`app.run(host='0.0.0.0', port=80)`). For anyone to reach it over the internet, the security group must **allow inbound TCP on port 80 from Anywhere** — that's the **HTTP** rule shown above. The `Custom :5000` row in older versions of this table was a leftover; our app uses port 80, so HTTP :80 is the one that matters.
-
-> If you change the app to a different port (say **8080**, like in "Your Turn" step 5), you MUST also add a matching **Custom TCP** rule for that port, or the traffic gets blocked at the firewall and your page won't load. A classic gotcha: the app runs fine on the server (you see the logs), but the browser times out — that's almost always the security group.
+> **🛑 Stop and read this — the number must match.** A web app listens on a **port** (the number in `app.run(..., port=…)`), and the firewall only lets the outside in on ports that have a matching rule. The app in Section 5 uses **port 80**, and the table above already has an **HTTP :80 → Anywhere** rule, so it will work as-is.
+>
+> **What matters:** every time you run an app on a *different* port, you must add a matching firewall rule too. In "Your Turn" step 5 you'll run on **8080** — so add a **Custom TCP :8080** rule (point it at your own IP for learning). Wrong port number → firewall silently blocks it → app runs on the server but your browser times out. That mismatch is the #1 cause of "why is my page not loading?" on EC2.
 
 **Rules of thumb:**
 - Allow only what you need (don't open port 22 to everyone)
