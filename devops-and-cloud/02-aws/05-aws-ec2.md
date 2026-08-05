@@ -118,22 +118,29 @@ Inbound Rules (what's allowed in):
 ├─────────┼─────────┼─────────┼──────┤
 │ HTTPS    │ TCP :443 │ Anywhere │ Allow │
 ├─────────┼─────────┼─────────┼──────┤
-│ Custom   │ TCP :5000│ My IP    │ Allow │ (for our Flask app)
+│ Custom   │ TCP :8080│ My IP    │ Allow │ (for a custom port app)
 └─────────────────────────────────────────┘
 
 Outbound Rules (all traffic allowed out — usually fine)
 ```
 
+> **🔑 Match the port to the rules!** The app in Section 5 runs on **port 80** (`app.run(host='0.0.0.0', port=80)`). For anyone to reach it over the internet, the security group must **allow inbound TCP on port 80 from Anywhere** — that's the **HTTP** rule shown above. The `Custom :5000` row in older versions of this table was a leftover; our app uses port 80, so HTTP :80 is the one that matters.
+
+> If you change the app to a different port (say **8080**, like in "Your Turn" step 5), you MUST also add a matching **Custom TCP** rule for that port, or the traffic gets blocked at the firewall and your page won't load. A classic gotcha: the app runs fine on the server (you see the logs), but the browser times out — that's almost always the security group.
+
 **Rules of thumb:**
 - Allow only what you need (don't open port 22 to everyone)
 - Use "My IP" for SSH, not "Anywhere"
 - Open app ports (80/443) to "Anywhere" only if it's a public website
+- **Edit a rule:** select your instance → **Security** tab → your security group → **Inbound rules** → **Edit inbound rules**
 
 ---
 
 ## 5. Running a Simple App on EC2
 
-Let's deploy a real web app on your EC2 instance. We'll create a simple Flask API directly on the server — no extra tools needed.
+Let's deploy a real web app on your EC2 instance. We'll create a simple Flask API **directly on the server** — no extra tools needed.
+
+> **👉 Where do I type this?** Make sure you're **inside the SSH session** you opened in Section 3 — the one where your terminal prompt shows `[ec2-user@ip-…]`. If your prompt still looks like your laptop (e.g. `szonja@MacBook` or `C:\Users\…`), you're **not** on the server yet. Every line below runs **on the EC2 server**, not on your laptop and not in the AWS console. Paste the whole block into your SSH terminal.
 
 ```bash
 # Update packages and install Python
