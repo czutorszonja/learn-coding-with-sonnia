@@ -121,6 +121,10 @@ aws ecr get-login-password --region eu-west-2 | \
 
 ### Step 3: Build, tag, and push
 
+> **📦 Where does `url-shortener` come from?** It's the project you built in **Docker Lesson 08** ([08-docker-project.md](../01-docker/08-docker-project.md)) — that lesson gives you the full starter code: `backend/app.py`, `backend/requirements.txt`, `backend/Dockerfile`. If you've done it, you already have a `url-shortener/backend/` folder on your machine; open a terminal in that folder and continue below.
+>
+> **Haven't done the Docker lessons yet?** Two options: do [Docker Lesson 08](../01-docker/08-docker-project.md) first (recommended — the ECS lesson builds on it too), or push **any** image you already have (e.g. `flask-app` from Docker Lesson 03) — just create the repo with that name in Step 1 and swap the name in the commands below.
+
 ```bash
 # Build your image
 docker build -t url-shortener ./backend

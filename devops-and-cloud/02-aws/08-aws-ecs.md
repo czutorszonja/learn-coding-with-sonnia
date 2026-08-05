@@ -77,6 +77,8 @@ ECS has two modes:
 
 ### Step 1: Push your image to ECR
 
+> **📦 Need the `./backend` code?** Same as in the ECR lesson: `url-shortener` is the project from **Docker Lesson 08** ([08-docker-project.md](../01-docker/08-docker-project.md)) — it has the full starter code. If you haven't built it yet, do that lesson first (or push any image you already have, using its name below).
+
 ```bash
 # Login to ECR
 aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.eu-west-2.amazonaws.com
