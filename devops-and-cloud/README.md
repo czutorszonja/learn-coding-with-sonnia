@@ -7,6 +7,7 @@ This track is about taking the code you write and making it **available**, **rel
 - **Docker** — package your app so it runs the same way everywhere
 - **Kubernetes** — run containers across many machines automatically
 - **AWS** — the cloud platform where you run it at scale
+- **Terraform** — define and manage your whole infrastructure as code
 
 You won't become a cloud architect overnight. But by the end of these lessons, you'll be able to:
 
@@ -18,6 +19,7 @@ You won't become a cloud architect overnight. But by the end of these lessons, y
 - Deploy a server (EC2)
 - Go serverless (Lambda)
 - Run Docker containers on AWS (ECS)
+- Manage your entire infrastructure as code with Terraform
 - Put it all together in a real-world project
 
 ---
@@ -27,6 +29,8 @@ You won't become a cloud architect overnight. But by the end of these lessons, y
 Each lesson builds on the last. Start at **01** and work through in order — especially the Docker and Kubernetes ones, where later lessons assume you've done the earlier ones.
 
 The AWS section is more modular. You can jump between S3, EC2, and Lambda depending on what interests you.
+
+The Terraform section sits after AWS — it's the layer that *manages* all the cloud resources you've met.
 
 Every lesson has:
 - A **real-world scenario** that explains *why* this matters

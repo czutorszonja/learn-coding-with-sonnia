@@ -289,7 +289,106 @@ Test in an **incognito window** (a logged-in normal tab can mask permission prob
 
 ---
 
-## 4. 🔍 Debugging cheat
+## 4. 🌍 Terraform — infrastructure as code
+
+### The mental model
+
+**IaC** = describe infrastructure in config files; Terraform makes it real. **Declarative** = you say *what* you want; Terraform figures out *how* and tracks what exists.
+
+```
+main.tf (desired state)  ──▶  Terraform  ──▶  real cloud resources
+terraform.tfstate (what exists)  ◀── tracks everything
+```
+
+**Terraform vs the rest:** Docker/K8s manage *containers*; Terraform manages the *underlying cloud resources* (servers, networks, storage) before anything runs.
+
+### The core workflow (memorise)
+
+```
+terraform init       # setup — downloads providers
+terraform plan       # preview — shows changes, changes NOTHING
+terraform apply      # make it real — re-shows plan, asks `yes`
+terraform destroy    # tear down everything
+```
+
+### Building blocks
+
+| Block | Purpose |
+|---|---|
+| `terraform {}` | global settings (providers, backend) |
+| `provider {}` | which cloud (aws/azure/gcp) |
+| `resource {}` | create one concrete thing |
+| `data {}` | read existing infra, don't create |
+| `variable {}` | input knob |
+| `output {}` | return a value (URL, ARN) |
+| `local {}` | internal derived helper |
+
+### Variables — setting values (priority order)
+
+`default` < `TF_VAR_` env var < `terraform.tfvars` < `-var` flag (highest).
+
+```hcl
+variable "bucket_name" {
+  type    = string
+  default = "szonja-bucket"
+}
+```
+
+### Dependencies & ordering
+
+- **Reference one resource's attribute** in another → Terraform orders creation automatically.
+- Attribute ref: `resource_type.resource_name.attribute` (e.g. `aws_vpc.main.id`).
+- **`depends_on = [resource.x]`** forces order when a plain reference can't (use sparingly).
+- Destroy happens in the **reverse** order.
+
+### State — the file that remembers
+
+- `terraform.tfstate` maps config to real resources. **Never hand-edit it.**
+- **Remote state** (S3 backend + lock) for teams/CI — one shared source of truth.
+- **Protect like credentials** — secrets can live in state attributes; `sensitive = true` on outputs; add `*.tfstate*` to `.gitignore`.
+- `state list` / `state show` / `state mv` / `state rm` — inspect and admin.
+- `state rm` = *untrack* a resource without deleting it from the cloud.
+
+### Useful commands
+
+```
+terraform fmt          # auto-format .tf files
+terraform validate     # offline syntax check
+terraform refresh      # sync state to reality
+terraform workspace new dev | select dev   # separate state per env
+terraform import aws_s3_bucket.web my-bucket  # adopt existing infra
+terraform force-unlock <ID>   # last resort for orphaned locks
+```
+
+### Modules
+
+Reusable chunk of config with inputs (variables) and outputs. Call from root:
+
+```hcl
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"   # or ./modules/…
+  version = "5.0.0"
+}
+```
+
+Prefer **maintained Registry modules** over hand-rolling common patterns. One module = one concern, typed vars, versioned, secret-free.
+
+### Provisioners (use sparingly!)
+
+`file`, `remote-exec`, `local-exec` run **one-shot** imperative commands — **not** a management loop (won't repair drift). Terraform recommends avoiding them for anything long-lived. Prefer **Docker images, custom AMIs, user-data** instead.
+
+### Terraform gotchas
+
+- Renaming a resource in `.tf` alone → destroy + recreate. Use `terraform state mv` first.
+- Changing a tightly-coupled value (e.g. VPC CIDR) **ripples**: parent update forces child replacement.
+- Bucket name change = replacement (name is immutable).
+- `0.0.0.0/0` on port 22 in a security group = exposed — restrict to your IP for real work.
+- An S3 state bucket is special infra — set it up **once**, outside your normal config.
+- Always `terraform destroy` when done, or it keeps billing you.
+
+---
+
+## 6. 🔍 Debugging cheat
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
@@ -348,4 +447,4 @@ Internet ──▶ Security Group (firewall: port 80 open to 0.0.0.0/0) ──�
 
 ---
 
-*Full lessons: `01-docker/`, `02-aws/`, `03-kubernetes/` · Terms: `glossary.md`*
+*Full lessons: `01-docker/`, `02-aws/`, `03-kubernetes/`, `04-terraform/` · Terms: `glossary.md`*
